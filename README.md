@@ -28,16 +28,11 @@ The repository has the file structure outlined below. In general:
 **For Panel code:** Each module's Panel code, as well as the main website page, is in the `panel-scripts` folder.
 
 ```
-panel-scripts
-|__ main.py
-|__ map_matching_pn.py
-|__ metadata_pn.py
-|__ traj_split_pn.py
-|__ ...
-
 data
 |__ input
+    |__ data_files
 |__ output
+    |__ data files
 
 docs
 |__ general.ipynb
@@ -60,6 +55,13 @@ module-scripts
     |__ constants.py
     |__ main.py
     |__ vizualization.py
+
+panel-scripts
+|__ main.py
+|__ map_matching_pn.py
+|__ metadata_pn.py
+|__ traj_split_pn.py
+|__ ...
 
 utils
 |__ visualization.py
