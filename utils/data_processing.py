@@ -48,16 +48,15 @@ def get_in_data_info_dict(f_input_info_widget):
 def check_data_is_valid(df):
     pass
 
-########################################## FUNCTIONS ########################################
-'''
-Create a class instance of InputData for each data upload.
-
-This class gets and keeps the name of the necessary columns
-    - this code assumes a file with the corresponding column names for the columns we want
-      is provided along with the uploaded data. Later on, we can write a function that extracts
-      this information from the raw file.
-'''
 class InputData:
+    '''
+    Create a class instance of InputData for each data upload.
+
+    This class gets and keeps the name of the necessary columns
+        - this code assumes a file with the corresponding column names for the columns we want
+        is provided along with the uploaded data. Later on, we can write a function that extracts
+        this information from the raw file.
+    '''
 
     def __init__(self, f_input_widget, f_input_info_widget):
 
@@ -83,31 +82,35 @@ class InputData:
     
     def long_column(self):
         return self.df[self.long]
-    
 
+########################################## FUNCTIONS ######################################## 
 '''
 This code declares an instance of the InputData defined above, 
 and checks if the data is valid for the module choices
 '''
-# declare InputData
 
-# given module_choice_widget choices, make sure the data is valid for the desired modules
-
-# if it is, 
-    # call the main.py functions for the coresponding modules
-    # these modules will be passed the instance of the InputData defined above
-
-    # when the main.py functions return their output here (and we knew it would take awhile), 
-        # an email will be sent out to the user to say the data is ready
-        # the data will be downloadable and ready for visualization
-
-    # if the user decides to visualize the data, the visualization.py functions for the 
-    # corresponding modules will be called
-    # additionally, the panel-script for the module will be called to create the webpage/dashboard
-
-
-# if the data is not valid/usable, this script will return errors regarding the data upload
+def data_processing( f_input_widget, f_input_info_widget, module_choices_widget):
     
+    # declare InputData instance
+    cur_data = InputData(f_input_widget, f_input_info_widget)
+
+    # given module_choice_widget choices, make sure the data is valid for the desired modules given in module_choices_widget
+
+    # if it is, 
+        # call the main.py functions for the coresponding modules
+        # these modules will be passed the instance of the InputData defined above
+
+        # when the main.py functions return their output here (and we knew it would take awhile), 
+            # an email will be sent out to the user to say the data is ready
+            # the data will be downloadable and ready for visualization
+
+        # if the user decides to visualize the data, the visualization.py functions for the 
+        # corresponding modules will be called
+        # additionally, the panel-script for the module will be called to create the webpage/dashboard
+
+
+    # if the data is not valid/usable, this script will return errors regarding the data upload
+        
     
     
 
