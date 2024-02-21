@@ -24,8 +24,9 @@ The repository has the file structure outlined below. In general:
 **For specific module code:** Each module has their own folder in the `module-scripts` folder. 
 * `main.py` has the code that runs the module's data processing
 * `vizualization.py` has the code that is used by Panel to visualize the data
+* `constants.py` has the constants used in the `main.py` and `visualization.py` scripts
 
-**For Panel code:** Each module's Panel code, as well as the main website page, is in the `panel-scripts` folder.
+**For Panel code:** Each module's Panel webpage/dashboard code, as well as the main webpage/dashboard code, is in the `panel-scripts` folder.
 
 ```
 data
