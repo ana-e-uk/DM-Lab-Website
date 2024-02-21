@@ -16,5 +16,16 @@ Author: Ana Uribe
 ########################################## HELPER FUNCTIONS #################################
 
 
-
 ########################################## FUNCTIONS ########################################
+
+def get_metadata(dat):
+    '''
+    Main function that computes the metadata given the data input from utils.InputData 
+    '''
+    metadata = []
+
+    # call functions that compute the metadata
+        # TODO
+
+    
+    return metadata

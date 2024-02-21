@@ -10,11 +10,15 @@ Author: Ana Uribe
 '''
 
 ########################################## IMPORTS ##########################################
-
-
+import holoviews as hv
+import panel as pn
 
 ########################################## HELPER FUNCTIONS #################################
 
 
-
 ########################################## FUNCTIONS ########################################
+# load bohek extension
+hv.extension("bokeh")
+
+# set the sizing mode
+pn.extension(sizing_mode="stretch_width")
