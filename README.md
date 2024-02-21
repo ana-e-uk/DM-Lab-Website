@@ -36,11 +36,11 @@ data
 
 docs
 |__ general.ipynb
+|__ map_matching.ipynb
+|__ metadata.ipynb
 |__ module_example.ipynb
-|__ api_example.ipynb
-|__ map_matching
-|__ metadata
-|__ traj_split
+|__ panel_example.ipynb
+|__ traj_split.ipynb
 
 module-scripts
 |__ map-matching
@@ -64,6 +64,9 @@ panel-scripts
 |__ ...
 
 utils
-|__ visualization.py
+|__ constants.py
 |__ data_processing.py
+|__ visualization.py
+
+requirements.txt
 ```
