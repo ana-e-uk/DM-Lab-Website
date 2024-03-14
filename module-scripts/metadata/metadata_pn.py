@@ -10,7 +10,7 @@ Author: Ana Uribe
 '''
 
 ########################################## IMPORTS ##########################################
-import holoviews as hv
+# import holoviews as hv
 import panel as pn
 import numpy as np
 import pandas as pd
@@ -22,6 +22,7 @@ from main import (get_speed_stats,
                   get_points_for_e_n, 
                   get_turn_driving_directions)
 
+pn.extension()
 ########################################## HELPER FUNCTIONS #################################
 
 def return_chosen_data(select_widget):
@@ -48,7 +49,6 @@ def return_e_n_choices(select_widget, data):
 
 # set the sizing mode
 # pn.extension(sizing_mode="stretch_width")
-pn.extension()
 
 ########################################### sidebar elements ##########################################
 trajectory_descr = pn.pane.Markdown("**Trajectories to Use**")
