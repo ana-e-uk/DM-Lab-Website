@@ -23,10 +23,11 @@ The repository has the file structure outlined below. In general:
 
 **For specific module code:** Each module has their own folder in the `module-scripts` folder. 
 * `main.py` has the code that runs the module's data processing
+* `[module name]_pn.py` has the code that creates the Panel dashboard/web-page for the specific module
 * `vizualization.py` has the code that is used by Panel to visualize the data
 * `constants.py` has the constants used in the `main.py` and `visualization.py` scripts
 
-**For Panel code:** Each module's Panel webpage/dashboard code, as well as the main webpage/dashboard code, is in the `panel-scripts` folder.
+**For Panel code:** Each module's Panel webpage/dashboard code is in that module's `module-scripts` file. The main webpage/dashboard code is in the `panel-scripts` folder.
 
 ```
 data
@@ -40,34 +41,31 @@ docs
 |__ map_matching.ipynb
 |__ metadata.ipynb
 |__ module_example.ipynb
-|__ panel_example.ipynb
 |__ traj_split.ipynb
 
 module-scripts
 |__ map-matching
     |__ constants.py
     |__ main.py
+    |__ map_matching_pn.py
     |__ vizualization.py
 |__ metadata
     |__ constants.py
     |__ main.py
+    |__ metadata_pn.py
     |__ vizualization.py
 |__ traj-split
     |__ constants.py
     |__ main.py
+    |__ traj_split_pn.py
     |__ vizualization.py
 
 panel-scripts
 |__ main.py
-|__ map_matching_pn.py
-|__ metadata_pn.py
-|__ traj_split_pn.py
-|__ ...
+|__ utils
+    |__ constants.py
+    |__ data_processing.py
+    |__ visualization.py
 
-utils
-|__ constants.py
-|__ data_processing.py
-|__ visualization.py
-
-requirements.txt
+requirements.txt (to be added)
 ```
