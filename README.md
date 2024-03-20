@@ -32,7 +32,9 @@ The repository has the file structure outlined below. In general:
 ```
 data
 |__ input
-    |__ data_files
+    |__ uploads
+        |__ data_files
+    |__ data files
 |__ output
     |__ data files
 
