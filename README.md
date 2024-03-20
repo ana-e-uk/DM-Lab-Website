@@ -65,11 +65,12 @@ module-scripts
     |__ vizualization.py
 
 panel-scripts
-|__ main.py
 |__ utils
     |__ constants.py
     |__ data_processing.py
     |__ visualization.py
+|__ main.py
+|__ upload_data.py
 
 requirements.txt (to be added)
 ```
