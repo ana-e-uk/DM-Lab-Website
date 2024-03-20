@@ -1,5 +1,6 @@
 # Data folders
-data/
+data/output
+data/input
 
 # Other
 .DS_Store

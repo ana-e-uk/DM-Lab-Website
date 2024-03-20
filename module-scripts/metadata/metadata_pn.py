@@ -1,10 +1,12 @@
 '''
 File name: panel-scripts/metadata_pn.py
 
-Description: contains the Panel code that generates the metadata webpage/dashboard
+Description: Contains the Panel code that generates the metadata webpage/dashboard
              of the website.
 
              Calls functions in module-scripts/metadata, and utils folders.
+
+CURRENT DESCRIPTION: In the sidebar: there's two trajectory dfs to choose from, then there are
              
 Author: Ana Uribe
 '''
@@ -14,6 +16,7 @@ Author: Ana Uribe
 import panel as pn
 import numpy as np
 import pandas as pd
+import os
 
 import bokeh
 from bokeh.plotting import figure
@@ -23,14 +26,16 @@ from main import (get_speed_stats,
                   get_turn_driving_directions)
 
 pn.extension()
+
+data_dir = os.path.join(os.pardir, 'data/examples')
 ########################################## HELPER FUNCTIONS #################################
 
 def return_chosen_data(select_widget):
     if select_widget == 'All Trajectories':
         # TODO: maybe cache data?
-        data_path = '/Users/bean/Documents/masters-project/data/trajectory_datasets/full_traj_59-Scan-50%_edge_node_df.csv'
+        data_path = os.path.join(data_dir, 'full_traj_59-Scan-50%_edge_node_df.csv')
     else:
-        data_path = '/Users/bean/Documents/masters-project/data/trajectory_datasets/sample_full_traj_59-Scan-50%_edge_node_df.csv'
+        data_path = os.path.join(data_dir, 'sample_full_traj_59-Scan-50%_edge_node_df.csv')
     
     data = pd.read_csv(data_path)
     return data

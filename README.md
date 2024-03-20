@@ -31,9 +31,11 @@ The repository has the file structure outlined below. In general:
 
 ```
 data
+|__ examples
+    |__ data files
 |__ input
     |__ uploads
-        |__ data_files
+        |__ data files
     |__ data files
 |__ output
     |__ data files
