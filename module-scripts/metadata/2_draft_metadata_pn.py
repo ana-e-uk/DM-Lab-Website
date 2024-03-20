@@ -19,7 +19,7 @@ import io
 
 import ipywidgets as ipw
 import folium
-from ipyleaflet import Map, basemaps
+from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl
 
 # import bokeh
 from bokeh.plotting import figure, save
@@ -34,16 +34,51 @@ from main import (get_speed_stats,
 pn.extension()
 
 ########################################## HELPER FUNCTIONS ##########################################
-'''
-FUNCTION: get_metadata_from_b_box_or_point
+def get_b_box_p_coordinates(drawing):
+    '''
+    FUNCTION: get_b_box_p_coordinates
 
-DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
-             or the metadata closest to the point. This data will be visualized using other functions.
+    DESCRIPTION: Returns the bounding box or point coordinates of the bounding box or point drawn with draw_control
 
-IN: bounding box () or point (coordinate - (float, float))
-OUT: metadata_df (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
-                                      or corresp. to the road/intersection closest to the point input.
-'''
+    IN: drawing ()
+    OUT: bounding box () or point (coordinate - (float, float))
+    '''
+    # ********** Code adapted from Yousseff Hussein's 'calculate statistics' function:
+    # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L439
+
+    shape = drawing['new']
+    if shape:
+        
+        if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
+            coordinates = None
+            coordinates = shape['geometry']['coordinates'][0]
+            # currentShape = shape
+            # currentCoordinates = coordinates
+
+            if isinstance(coordinates, float):  # Handle single point shape
+                coordinates = [coordinates]
+            
+            # call functions to get metadata from bounding box
+            get_metadata_from_b_box_or_point(coordinates)
+
+        else:
+            print("Invalid shape format")
+        drawing['new']=''
+
+        
+
+def get_metadata_from_b_box_or_point(coordinates):
+    '''
+    FUNCTION: get_metadata_from_b_box_or_point
+
+    DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
+                or the metadata closest to the point. This data will be visualized using other functions.
+
+    IN: bounding box () or point (coordinate - (float, float))
+    OUT: metadata_df (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
+                                        or corresp. to the road/intersection closest to the point input.
+    '''
+    print(coordinates)
 
 '''
 FUNCTION: visualize_metadata
@@ -71,6 +106,7 @@ sidebar_elements = pn.Column(instructions_text
                             )
 
 ########################################## MAIN ELEMENTS ##########################################
+
 ##### Map #####
 # folium map
 # map_pane = pn.pane.plot.Folium(folium.Map(location=[13.406, 80.110], tiles="OpenStreetMap", zoom_start=2.5), height = 700)
@@ -79,14 +115,40 @@ sidebar_elements = pn.Column(instructions_text
 center = [38.128, 2.588]
 zoom = 5
 map = Map(basemap=basemaps.OpenStreetMap.Mapnik, center=center, zoom=zoom)
-map_pane = pn.panel(map)
 
-##### Code below from Yousseff Hussein https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py
+# ********** Start code below from Yousseff Hussein's 'visualization_iHARP_V01.py':
+# ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py
+
 # Add full-screen control to the map
-# full_screen_control = FullScreenControl(exit_button=True)
-# m.add_control(full_screen_control)
+full_screen_control = FullScreenControl(exit_button=True)
+map.add_control(full_screen_control)
+osm_basemap = basemap_to_tiles(basemaps.OpenStreetMap.Mapnik)
+# Add the basemaps to the map
+map.add_layer(osm_basemap)
 
-##### End code from Y.H.
+# Add draw controls to the map
+draw_control = DrawControl()
+draw_control.rectangle = {
+    "shapeOptions": {
+        "fillOpacity": 0.1
+    }
+}
+# Configure the DrawControl to only allow rectangle shapes
+draw_control.polyline = {}
+draw_control.circle = {}
+draw_control.polygon = {}
+draw_control.marker = {}
+draw_control.CircleMarker = {}
+
+map.add_control(draw_control)
+
+#Do something when sleecting a new area on the map
+draw_control.observe(get_b_box_p_coordinates, names='last_draw')
+
+# ********** End code from Y.H.
+
+# declare map panel object
+map_pane = pn.panel(map)
 
 ##### Bounding Box Tool #####
 
