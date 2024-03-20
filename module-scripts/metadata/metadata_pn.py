@@ -6,7 +6,10 @@ Description: Contains the Panel code that generates the metadata webpage/dashboa
 
              Calls functions in module-scripts/metadata, and utils folders.
 
-CURRENT DESCRIPTION: In the sidebar: there's two trajectory dfs to choose from, then there are
+CURRENT DESCRIPTION: In the sidebar: there's two trajectory dfs to choose from, then there are options
+                     to choose an edge or node, then you can choose which edge/node to show a speed distribution
+                     plot, as well as some other metadata. 
+                     In the main part: there is nothing.
              
 Author: Ana Uribe
 '''
