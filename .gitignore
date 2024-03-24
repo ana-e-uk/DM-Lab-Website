@@ -1,6 +1,6 @@
 # Data folders
 data/output
-data/input
+data/input/uploads
 
 # Other
 .DS_Store

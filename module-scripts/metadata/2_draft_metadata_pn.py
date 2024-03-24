@@ -20,15 +20,19 @@ import io
 import ipywidgets as ipw
 import folium
 from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl
+from shapely.geometry import Polygon
 
-# import bokeh
+import bokeh
 from bokeh.plotting import figure, save
 import geopandas as gpd
 
+from constants import(METADATA_DIR,
+                      )
 
 from main import (get_speed_stats, 
                   get_points_for_e_n, 
-                  get_turn_driving_directions)
+                  get_turn_driving_directions
+                  )
 
 # pn.extension("ipywidgets")
 pn.extension()
@@ -58,14 +62,16 @@ def get_b_box_p_coordinates(drawing):
             if isinstance(coordinates, float):  # Handle single point shape
                 coordinates = [coordinates]
             
-            # call functions to get metadata from bounding box
-            get_metadata_from_b_box_or_point(coordinates)
+            # get metadata from bounding box
+            metadata = get_metadata_from_b_box_or_point(coordinates)
+
+            # visualize metadata
+
 
         else:
             print("Invalid shape format")
         drawing['new']=''
 
-        
 
 def get_metadata_from_b_box_or_point(coordinates):
     '''
@@ -75,10 +81,34 @@ def get_metadata_from_b_box_or_point(coordinates):
                 or the metadata closest to the point. This data will be visualized using other functions.
 
     IN: bounding box () or point (coordinate - (float, float))
-    OUT: metadata_df (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
-                                        or corresp. to the road/intersection closest to the point input.
+    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
+                                                or corresp. to the road/intersection closest to the point input.
     '''
-    print(coordinates)
+    ##### Get coordninates as bounding box #####
+    # ********** Code adapted from Yousseff Hussein's 'calculate daily stats' function:
+    # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L200
+
+    min_lat, max_lat, min_long, max_long = [], [], [], []
+
+    polygon = Polygon(coordinates)
+    area = polygon.area
+
+    min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
+    max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
+
+    # ********** End code from Y.H.
+        
+    print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
+    #### Query metadata file #####
+    # read in all of the metadata
+    metadata_df = pd.read_csv(METADATA_DIR)
+
+    # grab only the data that fall within lat/long ranges
+    metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
+
+    print(metadata_df_slice)
+    
+    return metadata_df_slice
 
 '''
 FUNCTION: visualize_metadata
@@ -92,7 +122,7 @@ OUT: --
 '''
 
 ########################################## SIDEBAR ELEMENTS ########################################## 
-# instructions text
+##### instructions text #####
 instructions_text = pn.pane.Markdown('''
                                      ## Instructions:
                                      
@@ -101,7 +131,7 @@ instructions_text = pn.pane.Markdown('''
                                      Hover over or click on the road segments or intersections to see the current statistics and metadata for that road segment or intersection.
                                      ''')
 
-# layout
+##### layout #####
 sidebar_elements = pn.Column(instructions_text
                             )
 
@@ -123,9 +153,11 @@ map = Map(basemap=basemaps.OpenStreetMap.Mapnik, center=center, zoom=zoom)
 full_screen_control = FullScreenControl(exit_button=True)
 map.add_control(full_screen_control)
 osm_basemap = basemap_to_tiles(basemaps.OpenStreetMap.Mapnik)
+
 # Add the basemaps to the map
 map.add_layer(osm_basemap)
 
+##### Bounding Box Tool #####
 # Add draw controls to the map
 draw_control = DrawControl()
 draw_control.rectangle = {
@@ -150,11 +182,8 @@ draw_control.observe(get_b_box_p_coordinates, names='last_draw')
 # declare map panel object
 map_pane = pn.panel(map)
 
-##### Bounding Box Tool #####
 
-
-
-
+##### layout #####
 main_elements = [map_pane]
 
 

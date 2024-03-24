@@ -7,7 +7,7 @@ Author: Ana Uribe
 '''
 
 ########################################## IMPORTS ##################################################
-
+import os
 
 
 ########################################## START Main CONSTANTS #######################################
@@ -55,6 +55,7 @@ TURN_RANGES = {
                'ahead': [(315, 360), (0, 45)],
                'u-turn': (157, 202)
               }
+
 ########################################## END Main CONSTANTS #######################################
 
 ########################################## START Visualization CONSTANTS #################################
@@ -71,6 +72,8 @@ TRAJ_POINT_MARKER ='x'
 TRAJ_POINT_MARKER_SIZE = 1
 PLOT_TYPES = ['scatter', 'line']
 
-
 ########################################## END VISUALIZATION CONSTANTS ##################################
 
+########################################## START metadata_pn CONSTANTS ##########################################
+
+METADATA_DIR = os.path.join(os.pardir, os.pardir, 'data/output/metadata.csv')  ## TODO: save metadata file somewhere else (on a server)
