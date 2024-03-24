@@ -55,15 +55,19 @@ def get_b_box_p_coordinates(drawing):
         
         if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
             coordinates = None
-            coordinates = shape['geometry']['coordinates'][0]
-            # currentShape = shape
-            # currentCoordinates = coordinates
+            # coordinates = shape['geometry']['coordinates'][0]
+            coordinates = shape['geometry']['coordinates']
 
-            if isinstance(coordinates, float):  # Handle single point shape
-                coordinates = [coordinates]
+            if isinstance(coordinates[0], float):  # Handle single point shape
+                # coordinates = [coordinates]
+                print('one', coordinates)
+                metadata = get_metadata_from_point(coordinates)
             
-            # get metadata from bounding box
-            metadata = get_metadata_from_b_box_or_point(coordinates)
+            else:
+                # get metadata from bounding box
+                coordinates = coordinates[0]
+                print('two', coordinates)
+                metadata = get_metadata_from_b_box(coordinates)
 
             # visualize metadata
 
@@ -72,15 +76,48 @@ def get_b_box_p_coordinates(drawing):
             print("Invalid shape format")
         drawing['new']=''
 
-
-def get_metadata_from_b_box_or_point(coordinates):
+def get_metadata_from_point(coordinates):
     '''
-    FUNCTION: get_metadata_from_b_box_or_point
+    FUNCTION: get_metadata_from_point
 
     DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
                 or the metadata closest to the point. This data will be visualized using other functions.
 
-    IN: bounding box () or point (coordinate - (float, float))
+    IN: coordinates - [(float, float)]
+    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
+                                                or corresp. to the road/intersection closest to the point input.
+    '''
+    print('three', coordinates)
+    ##### Get coordninates #####
+    lat_coord = coordinates[0]
+    long_coord = coordinates[1]
+    print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
+
+    min_lat = lat_coord - 0.05
+    max_lat = lat_coord + 0.05
+
+    min_long = long_coord - 0.05
+    max_long = long_coord + 0.05
+
+    #### Query metadata file #####
+    # read in all of the metadata
+    metadata_df = pd.read_csv(METADATA_DIR)
+
+    # grab only the data that fall within lat/long ranges
+    metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
+
+    print(metadata_df_slice)
+    
+    return metadata_df_slice
+
+def get_metadata_from_b_box(coordinates):
+    '''
+    FUNCTION: get_metadata_from_b_box
+
+    DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
+                or the metadata closest to the point. This data will be visualized using other functions.
+
+    IN: coordinates ()
     OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
                                                 or corresp. to the road/intersection closest to the point input.
     '''
@@ -91,7 +128,6 @@ def get_metadata_from_b_box_or_point(coordinates):
     min_lat, max_lat, min_long, max_long = [], [], [], []
 
     polygon = Polygon(coordinates)
-    area = polygon.area
 
     min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
     max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
