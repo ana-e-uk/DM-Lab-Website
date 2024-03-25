@@ -5,7 +5,7 @@ DESCRIPTION: Generates metadata dashboard webpage.
              This page has instructions on the sidebar and the map on the main area.
 
 CURRENT DESCRIPTION: Prints description text in sidebar, plots ipyleaflet map on the main part of dashboard. 
-                     Select tool and metadata visualization NOT coded yet.
+                     Select tool returns subset of metadata that falls within the drawn bounding box or point.
 
              Imports functions from main.py
 
@@ -39,14 +39,17 @@ from main import (get_speed_stats,
 pn.extension()
 
 ########################################## HELPER FUNCTIONS ##########################################
-def get_b_box_p_coordinates(drawing):
+def get_metadata(drawing):
     '''
-    FUNCTION: get_b_box_p_coordinates
+    FUNCTION: get_metadata
 
-    DESCRIPTION: Returns the bounding box or point coordinates of the bounding box or point drawn with draw_control
+    DESCRIPTION: Calls functions to get the metadata from the given bounding box or point coordinates drawn by the user,
+                 and visualizes it on the map.
 
-    IN: drawing ()
-    OUT: bounding box () or point (coordinate - (float, float))
+    IN: drawing (dict) - dictionary with information about the drawing from ipyleaflet's DrawControl
+                         The information of interest is the coordinates of the geometry.
+
+    OUT: None
     '''
     # ********** Code adapted from Yousseff Hussein's 'calculate statistics' function:
     # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L439
@@ -61,8 +64,7 @@ def get_b_box_p_coordinates(drawing):
             if isinstance(coordinates[0], float):  # Handle single point shape
                 metadata = get_metadata_from_point(coordinates)
             
-            else:
-                # get metadata from bounding box
+            else:   # handle bounding box shape
                 coordinates = coordinates[0]
                 metadata = get_metadata_from_b_box(coordinates)
 
@@ -77,17 +79,16 @@ def get_metadata_from_point(coordinates):
     '''
     FUNCTION: get_metadata_from_point
 
-    DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
-                or the metadata closest to the point. This data will be visualized using other functions.
+    DESCRIPTION: Query the existing metadata file and return all the metadata that lies around the point.
+                 This data will be visualized using other functions.
 
-    IN: coordinates - [(float, float)]
-    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
-                                                or corresp. to the road/intersection closest to the point input.
+    IN: coordinates - [float, float]
+
+    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the point.
     '''
     ##### Get coordninates #####
     lat_coord = coordinates[1]
     long_coord = coordinates[0]
-    # print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
     
     min_lat = min(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
     max_lat = max(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
@@ -95,6 +96,7 @@ def get_metadata_from_point(coordinates):
     min_long = min(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
     max_long = max(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
 
+    # print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
     # print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
     
     #### Query metadata file #####
@@ -104,7 +106,7 @@ def get_metadata_from_point(coordinates):
     # grab only the data that fall within lat/long ranges
     metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
 
-    print(metadata_df_slice)
+    # print(metadata_df_slice.shape)
     
     return metadata_df_slice
 
@@ -112,20 +114,18 @@ def get_metadata_from_b_box(coordinates):
     '''
     FUNCTION: get_metadata_from_b_box
 
-    DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box,
-                or the metadata closest to the point. This data will be visualized using other functions.
+    DESCRIPTION: Query the existing metadata file and return all the metadata that lies within the bounding box.
+                 This data will be visualized using other functions.
 
-    IN: coordinates ()
-    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
-                                                or corresp. to the road/intersection closest to the point input.
+    IN: coordinates (list) - contains corner coordinates of the bounding box
+
+    OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box.
     '''
     ##### Get coordninates as bounding box #####
     # ********** Code adapted from Yousseff Hussein's 'calculate daily stats' function:
     # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L200
 
     min_lat, max_lat, min_long, max_long = [], [], [], []
-
-    polygon = Polygon(coordinates)
 
     min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
     max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
@@ -141,7 +141,7 @@ def get_metadata_from_b_box(coordinates):
     # grab only the data that fall within lat/long ranges
     metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
 
-    print(metadata_df_slice)
+    # print(metadata_df_slice.shape)
     
     return metadata_df_slice
 
@@ -212,7 +212,7 @@ draw_control.CircleMarker = {}
 map.add_control(draw_control)
 
 #Do something when sleecting a new area on the map
-draw_control.observe(get_b_box_p_coordinates, names='last_draw')
+draw_control.observe(get_metadata, names='last_draw')
 
 # ********** End code from Y.H.
 
