@@ -100,12 +100,15 @@ def get_graph_from_bb(lat_col, long_col, network_type=NETWORK_TYPE, verbose=Fals
     E = max(long_col)
     W = min(long_col)
 
-    # get graph from bounding box
-    G = ox.graph_from_bbox(north=N, 
-                           south=S,
-                           east=E,
-                           west=W,
-                           network_type=network_type)
+    # TODO: check code below works as replacement for north= south=...
+    G = ox.graph_from_bbox((N, S, E, W), network_type=network_type)
+
+    # # get graph from bounding box
+    # G = ox.graph_from_bbox(north=N, 
+    #                        south=S,
+    #                        east=E,
+    #                        west=W,
+    #                        network_type=network_type)
     
     if verbose:
         print(f'Number of edges in graph: {len(G.edges)}')
