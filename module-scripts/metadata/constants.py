@@ -77,3 +77,6 @@ PLOT_TYPES = ['scatter', 'line']
 ########################################## START metadata_pn CONSTANTS ##########################################
 
 METADATA_DIR = os.path.join(os.pardir, os.pardir, 'data/output/metadata.csv')  ## TODO: save metadata file somewhere else (on a server)
+
+# helps create range of lat/long from point
+POINT_RANGE = 0.05

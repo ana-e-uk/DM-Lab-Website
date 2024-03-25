@@ -27,6 +27,7 @@ from bokeh.plotting import figure, save
 import geopandas as gpd
 
 from constants import(METADATA_DIR,
+                      POINT_RANGE
                       )
 
 from main import (get_speed_stats, 
@@ -83,19 +84,18 @@ def get_metadata_from_point(coordinates):
     OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
                                                 or corresp. to the road/intersection closest to the point input.
     '''
-    radius_range = 0.05
     ##### Get coordninates #####
     lat_coord = coordinates[1]
     long_coord = coordinates[0]
-    print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
+    # print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
     
-    min_lat = min(lat_coord - radius_range, lat_coord + radius_range)
-    max_lat = max(lat_coord - radius_range, lat_coord + radius_range)
+    min_lat = min(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
+    max_lat = max(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
 
-    min_long = min(long_coord - radius_range, long_coord + radius_range)
-    max_long = max(long_coord - radius_range, long_coord + radius_range)
+    min_long = min(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
+    max_long = max(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
 
-    print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
+    # print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
     
     #### Query metadata file #####
     # read in all of the metadata
@@ -132,7 +132,8 @@ def get_metadata_from_b_box(coordinates):
 
     # ********** End code from Y.H.
         
-    print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
+    # print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
+    
     #### Query metadata file #####
     # read in all of the metadata
     metadata_df = pd.read_csv(METADATA_DIR)
@@ -144,16 +145,18 @@ def get_metadata_from_b_box(coordinates):
     
     return metadata_df_slice
 
-'''
-FUNCTION: visualize_metadata
+def visualize_metadata():
+    '''
+    FUNCTION: visualize_metadata
 
-DESCRIPTION: Visualize the desired metadata on the dashboard map.
-             When a road or intersection is hovered over/clicked on, you can see: speed statistics, turn/driving directions,
-             length of road(?) etc.
+    DESCRIPTION: Visualize the desired metadata on the dashboard map.
+                When a road or intersection is hovered over/clicked on, you can see: speed statistics, turn/driving directions,
+                length of road(?) etc.
 
-IN: df (pandas DataFrame) - dataframe of the metadata
-OUT: --
-'''
+    IN: df (pandas DataFrame) - dataframe of the metadata
+    OUT: --
+    '''
+    pass
 
 ########################################## SIDEBAR ELEMENTS ########################################## 
 ##### instructions text #####
