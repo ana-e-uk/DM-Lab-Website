@@ -9,7 +9,7 @@ DESCRIPTION: Generates metadata dashboard webpage.
 
 CURRENT DESCRIPTION: Visualization and interactability of metadata is NOT coded yet.
                      
-             Imports functions from main.py, constants.py
+             Imports functions from main.py, constants.py, visualization.py
 
 Author: Ana Uribe
 '''
@@ -32,10 +32,13 @@ from constants import(METADATA_DIR,
                       POINT_RANGE
                       )
 
-from main import (get_speed_stats, 
+from main import (get_graph,
+                  get_speed_stats, 
                   get_points_for_e_n, 
                   get_turn_driving_directions
                   )
+
+from visualization import (plot_graph_only)
 
 # pn.extension("ipywidgets")
 pn.extension()
@@ -144,6 +147,13 @@ def get_metadata_from_b_box(coordinates):
     metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
 
     return metadata_df_slice
+
+def plot_graph(df):
+    '''
+    '''
+    G = get_graph(df)
+    fig = plot_graph_only(G)
+    
 
 def visualize_metadata():
     '''
