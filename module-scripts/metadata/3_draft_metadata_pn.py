@@ -189,8 +189,8 @@ sidebar_elements = pn.Column(instructions_text
 # map_pane = pn.pane.plot.Folium(folium.Map(location=[13.406, 80.110], tiles="OpenStreetMap", zoom_start=2.5), height = 700)
 
 # ipyleaflet map (from https://ipyleaflet.readthedocs.io/en/latest/map_and_basemaps/basemaps.html)
-center = [38.128, 2.588]
-zoom = 5
+center = (42.5, -41)
+zoom = 2
 map = Map(basemap=basemaps.OpenStreetMap.Mapnik, center=center, zoom=zoom)
 
 # ********** Start code below from Yousseff Hussein's 'visualization_iHARP_V01.py':
