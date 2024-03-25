@@ -2,10 +2,9 @@
 File name: 2_metadata_pn.py
 
 DESCRIPTION: Generates metadata dashboard webpage. 
-             This page has instructions on the sidebar and the map on the main area.
-
-CURRENT DESCRIPTION: Prints description text in sidebar, plots ipyleaflet map on the main part of dashboard. 
-                     Select tool returns subset of metadata that falls within the drawn bounding box or point.
+             This page has instructions on the sidebar and plots ipyleaflet map on the main part of the dashboard.
+             You can draw a bounding box reigon and a point with a select tool.
+             Select tool returns subset of metadata that falls within the drawn bounding box or point to the teminal.
 
              Imports functions from main.py
 
@@ -69,7 +68,9 @@ def get_metadata(drawing):
                 metadata = get_metadata_from_b_box(coordinates)
 
             # visualize metadata
-
+            print('First three rows of metadata dataframe:')
+            print(metadata.head(3))
+            print(f'Metadata dataframe size: {metadata.shape}')
 
         else:
             print("Invalid shape format")
@@ -105,8 +106,6 @@ def get_metadata_from_point(coordinates):
 
     # grab only the data that fall within lat/long ranges
     metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
-
-    # print(metadata_df_slice.shape)
     
     return metadata_df_slice
 
@@ -141,8 +140,6 @@ def get_metadata_from_b_box(coordinates):
     # grab only the data that fall within lat/long ranges
     metadata_df_slice = metadata_df[(metadata_df['lat'] >= min_lat) & (metadata_df['lat'] <= max_lat) & (metadata_df['long'] >= min_long) & (metadata_df['long'] <= max_long)]
 
-    # print(metadata_df_slice.shape)
-    
     return metadata_df_slice
 
 def visualize_metadata():
