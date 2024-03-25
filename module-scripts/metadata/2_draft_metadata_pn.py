@@ -55,18 +55,14 @@ def get_b_box_p_coordinates(drawing):
         
         if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
             coordinates = None
-            # coordinates = shape['geometry']['coordinates'][0]
             coordinates = shape['geometry']['coordinates']
 
             if isinstance(coordinates[0], float):  # Handle single point shape
-                # coordinates = [coordinates]
-                print('one', coordinates)
                 metadata = get_metadata_from_point(coordinates)
             
             else:
                 # get metadata from bounding box
                 coordinates = coordinates[0]
-                print('two', coordinates)
                 metadata = get_metadata_from_b_box(coordinates)
 
             # visualize metadata
@@ -87,18 +83,20 @@ def get_metadata_from_point(coordinates):
     OUT: metadata_df_slice (pandas DataFrame) - datataframe of the metadata of the roads/intersections within the bounding box 
                                                 or corresp. to the road/intersection closest to the point input.
     '''
-    print('three', coordinates)
+    radius_range = 0.05
     ##### Get coordninates #####
-    lat_coord = coordinates[0]
-    long_coord = coordinates[1]
+    lat_coord = coordinates[1]
+    long_coord = coordinates[0]
     print(f'Coordinate values chosen:\n\tlatitude: {lat_coord} \n\tlongitude: {long_coord}')
+    
+    min_lat = min(lat_coord - radius_range, lat_coord + radius_range)
+    max_lat = max(lat_coord - radius_range, lat_coord + radius_range)
 
-    min_lat = lat_coord - 0.05
-    max_lat = lat_coord + 0.05
+    min_long = min(long_coord - radius_range, long_coord + radius_range)
+    max_long = max(long_coord - radius_range, long_coord + radius_range)
 
-    min_long = long_coord - 0.05
-    max_long = long_coord + 0.05
-
+    print(f'Coordinate values chosen:\n\tlatitude: ({min_lat}, \t {max_lat})\n\tlongitude: ({min_long}, \t {max_long})')
+    
     #### Query metadata file #####
     # read in all of the metadata
     metadata_df = pd.read_csv(METADATA_DIR)
