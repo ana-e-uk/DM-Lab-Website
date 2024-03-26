@@ -17,12 +17,15 @@ Author: Ana Uribe
 import panel as pn
 import numpy as np
 import pandas as pd
+import statistics as stat
 import io
 
 import ipywidgets as ipw
-import folium
-from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl
+from ipywidgets import HTML
+from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
+
 from shapely.geometry import Polygon
+
 
 import bokeh
 from bokeh.plotting import figure, save
@@ -42,46 +45,9 @@ from visualization import (plot_graph_only)
 
 # pn.extension("ipywidgets")
 pn.extension()
+########################################## ##########################################
 
 ########################################## HELPER FUNCTIONS ##########################################
-def get_metadata(drawing):
-    '''
-    FUNCTION: get_metadata
-
-    DESCRIPTION: Calls functions to get the metadata from the given bounding box or point coordinates drawn by the user,
-                 and visualizes it on the map.
-
-    IN: drawing (dict) - dictionary with information about the drawing from ipyleaflet's DrawControl
-                         The information of interest is the coordinates of the geometry.
-
-    OUT: None
-    '''
-    # ********** Code adapted from Yousseff Hussein's 'calculate statistics' function:
-    # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L439
-
-    shape = drawing['new']
-    if shape:
-        
-        if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
-            coordinates = None
-            coordinates = shape['geometry']['coordinates']
-
-            if isinstance(coordinates[0], float):  # Handle single point shape
-                metadata = get_metadata_from_point(coordinates)
-            
-            else:   # handle bounding box shape
-                coordinates = coordinates[0]
-                metadata = get_metadata_from_b_box(coordinates)
-
-            # visualize metadata
-            print('First three rows of metadata dataframe:')
-            print(metadata.head(3))
-            print(f'Metadata dataframe size: {metadata.shape}')
-
-        else:
-            print("Invalid shape format")
-        drawing['new']=''
-
 def get_metadata_from_point(coordinates):
     '''
     FUNCTION: get_metadata_from_point
@@ -148,14 +114,44 @@ def get_metadata_from_b_box(coordinates):
 
     return metadata_df_slice
 
-def plot_graph(df):
-    '''
-    '''
-    G = get_graph(df)
-    fig = plot_graph_only(G)
+def create_map_with_multiple_polylines(df, m, colors):
     
+    # Initialize a placeholder for the popup outside the loop
+    # This ensures we're working with only one popup at a time
+    popup = Popup(max_width=200)
+    
+    for index, row in df.iterrows():
+        polyline = Polyline(
+            locations=row['Coordinates'],
+            color=colors[index],
+            fill=False,
+            weight=5,
+            opacity=0.9
+        )
+        m.add_layer(polyline)
 
-def visualize_metadata():
+        def on_polyline_click(event=None, feature=None, id=row['ID'], **kwargs):
+            # Configure the popup for the current polyline
+            coords = list(df[df['ID'] == id]['Coordinates'])[0][0]
+            print(f'event:{event}\nid: {id}\nfeature:{feature}\ncoords:{coords}')
+
+            # Update popup location and content
+            popup.location = coords
+
+            popup.child = HTML(value=f"<b>{row['Speed']}</b>: {row['Heading']}")
+            
+            # Check if the popup is already on the map
+            if popup not in m.layers:
+                m.add_layer(popup)
+            else:
+                # Popup is already on the map, so we just updated its content and location
+                popup.open = True
+
+        polyline.on_click(on_polyline_click)
+    
+    return m
+
+def visualize_metadata(bool, df, map):
     '''
     FUNCTION: visualize_metadata
 
@@ -166,8 +162,52 @@ def visualize_metadata():
     IN: df (pandas DataFrame) - dataframe of the metadata
     OUT: --
     '''
-    pass
+    if bool:
+        print('reached visualize metadata function')
+        colors = ['#BD44E8', '#2075DE', '#970E02', '#06FD6A']
+        m = create_map_with_multiple_polylines(df,map,colors=colors)
 
+        return m
+    else:
+        pass
+
+def get_metadata(drawing):
+    '''
+    FUNCTION: get_metadata
+
+    DESCRIPTION: Calls functions to get the metadata from the given bounding box or point coordinates drawn by the user,
+                 and visualizes it on the map.
+
+    IN: drawing (dict) - dictionary with information about the drawing from ipyleaflet's DrawControl
+                         The information of interest is the coordinates of the geometry.
+
+    OUT: None
+    '''
+    # ********** Code adapted from Yousseff Hussein's 'calculate statistics' function:
+    # ********** https://github.com/joHussien/iHARPVis/blob/main/VisualizationDemoV01/visualization_iHARP_V01.py#L439
+
+    shape = drawing['new']
+    if shape:
+        
+        if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
+            coordinates = None
+            coordinates = shape['geometry']['coordinates']
+
+            if isinstance(coordinates[0], float):  # Handle single point shape
+                metadata = get_metadata_from_point(coordinates)
+            
+            else:   # handle bounding box shape
+                coordinates = coordinates[0]
+                metadata = get_metadata_from_b_box(coordinates)
+
+            # visualize metadata
+            print('First three rows of metadata dataframe:')
+            print(metadata.head(3))
+            print(f'Metadata dataframe size: {metadata.shape}')
+
+        else:
+            print("Invalid shape format")
+        drawing['new']=''
 ########################################## SIDEBAR ELEMENTS ########################################## 
 ##### instructions text #####
 instructions_text = pn.pane.Markdown('''
@@ -225,6 +265,10 @@ map.add_control(draw_control)
 draw_control.observe(get_metadata, names='last_draw')
 
 # ********** End code from Y.H.
+
+#TODO: have the get_metadata function save the metadata df slice or the new df we want
+# (with the coordinates for one trajectory combined in a list) and then on click or something
+# add the polylines to the map/call a function to add them to the map, as well as add the popup for them
 
 # declare map panel object
 map_pane = pn.panel(map)
