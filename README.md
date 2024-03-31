@@ -74,3 +74,6 @@ panel-scripts
 
 requirements.txt (to be added)
 ```
+
+### How to run the code
+First, you need to install 
