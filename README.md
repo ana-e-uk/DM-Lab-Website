@@ -76,4 +76,13 @@ requirements.txt (to be added)
 ```
 
 ### How to run the code
-First, you need to install 
+First, you need to create an environment and then install panel
+```
+conda create -n panel python=3.8
+conda install panel
+```
+
+To run the code, use the following command
+```
+panel server [filename.py]
+```
