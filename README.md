@@ -78,11 +78,12 @@ requirements.txt (to be added)
 ### How to run the code
 First, you need to create an environment and then install panel
 ```
-conda create -n panel python=3.8
-conda install panel
+conda create -n panel
+conda install panel ipywidgets ipyleaflet shapely geopandas ipykernel
+pip install osmnx
 ```
 
 To run the code, use the following command
 ```
-panel server [filename.py]
+panel serve [filename.py]
 ```
