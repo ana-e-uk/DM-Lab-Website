@@ -16,6 +16,23 @@ The website can:
     * Metadata
     * Visualization and downloadable results of the above
 
+### Map Matching
+
+#### How to run it?
+```
+conda activate panel
+cd module-scripts
+cd map-matching
+panel serve map_matching_pn.py
+```
+Then, open the link attached
+
+#### Assumptions
+1. Each file contains one trajectory. Even if you fed in different trajectories in the same file. The script will randomly select one of them and plot it
+2. Map matching may take some time, so the user is expected to wait for sometime to see the output
+3. The used library of map matching is limited somehow. It only outputs the matched road per point which is discontinuous rather than the whole trajectory of roads which is continous
+4. The library has a problem with the map extraction. It disregards roads that are disconneted in the roads extraction part. A modified version may be used here to adjust this.
+
 ### File Structure
 The repository has the file structure outlined below. In general:
 
