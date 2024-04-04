@@ -128,3 +128,81 @@ def plot_graph_and_multiple_traj(G, trajectory_df, traj_idx_col, plot_type):
 
     return fig
     return fig, ax
+
+
+############################################################
+from mappymatch.matchers.matcher_interface import MatchResult
+from mappymatch.utils.crs import LATLON_CRS, XY_CRS
+from shapely.geometry import Point
+from typing import List
+from mappymatch.constructs.match import Match
+import pandas as pd
+import geopandas as gpd
+from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
+
+def plot_matches_on_pyleaflet(matches: List[Match], crs=XY_CRS, map=None):
+    """
+    Plots a trace and the relevant matches on a folium map.
+
+    Args:
+    matches: The matches.
+    road_map: The road map.
+
+    Returns:
+        A folium map with trace and matches plotted.
+    """
+
+    def _match_to_road(m):
+        """Private function."""
+        d = {"road_id": m.road.road_id, "geom": m.road.geom}
+        return d
+
+    def _match_to_coord(m):
+        """Private function."""
+        d = {
+            "road_id": m.road.road_id,
+            "geom": Point(m.coordinate.x, m.coordinate.y),
+            "distance": m.distance,
+        }
+
+        return d
+
+    road_df = pd.DataFrame([_match_to_road(m) for m in matches if m.road])
+    road_df = road_df.loc[road_df.road_id.shift() != road_df.road_id]
+    road_gdf = gpd.GeoDataFrame(road_df, geometry=road_df.geom, crs=crs).drop(
+        columns=["geom"]
+    )
+    road_gdf = road_gdf.to_crs(LATLON_CRS)
+
+    coord_df = pd.DataFrame([_match_to_coord(m) for m in matches if m.road])
+
+    coord_gdf = gpd.GeoDataFrame(
+        coord_df, geometry=coord_df.geom, crs=crs
+    ).drop(columns=["geom"])
+    coord_gdf = coord_gdf.to_crs(LATLON_CRS)
+
+    mid_i = int(len(coord_gdf) / 2)
+    mid_coord = coord_gdf.iloc[mid_i].geometry
+
+    map.center = (mid_coord.y, mid_coord.x)
+    map.zoom = 14
+
+    for coord in coord_gdf.itertuples():
+        marker = Circle(
+            location=(coord.geometry.y, coord.geometry.x),
+            radius=5,
+            tooltip=f"road_id: {coord.road_id}\ndistance: {coord.distance}",
+            color = "red",  # Set the color of the point circle
+            fill_color = "red"  
+            )
+        map.add_layer(marker)
+
+    for road in road_gdf.itertuples():
+        polyline = Polyline(
+            locations=[(lat, lon) for lon, lat in road.geometry.coords],
+            color="blue",
+            tooltip=road.road_id
+        )
+        map.add_layer(polyline)
+
+    return map

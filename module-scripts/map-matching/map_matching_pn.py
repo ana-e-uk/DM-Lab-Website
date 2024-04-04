@@ -15,7 +15,7 @@ import io
 
 import ipywidgets as ipw
 from ipywidgets import HTML
-from ipyleaflet import Marker, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
+from ipyleaflet import Marker, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
 
 
 from shapely.geometry import Polygon
@@ -35,7 +35,7 @@ from main import (get_graph,
                   get_turn_driving_directions
                   )
 
-from visualization import (plot_graph_only)
+from visualization import (plot_graph_only, plot_matches_on_pyleaflet)
 
 # pn.extension("ipywidgets")
 pn.extension()
@@ -212,8 +212,42 @@ instructions_text = pn.pane.Markdown('''
                                      Hover over or click on the road segments or intersections to see the current statistics and metadata for that road segment or intersection.
                                      ''')
 
+######## Choosing the trajectory to match ################
+# Define a list of options
+import os
+options = os.listdir('../../data/examples')
+options.insert(0, '')
+chosen_traj_filename = ''
+
+# Create the select widget
+select_widget = pn.widgets.Select(options=options)
+
+# Define a function to be called when an option is selected
+def on_select(event):
+    global chosen_traj_filename
+    chosen_traj_filename = select_widget.value
+    print(f"Selected: {select_widget.value}")
+
+# Attach the function to the select widget
+select_widget.param.watch(on_select, 'value')
+
+# Define a function to be called when the button is clicked
+def on_button_click(event):
+    global chosen_traj_filename
+    global map
+    map_match(chosen_traj_filename, map)
+    print("Button clicked!")
+
+# Create the button
+button = pn.widgets.Button(name='Match One Trajectory', description='Wait for 5 minutes')
+
+# Attach the function to the button's click event
+button.on_click(on_button_click)
+
 ##### layout #####
-sidebar_elements = pn.Column(instructions_text
+sidebar_elements = pn.Column(instructions_text, 
+                             select_widget,
+                             button
                             )
 
 ########################################## MAIN ELEMENTS ##########################################
@@ -240,15 +274,67 @@ map.add_layer(osm_basemap)
 
 ##### Plot a trajectory #####
 
-# Step 1: Read the csv file
-data = pd.read_csv('../../data/examples/sample_full_traj_59-Scan-50%_edge_node_df.csv')  # Update 'your_data.csv' with your CSV file path
-locations = data[['lat', 'long']]
+def map_match(traj_filename, map):
 
-# Step 3: Add markers for each point
-for _, location in locations.iterrows():
-    marker = Marker(location=(location['latitude'], location['longitude']))
-    m.add_layer(marker)
+    from mappymatch import package_root
+    from mappymatch.constructs.trace import Trace
+    from mappymatch.constructs.geofence import Geofence
+    from mappymatch.maps.nx.nx_map import NxMap, NetworkType
+    from mappymatch.matchers.lcss.lcss import LCSSMatcher
+    import random
 
+    # Step 1: Read the csv file
+    # traj_filename = 'sample_full_traj_59-Scan-50%_edge_node_df.csv'
+    print("Traj Filename: ", traj_filename)
+    df = pd.read_csv('../../data/examples/'+traj_filename)  # Update 'your_data.csv' with your CSV file path
+
+    # # Step 3: Add markers for each point
+    # mean_lat, mean_long = df.lat.mean(), df.long.mean()
+    # new_center = (mean_lat, mean_long)  # Coordinates of the new center
+    # new_zoom = 14  # New zoom level
+
+    # df.sort_values(by=["Vehicle ID", 'Position Date Time'], inplace=True)
+
+    # df.reset_index(drop=True, inplace=True)
+    print("Selecting one Trajectory!")
+    vechile_ids = df["Vehicle ID"].unique()
+    # one_id = vechile_ids[0]
+    one_id = random.choice(vechile_ids)
+    sub_df = df[df["Vehicle ID"] == one_id]
+    sub_df.sort_values(by=['Position Date Time'], inplace=True)    
+
+    # Do Map Matching
+    print("Getting the trace!")
+    trace = Trace.from_dataframe(dataframe=sub_df, xy=True, lat_column='lat', lon_column='long')
+    print("Getting the geofence!")
+    geofence = Geofence.from_trace(trace, padding=1e3)
+    print("Getting the underlying road network!")
+    nx_map = NxMap.from_geofence(geofence, network_type=NetworkType.DRIVE)
+    print("Matching the trace to the road network!")
+    matcher = LCSSMatcher(nx_map)
+    match_result = matcher.match_trace(trace)
+
+    # Plotting the match result
+    print("Now Plotting the matches...!")
+    plot_matches_on_pyleaflet(matches=match_result.matches, map=map)
+
+
+# Set the new center and zoom level
+    # map.center = new_center
+    # map.zoom = new_zoom
+    # for _, location in df.iterrows():
+    #     marker = Circle(
+    #         location=(location['lat'], location['long']), 
+    #         radius = 50,  # Set the radius of the point circle
+    #         color = "red",  # Set the color of the point circle
+    #         fill_color = "red"  
+    #         )
+    #     map.add_layer(marker)
+
+    # for i, c in enumerate(trace.coords):
+    #     folium.PolyLine(
+    #         [(p.y, p.x) for p in trace.coords], color=line_color
+    #     ).add_to(m)
 
 ##### Bounding Box Tool #####
 # Add draw controls to the map

@@ -1,6 +1,14 @@
 # Data folders
 data/output
 data/input/uploads
+data/examples/
+
+# Map Matching
+module-scripts/map-matching/cache/
+cache/
+# I ignore the notebook 
+
+/notebook.ipynb
 
 # Other
 .DS_Store
@@ -165,3 +173,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+notebook.ipynb
