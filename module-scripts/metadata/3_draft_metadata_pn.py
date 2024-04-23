@@ -262,7 +262,7 @@ draw_control.CircleMarker = {}
 map.add_control(draw_control)
 
 #Do something when sleecting a new area on the map
-draw_control.observe(get_metadata, names='last_draw')
+observe_object = draw_control.observe(get_metadata, names='last_draw')
 
 # ********** End code from Y.H.
 
@@ -271,6 +271,10 @@ draw_control.observe(get_metadata, names='last_draw')
 # add the polylines to the map/call a function to add them to the map, as well as add the popup for them
 
 # declare map panel object
+updating_map = pn.bind(update_map,
+                       observe_object,
+                       map)
+
 map_pane = pn.panel(map)
 
 
