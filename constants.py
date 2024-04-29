@@ -82,4 +82,4 @@ METADATA_DIR = os.path.join(os.pardir, os.pardir, 'data/output/metadata.csv')  #
 POINT_RANGE = 0.05
 
 ################################################## MAIN CONSTANTS ####################################
-TRAJ_DIR = '../data/examples/'
+TRAJ_DIR = './data/examples/'
