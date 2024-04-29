@@ -16,17 +16,11 @@ The website can:
     * Metadata
     * Visualization and downloadable results of the above
 
-### Map Matching
-
-#### How to run it?
+### How to run it?
 ```
 conda activate panel
-cd module-scripts
-cd map-matching
-panel serve map_matching_pn.py
+panel serve main.py
 ```
-Then, open the link attached
-
 #### Assumptions
 1. Each file contains one trajectory. Even if you fed in different trajectories in the same file. The script will randomly select one of them and plot it
 2. Map matching may take some time, so the user is expected to wait for sometime to see the output
