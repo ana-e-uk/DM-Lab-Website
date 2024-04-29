@@ -270,10 +270,10 @@ observe_object = draw_control.observe(get_metadata, names='last_draw')
 # (with the coordinates for one trajectory combined in a list) and then on click or something
 # add the polylines to the map/call a function to add them to the map, as well as add the popup for them
 
-# declare map panel object
-updating_map = pn.bind(update_map,
-                       observe_object,
-                       map)
+# # declare map panel object
+# updating_map = pn.bind(update_map,
+#                        observe_object,
+#                        map)
 
 map_pane = pn.panel(map)
 
