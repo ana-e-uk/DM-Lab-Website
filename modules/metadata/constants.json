@@ -1,0 +1,58 @@
+{
+    "input directory": "../data/input/uploads",
+    "processed directory": "../data/input",
+    "output directory": "../data/output",
+    
+    "input file name": "full_traj_59-Scan-50%_not_compressed.csv",
+
+    "trajectory metadata out": "trajectory_with_metadata.csv",
+
+    "map matching out": "trajectory_metadata_map_matching.csv",
+
+    "trajectory segment out": {
+                                "node df": "trajectory_segment_node_df.csv",
+                                "edge df": "trajectory_segment_edge_df.csv"
+                              },
+
+    "map metadata out": {
+                           "node structural": "node_s.csv",
+                           "node functional": "node_f.csv",
+                           "edge structural": "edge_s.csv",
+                           "edge functional": "edge_f.csv" 
+                        },
+
+    "trajectory cols": {
+                        "speed bool": 0,
+                        "heading bool": 0,
+                        "speed col name": "average_speed",
+                        "timestamp col name": "Position Date Time",
+                        "heading col name": "heading",
+                        "latitude col name": "lat",
+                        "longitude col name": "long",
+                        "trip id": "trip_id"
+                       },
+    "metadata cols": {
+                        "compass directions": "Compass_dir",
+                        "day": "Day",
+                        "day type": "Day_type",
+                        "time type": "Time_type",
+                        "time bin": "Time_bin",
+                        "edge": "Edge",
+                        "node": "Node",
+                        "avg speed": "Avg_speed",
+                        "max speed": "Max_speed",
+                        "min speed": "Min_speed",
+                        "travel time": "Travel_time",
+                        "directions": "Oneway",
+                        "flow": "Flow",
+                        "confidence interval str": "_CI",
+                        "avg speed CI": "Avg_speed_CI",
+                        "travel time CI": "Travel_time_CI",
+                        "count": "Count"
+                     },
+    "map matching vals": { 
+                          "network type": "drive"
+
+                         }
+                
+}
