@@ -90,9 +90,9 @@ def radio_callback(event):
     if selected_option == 'Map Matching':
         add_map_matching_widgets(module_spec, config)
     elif selected_option == 'Trajectory Split':
-        add_metadata_widgets(module_spec)
-    elif selected_option == 'Meta Data':
         add_traj_split_widgets(module_spec)
+    elif selected_option == 'Metadata':
+        add_metadata_widgets(module_spec)
     else:
         raise Exception("Error Found!")
 module_select_radio.param.watch(radio_callback, 'value')
