@@ -13,10 +13,32 @@ Author: Ana Uribe
 
 
 import panel as pn
+from .functions import get_metadata
 
-def add_metadata_widgets(column):
+# Instantiate global vars
+# chosen_traj_filename = ''
+config = None
+
+# Function that edits website column to add metadata functionality
+def add_metadata_widgets(column, c):
+    global config
+    config = c
     column[:] = [
         pn.pane.Markdown('''
-            This part is for MetaData
-            ''')
+            Draw a box on the map to explore
+            the metadata in that region. 
+            '''),
+        drawing_button
+        
     ]
+
+# Define function called when button is clicked
+def on_button_click(event):
+    get_metadata(config.map, config.bounding_box)
+    print("Button clicked!")
+
+# Create the button
+drawing_button = pn.widgets.Button(name='Explore Region', description='If new trajectory was uploaded, wait a couple minutes')
+
+# Attach the function to the button's click
+drawing_button.on_click(on_button_click)

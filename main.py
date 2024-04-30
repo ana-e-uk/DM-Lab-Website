@@ -78,7 +78,7 @@ module_spec = pn.Column(pn.pane.Markdown('''
                         '''))
 #####################################################
 
-options = ['Map Matching', 'Trajectory Split', 'Meta Data']
+options = ['Map Matching', 'Trajectory Split', 'Metadata']
 module_select_radio = pn.widgets.RadioBoxGroup(name='Modules', options=options)
 from modules.map_matching import add_map_matching_widgets
 from modules.metadata import add_metadata_widgets
@@ -92,7 +92,7 @@ def radio_callback(event):
     elif selected_option == 'Trajectory Split':
         add_traj_split_widgets(module_spec)
     elif selected_option == 'Metadata':
-        add_metadata_widgets(module_spec)
+        add_metadata_widgets(module_spec, config)
     else:
         raise Exception("Error Found!")
 module_select_radio.param.watch(radio_callback, 'value')
