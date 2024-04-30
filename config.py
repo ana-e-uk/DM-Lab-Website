@@ -5,3 +5,5 @@ zoom = 2
 map = Map(basemap=basemaps.OpenStreetMap.Mapnik, center=center, zoom=zoom)
 
 chosen_traj_filename = ''
+
+bounding_box = None

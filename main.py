@@ -129,6 +129,25 @@ draw_control.rectangle = {
     }
 }
 config.map.add_control(draw_control)
+
+##### Saving shape from draw control to config #####
+def get_coordinates(drawing):
+
+    shape = drawing['new']
+    if shape:
+        if 'coordinates' in shape['geometry']:  # Check if 'coordinates' key exists
+            coordinates = None
+            coordinates = shape['geometry']['coordinates']
+            print('Coordinates:',coordinates)
+            return coordinates
+        else:
+            print("Invalid shape format")
+        drawing['new']=''
+        return 
+
+coordinates = draw_control.observe(get_coordinates, names='last_draw')
+config.bounding_box = coordinates
+
 map_pane = pn.panel(config.map)
 
 ########################################## Layout ##########################################
