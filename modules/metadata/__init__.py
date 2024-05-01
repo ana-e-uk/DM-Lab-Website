@@ -34,8 +34,8 @@ def add_metadata_widgets(column, c):
 
 # Define function called when button is clicked
 def on_button_click(event):
+    print(f'\nButton clicked!')
     get_metadata(config.map, config.bounding_box)
-    print("Button clicked!")
 
 # Create the button
 drawing_button = pn.widgets.Button(name='Explore Region', description='If new trajectory was uploaded, wait a couple minutes')
