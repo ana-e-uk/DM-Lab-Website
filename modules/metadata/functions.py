@@ -55,6 +55,9 @@ def get_metadata(m, bb):
                            east=max_long,
                            west=min_long,
                            network_type=network_type)
+    
+    # add OSMnx graph to map and return it 
+    
 
     # save edge/node information from OSMnx graph
     osm_nodes, osm_edges = ox.graph_to_gdfs(G)
@@ -67,11 +70,9 @@ def get_metadata(m, bb):
     # print(osm_edges_list[0:5])
     # print(osm_nodes_list[0:5])
 
-    # query metadata 
+    # get computed metadata for the edges and nodes in the list
 
-    # add OSMnx graph to map and return it 
+    # combine metadata into one (or more?) dataframes to return and visualize
 
-
-    # return OSM and computed metadata for all the edges and nodes
 
     return
