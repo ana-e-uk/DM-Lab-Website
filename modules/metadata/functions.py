@@ -3,9 +3,11 @@ File name modules/metadata/functions.py
 
 Description: contains functions used by __init__.py
 
-Author: Ana Uribe
-'''
+TODO: Save osmid for edges so you don't have to query the u,v parts...
 
+Author: Ana Uribe 
+'''
+import numpy as np
 import osmnx as ox
 
 POINT_RANGE = 0.05
@@ -24,23 +26,26 @@ def get_metadata(m, bb):
     '''
 
     # Determine if bounding box or point
-    if isinstance(bb[0], float):  # Handle single point shape
-        lat_coord = bb[1]
-        long_coord = bb[0]
-        
-        min_lat = min(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
-        max_lat = max(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
+    if bb == None:
+        return
+    else:
+        if isinstance(bb[0], float):  # Handle single point shape
+            lat_coord = bb[1]
+            long_coord = bb[0]
+            
+            min_lat = min(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
+            max_lat = max(lat_coord - POINT_RANGE, lat_coord + POINT_RANGE)
 
-        min_long = min(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
-        max_long = max(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
+            min_long = min(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
+            max_long = max(long_coord - POINT_RANGE, long_coord + POINT_RANGE)
 
 
-    else:   # Handle bounding box shape
-        coordinates = bb[0]
-        min_lat, max_lat, min_long, max_long = [], [], [], []
+        else:   # Handle bounding box shape
+            coordinates = bb[0]
+            min_lat, max_lat, min_long, max_long = [], [], [], []
 
-        min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
-        max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
+            min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
+            max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
 
     # print(min_lat, min_long, max_lat, max_long)
 
@@ -52,10 +57,17 @@ def get_metadata(m, bb):
                            network_type=network_type)
 
     # save edge/node information from OSMnx graph
+    osm_nodes, osm_edges = ox.graph_to_gdfs(G)
 
-    
-    # get list of edges/nodes from OSMnx graph to query metadata output
+    # get list of edges/nodes from OSMnx graph
+    osm_nodes_list = list(osm_nodes.index)
+    osm_edges['Edge'] = list(zip(osm_edges.index.get_level_values('u'), osm_edges.index.get_level_values('v'), osm_edges.index.get_level_values('key')))
+    osm_edges_list = list(osm_edges['Edge'])
 
+    # print(osm_edges_list[0:5])
+    # print(osm_nodes_list[0:5])
+
+    # query metadata 
 
     # add OSMnx graph to map and return it 
 
