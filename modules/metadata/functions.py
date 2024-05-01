@@ -6,9 +6,10 @@ Description: contains functions used by __init__.py
 Author: Ana Uribe
 '''
 
+import osmnx as ox
 
 POINT_RANGE = 0.05
-
+network_type = 'drive'
 
 def get_metadata(m, bb):
     '''
@@ -41,10 +42,14 @@ def get_metadata(m, bb):
         min_lat, min_long = min(coordinates, key=lambda x: x[1])[1], min(coordinates, key=lambda x: x[0])[0]
         max_lat, max_long = max(coordinates, key=lambda x: x[1])[1], max(coordinates, key=lambda x: x[0])[0]
 
-    print(min_lat, min_long, max_lat, max_long)
-    
-    # get OSMnx graph from bounding box
+    # print(min_lat, min_long, max_lat, max_long)
 
+    # get OSMnx graph from bounding box
+    G = ox.graph_from_bbox(north=max_lat, 
+                           south=min_lat,
+                           east=max_long,
+                           west=min_long,
+                           network_type=network_type)
 
     # save edge/node information from OSMnx graph
 
