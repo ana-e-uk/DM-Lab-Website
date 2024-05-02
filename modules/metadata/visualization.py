@@ -13,11 +13,16 @@ Author: Ana Uribe
 import osmnx as ox
 import numpy as np
 import random
+import pandas as pd
 
 import geopandas as gpd
 from mappymatch.utils.crs import LATLON_CRS
 import folium
 import networkx as nx
+
+
+from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
+
 
 from constants import (
                         FIG_SIZE,
@@ -49,26 +54,29 @@ def plot_map(ox_map, m=None):
     roads = list(tmap.edges(data=True))
     road_df = pd.DataFrame([r[2] for r in roads])
 
+    print(road_df.head(3))
+    print(len(road_df))
     gdf = gpd.GeoDataFrame(
         road_df, geometry=road_df['geometry'], crs=LATLON_CRS
     )
     if gdf.crs != LATLON_CRS:
         gdf = gdf.to_crs(LATLON_CRS)
-        
-    if not m:
-        c = gdf.iloc[int(len(gdf) / 2)].geometry.centroid.coords[0]
-        m = folium.Map(location=[c[1], c[0]], zoom_start=11)
+    
+    # m.center = gdf.iloc[int(len(gdf) / 2)].geometry.centroid.coords[0]
+    # m.zoom = 14
 
     for t in gdf.itertuples():
         # print(t.geometry.coords)
         if t.geometry is None:
             pass
         else:
-            folium.PolyLine(
-                [(lat, lon) for lon, lat in t.geometry.coords],
+            # polyline = folium.PolyLine(
+            polyline = Polyline(
+                locations=[(lat, lon) for lon, lat in t.geometry.coords],
                 color="red",
-            ).add_to(m)
-
+            )#.add_to(m)
+            m.add_layer(polyline)
+            
     return m
 
 ########################################## HELPER FUNCTIONS #################################

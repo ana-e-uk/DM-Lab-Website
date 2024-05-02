@@ -10,7 +10,7 @@ Author: Ana Uribe
 import numpy as np
 import osmnx as ox
 
-from visualization import plot_map
+from .visualization import plot_map
 
 POINT_RANGE = 0.05
 network_type = 'drive'
@@ -59,7 +59,7 @@ def get_metadata(m, bb):
                            network_type=network_type)
     
     # add OSMnx graph to map and return it 
-    new_m = plot_map(G, m)
+    plot_map(ox_map=G, m=m)
 
     # save edge/node information from OSMnx graph
     osm_nodes, osm_edges = ox.graph_to_gdfs(G)
@@ -77,4 +77,4 @@ def get_metadata(m, bb):
     # combine metadata into one (or more?) dataframes to return and visualize
 
 
-    return new_m
+    # return
