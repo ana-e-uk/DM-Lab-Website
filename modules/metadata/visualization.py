@@ -1,5 +1,5 @@
 '''
-File name: module-scripts/metadata/visualization.py
+File name: modules/metadata/visualization.py
 
 Description: contains all the functions that generate the visualization for the
              metadata module webpage/dashboard
@@ -14,6 +14,11 @@ import osmnx as ox
 import numpy as np
 import random
 
+import geopandas as gpd
+from mappymatch.utils.crs import LATLON_CRS
+import folium
+import networkx as nx
+
 from constants import (
                         FIG_SIZE,
                         GRAPH_BG_COLOR,
@@ -25,6 +30,46 @@ from constants import (
                         TRAJ_POINT_MARKER_SIZE,
                         PLOT_TYPES,
                       )
+
+########################################## FUNCTIONS ########################################
+def plot_map(ox_map, m=None):
+    """
+    Plot the roads on an NxMap.
+
+    Args:
+        tmap: The Nxmap to plot.
+        m: the folium map to add to
+
+    Returns:
+        The folium map with the roads plotted.
+    """
+    tmap = nx.MultiDiGraph(ox_map)
+
+    # TODO make this generic to all map types, not just NxMap
+    roads = list(tmap.edges(data=True))
+    road_df = pd.DataFrame([r[2] for r in roads])
+
+    gdf = gpd.GeoDataFrame(
+        road_df, geometry=road_df['geometry'], crs=LATLON_CRS
+    )
+    if gdf.crs != LATLON_CRS:
+        gdf = gdf.to_crs(LATLON_CRS)
+        
+    if not m:
+        c = gdf.iloc[int(len(gdf) / 2)].geometry.centroid.coords[0]
+        m = folium.Map(location=[c[1], c[0]], zoom_start=11)
+
+    for t in gdf.itertuples():
+        # print(t.geometry.coords)
+        if t.geometry is None:
+            pass
+        else:
+            folium.PolyLine(
+                [(lat, lon) for lon, lat in t.geometry.coords],
+                color="red",
+            ).add_to(m)
+
+    return m
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):
@@ -39,8 +84,6 @@ def get_unique_colors(num_colors):
     colors = ["#" + ''.join([random.choice(hexadecimal_alphabets) for j in range(6)]) for i in range(num_colors)]
     
     return colors
-
-########################################## FUNCTIONS ########################################
 
 def plot_graph_only(G, verbose=False):
     '''
