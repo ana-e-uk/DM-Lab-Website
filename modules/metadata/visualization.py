@@ -22,7 +22,7 @@ import networkx as nx
 
 
 from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
-
+from ipywidgets import HTML
 
 from constants import (
                         FIG_SIZE,
@@ -70,12 +70,29 @@ def plot_map(ox_map, m=None):
         if t.geometry is None:
             pass
         else:
+            l = [(lat, lon) for lon, lat in t.geometry.coords]
+            c = l[0]
             # polyline = folium.PolyLine(
             polyline = Polyline(
-                locations=[(lat, lon) for lon, lat in t.geometry.coords],
+                locations=l,
                 color="red",
+                # tooltip=[t.maxspeed, t.oneway]
             )#.add_to(m)
+            polyline.popup = HTML("Hello World")
             m.add_layer(polyline)
+
+            # message = HTML()
+            # # message = f"<b>Oneway:</b> {t.oneway}"
+            # message.value = "Hi"
+            # popup = Popup(
+            #     location=c,
+            #     child=message,
+            #     close_button=True,
+            #     auto_close=False,
+            #     close_on_escape_key=False
+            #     )   
+            # m.add(popup)
+            # polyline.popup(message)
             
     return m
 
