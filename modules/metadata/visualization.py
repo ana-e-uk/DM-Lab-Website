@@ -54,8 +54,8 @@ def plot_map(ox_map, m=None):
     roads = list(tmap.edges(data=True))
     road_df = pd.DataFrame([r[2] for r in roads])
 
-    print(road_df.head(3))
-    print(len(road_df))
+    # print(road_df.head(3))
+
     gdf = gpd.GeoDataFrame(
         road_df, geometry=road_df['geometry'], crs=LATLON_CRS
     )

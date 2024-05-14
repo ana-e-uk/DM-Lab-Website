@@ -7,10 +7,30 @@ TODO: Save osmid for edges so you don't have to query the u,v parts...
 
 Author: Ana Uribe 
 '''
+########################################## IMPORTS ########################################## 
+
 import numpy as np
 import osmnx as ox
+import os
+import pandas as pd
 
 from .visualization import plot_map
+
+########################################## DATA UPLOAD ########################################## 
+
+# directory and file names
+metadata_dir = '/Users/bean/Documents/DM-Lab-Website/data/output'
+e_f_file = 'edge_f.csv'
+e_s_file = 'edge_s.csv'
+n_f_file = 'node_f.csv'
+n_s_file = 'node_s.csv'
+
+# create pandas df for each file
+e_f = pd.read_csv(os.path.join(metadata_dir, e_f_file))
+e_s = pd.read_csv(os.path.join(metadata_dir, e_s_file))
+n_f = pd.read_csv(os.path.join(metadata_dir, n_f_file))
+n_s = pd.read_csv(os.path.join(metadata_dir, n_s_file))
+########################################## FUNCTIONS ########################################## 
 
 POINT_RANGE = 0.05
 network_type = 'drive'
@@ -69,12 +89,23 @@ def get_metadata(m, bb):
     osm_edges['Edge'] = list(zip(osm_edges.index.get_level_values('u'), osm_edges.index.get_level_values('v'), osm_edges.index.get_level_values('key')))
     osm_edges_list = list(osm_edges['Edge'])
 
-    # print(osm_edges_list[0:5])
+    # print(osm_edges_list[0:2])
     # print(osm_nodes_list[0:5])
 
+    # Convert tuples to strings
+    osm_edges_list_str = [str(value) for value in osm_edges_list]
+
     # get computed metadata for the edges and nodes in the list
+    filtered_e_f = e_f[e_f['Edge'].isin(osm_edges_list_str)]
+    filtered_e_s = e_s[e_s['Edge'].isin(osm_edges_list_str)]
+    filtered_n_f = n_f[n_f['Node'].isin(osm_nodes_list)]
+    filtered_n_s = n_s[n_s['Node'].isin(osm_nodes_list)]
+
+    # print(filtered_e_f.head(3))
+    # print(filtered_e_s.head(3))
+    # print(filtered_n_f.head(3))
+    # print(filtered_n_s.head(3))
 
     # combine metadata into one (or more?) dataframes to return and visualize
 
 
-    # return
