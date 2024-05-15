@@ -76,6 +76,12 @@ module_select_text = pn.pane.Markdown('''
 module_spec = pn.Column(pn.pane.Markdown('''
                         This part is for the detailed specification for the modules we have. It's just a placeholder
                         '''))
+
+###############   MODULE VISUALIZATION Column ##########
+module_viz = pn.Row(pn.pane.Markdown('''
+                                     This section will contain the module visualziations.
+                                     '''))
+
 #####################################################
 
 options = ['Map Matching', 'Trajectory Split', 'Metadata']
@@ -86,13 +92,14 @@ from modules.traj_split import add_traj_split_widgets
 
 def radio_callback(event):
     global module_spec
+    global module_viz
     selected_option = event.new
     if selected_option == 'Map Matching':
         add_map_matching_widgets(module_spec, config)
     elif selected_option == 'Trajectory Split':
         add_traj_split_widgets(module_spec)
     elif selected_option == 'Metadata':
-        add_metadata_widgets(module_spec, config)
+        add_metadata_widgets(module_spec, module_viz, config)
     else:
         raise Exception("Error Found!")
 module_select_radio.param.watch(radio_callback, 'value')
