@@ -161,7 +161,7 @@ sidebar_elements = pn.Column(instructions_text,
                              module_spec,
                              # modal.param.open, modal # TODO: can be added later
                             )
-main_elements = [map_pane]
+main_elements = [pn.Column(map_pane, module_viz)]
 template = pn.template.FastListTemplate(
     site='Open MetaData Website',
     title="Map Services For GPS Trajectories",
