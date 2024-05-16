@@ -25,6 +25,11 @@ e_s_file = 'edge_s.csv'
 n_f_file = 'node_f.csv'
 n_s_file = 'node_s.csv'
 
+c_e_f_file = 'c_edge_f.csv'
+c_e_s_file = 'c_edge_s.csv'
+c_n_f_file = 'c_node_f.csv'
+c_n_s_file = 'c_node_s.csv'
+
 # create pandas df for each file
 e_f = pd.read_csv(os.path.join(metadata_dir, e_f_file))
 e_s = pd.read_csv(os.path.join(metadata_dir, e_s_file))
@@ -96,16 +101,20 @@ def get_metadata(m, bb):
     osm_edges_list_str = [str(value) for value in osm_edges_list]
 
     # get computed metadata for the edges and nodes in the list
-    filtered_e_f = e_f[e_f['Edge'].isin(osm_edges_list_str)]
-    filtered_e_s = e_s[e_s['Edge'].isin(osm_edges_list_str)]
-    filtered_n_f = n_f[n_f['Node'].isin(osm_nodes_list)]
-    filtered_n_s = n_s[n_s['Node'].isin(osm_nodes_list)]
+    c_e_f = e_f[e_f['Edge'].isin(osm_edges_list_str)]
+    c_e_s = e_s[e_s['Edge'].isin(osm_edges_list_str)]
+    c_n_f = n_f[n_f['Node'].isin(osm_nodes_list)]
+    c_n_s = n_s[n_s['Node'].isin(osm_nodes_list)]
 
-    # print(filtered_e_f.head(3))
-    # print(filtered_e_s.head(3))
-    # print(filtered_n_f.head(3))
-    # print(filtered_n_s.head(3))
+    # print(c_e_f.head(3))
+    print(c_e_s.head(3))
+    # print(c_n_f.head(3))
+    # print(c_n_s.head(3))
 
-    # combine metadata into one (or more?) dataframes to return and visualize
+    # save filtered dataframes
+    c_e_f.to_csv(os.path.join(metadata_dir, c_e_f_file), index=None)
+    c_e_s.to_csv(os.path.join(metadata_dir, c_e_s_file), index=None)
+    c_n_f.to_csv(os.path.join(metadata_dir, c_n_f_file), index=None)
+    c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
 
