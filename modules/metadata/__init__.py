@@ -25,17 +25,17 @@ c_e_s_file = 'c_edge_s.csv'
 c_n_f_file = 'c_node_f.csv'
 c_n_s_file = 'c_node_s.csv'
 
-# create pandas df for each file
+# # create pandas df for each file
 c_e_f = pd.read_csv(os.path.join(metadata_dir, c_e_f_file))
 c_e_s = pd.read_csv(os.path.join(metadata_dir, c_e_s_file))
 c_n_f = pd.read_csv(os.path.join(metadata_dir, c_n_f_file))
-c_n_s = pd.read_csv(os.path.join(metadata_dir, c_n_s_file))
+C_N_S = pd.read_csv(os.path.join(metadata_dir, c_n_s_file))
 
 ########################################## CONSTANTS ########################################## 
 # Instantiate global vars
 config = None
 
-########################################## FUNCTIONS ########################################## 
+########################################## MAIN FUNCTION ########################################## 
 
 # Function that edits website column to add metadata functionality
 def add_metadata_widgets(column, row, c):
@@ -66,11 +66,18 @@ def add_metadata_widgets(column, row, c):
         edge_select,
     ]
 
+########################################## HELPER FUNCTIONS ########################################## 
+
 ##### -------------------- Drawing Button -------------------- #####
 # Define function called when drawing button is clicked
 def on_button_click(event):
     print(f'\nButton clicked! Getting Metadata...')
     get_metadata(config.map, config.bounding_box)
+    # create pandas df for each file
+    c_e_f = pd.read_csv(os.path.join(metadata_dir, c_e_f_file))
+    c_e_s = pd.read_csv(os.path.join(metadata_dir, c_e_s_file))
+    c_n_f = pd.read_csv(os.path.join(metadata_dir, c_n_f_file))
+    C_N_S = pd.read_csv(os.path.join(metadata_dir, c_n_s_file))
 
 # Create the drawing button
 drawing_button = pn.widgets.Button(name='Explore Region', description='If new trajectory was uploaded, wait a couple minutes')
@@ -84,7 +91,7 @@ def on_node_select(event):
     print(f'Button clicked! Displaying intersection {node_select.value}')
     # display_node_data(node_select.value)
 
-node_select = pn.widgets.Select(options=['n1'], width=200, height=40)     # Create node button
+node_select = pn.widgets.Select(options=list(C_N_S['Node']), width=200, height=40)     # Create node button
 node_select.param.watch(on_node_select, 'value')    # Set a watch on it
 
 # Define function called when a EDGE is selected
