@@ -26,20 +26,13 @@ import param
 pn.extension()
 
 from .functions import get_metadata, display_node_data, display_edge_data
-########################################## DATA UPLOAD ########################################## 
-
+########################################## DATA CONSTANTS ########################################## 
 # directory and file names
 metadata_dir = '/Users/bean/Documents/DM-Lab-Website/data/output'
 c_e_f_file = 'c_edge_f.csv'
 c_e_s_file = 'c_edge_s.csv'
 c_n_f_file = 'c_node_f.csv'
 c_n_s_file = 'c_node_s.csv'
-
-# # create pandas df for each file
-c_e_f = pd.read_csv(os.path.join(metadata_dir, c_e_f_file))
-c_e_s = pd.read_csv(os.path.join(metadata_dir, c_e_s_file))
-c_n_f = pd.read_csv(os.path.join(metadata_dir, c_n_f_file))
-c_n_s = pd.read_csv(os.path.join(metadata_dir, c_n_s_file))
 
 ########################################## CONSTANTS ########################################## 
 # Instantiate global vars
@@ -135,11 +128,6 @@ class PlotUpdater(param.Parameterized):
                 self.options_n = self.df_n['Node'].unique().tolist()
             except Exception as e:
                 print(f'Error reading Node CSV file: {e}')
-        # try:
-        #     self.df_n = pd.read_csv(self.file_path_n)
-        #     self.options_n = self.df_n['Node'].unique().tolist()
-        # except Exception as e:
-        #     print(f'Error reading Node CSV file: {e}')
 
     def update_options_e(self, options=None):
         if options is not None:
@@ -157,14 +145,13 @@ class PlotUpdater(param.Parameterized):
         if self.selected_option_n and not self.df_n.empty:
             filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
             # fig = display_node_data(filtered_df_n)
-            ax.plot(filtered_df_n['Count'], filtered_df_n['Count'])
+            ax.scatter(filtered_df_n['Count'].tolist(), filtered_df_n['Count'].tolist())
         if self.selected_option_e and not self.df_e.empty:
             filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
-            ax.plot(filtered_df_e['Count'], filtered_df_e['Count'])
+            ax.plot(filtered_df_e['Count'].tolist(), filtered_df_e['Count'].tolist())
             # fig = display_edge_data(filtered_df_e)
         # ax.set_title(f'Metadata plot:')
         ax.legend()
-        # fig.close()
         self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
@@ -203,6 +190,10 @@ def update_select_options(event):
 plot_updater.param.watch(update_select_options, ['options_n', 'options_e'])
 
 
+
+######################## ######################## ######################## 
+########################       GRAVEYARD          ########################
+######################## ######################## ########################
 # ##### -------------------- Node and Edge Select Widgets -------------------- #####
 # ##### --------------------Function to update NODE options
 # def update_n_options():
