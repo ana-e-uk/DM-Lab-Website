@@ -14,6 +14,10 @@ import osmnx as ox
 import os
 import pandas as pd
 
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('agg')
+
 from .visualization import plot_map
 
 ########################################## DATA UPLOAD ########################################## 
@@ -117,4 +121,17 @@ def get_metadata(m, bb):
     c_n_f.to_csv(os.path.join(metadata_dir, c_n_f_file), index=None)
     c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
+def display_node_data(filtered_df):
+    fig, ax = plt.subplots()
+    ax.plot([0, 1, 2], [0, 1, 2])
+    ax.set_title(f'First node:{filtered_df['Node'].tolist()[0]}')
+
+    return fig
+
+def display_edge_data(filtered_df):
+    fig, ax = plt.subplots()
+    ax.plot([0, 1, 2], [2, 1, 0])
+    ax.set_title(f'First edge:{filtered_df['Edge'].tolist()[0]}')
+
+    return fig
 
