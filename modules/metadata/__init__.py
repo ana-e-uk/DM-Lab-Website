@@ -156,7 +156,6 @@ def on_edge_select(event):
     print(f'Button clicked! Displaying road {edge_select.value}')
     # display_node_data(node_select.value)
 
-edge_select = pn.widgets.Select(options=['e1'], width=200, height=40)     # Create edge button
 edge_select.param.watch(on_edge_select, 'value')    # Set a watch on it
     
 
