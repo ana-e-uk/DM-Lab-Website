@@ -17,6 +17,15 @@ import os
 import panel as pn
 import time
 
+import matplotlib.pyplot as plt
+import threading
+import param
+
+pn.extension()
+
+import matplotlib 
+matplotlib.use('agg')
+
 from .functions import get_metadata
 ########################################## DATA UPLOAD ########################################## 
 
@@ -112,7 +121,6 @@ def watch_n_file():
             print("Stopped watching the file.")
             break
 
-import threading
 watcher_thread = threading.Thread(target=watch_n_file, daemon=True)
 watcher_thread.start()
 
@@ -145,7 +153,6 @@ def watch_e_file():
             print("Stopped watching the file.")
             break
 
-import threading
 watcher_thread = threading.Thread(target=watch_e_file, daemon=True)
 watcher_thread.start()
 
