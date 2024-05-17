@@ -62,12 +62,14 @@ def add_metadata_widgets(column, row, c):
 
     # edit panel row object
     row[:] = [
-        pn.pane.Markdown('''
-            Road Network Metadata:
-            '''),
-        node_select,
-        edge_select,
-        plot_updater.plot_pane
+        pn.Column(
+            pn.Row(
+                pn.pane.Markdown('''
+                    Road Network Metadata:
+                    '''),
+                node_select,
+                edge_select),
+            plot_updater.plot_pane)
     ]
 
 ########################################## HELPER FUNCTIONS ########################################## 
