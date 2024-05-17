@@ -117,37 +117,55 @@ class PlotUpdater(param.Parameterized):
         ax.set_xticks([])
         ax.set_yticks([])
         return fig
-
-    def update_options_n(self):
+    
+    def update_options(self, file_path, col_name, update_func):
         try:
-            self.df_n = pd.read_csv(self.file_path_n)
-            self.options_n = self.df_n['Node'].unique().tolist()
+            df = pd.read_csv(file_path)
+            options = df[col_name].unique().tolist()
+            update_func(options)
         except Exception as e:
-            print(f'Error reading Node CSV file: {e}')
+            print(f'Error reading Csv file {file_path}: {e}')
 
-    def update_options_e(self):
-        try:
-            self.df_e = pd.read_csv(self.file_path_e)
-            self.options_e = self.df_e['Edge'].unique().tolist()
-        except Exception as e:
-            print(f'Error reading Edge CSV file: {e}')
+    def update_options_n(self, options=None):
+        if options is not None:
+            self.options_n = options
+        else:
+            try:
+                self.df_n = pd.read_csv(self.file_path_n)
+                self.options_n = self.df_n['Node'].unique().tolist()
+            except Exception as e:
+                print(f'Error reading Node CSV file: {e}')
+        # try:
+        #     self.df_n = pd.read_csv(self.file_path_n)
+        #     self.options_n = self.df_n['Node'].unique().tolist()
+        # except Exception as e:
+        #     print(f'Error reading Node CSV file: {e}')
+
+    def update_options_e(self, options=None):
+        if options is not None:
+            self.options_e = options
+        else:
+            try:
+                self.df_e = pd.read_csv(self.file_path_e)
+                self.options_e = self.df_e['Edge'].unique().tolist()
+            except Exception as e:
+                print(f'Error reading Edge CSV file: {e}')
 
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
-        if self.selected_option_n and self.selected_option_e:
-            fig, ax = plt.subplots()
-            if not self.df_n.empty:
-                filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
-                # fig = display_node_data(filtered_df_n)
-                ax.plot(filtered_df_n['Count'], filtered_df_n['Count'])
-            if not self.df_e.empty:
-                filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
-                ax.plot(filtered_df_e['Count'], filtered_df_e['Count'])
-                # fig = display_edge_data(filtered_df_e)
-            # ax.set_title(f'Metadata plot:')
-            ax.legend()
-            # fig.close()
-            self.plot_pane.object = fig
+        fig, ax = plt.subplots()
+        if self.selected_option_n and not self.df_n.empty:
+            filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
+            # fig = display_node_data(filtered_df_n)
+            ax.plot(filtered_df_n['Count'], filtered_df_n['Count'])
+        if self.selected_option_e and not self.df_e.empty:
+            filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
+            ax.plot(filtered_df_e['Count'], filtered_df_e['Count'])
+            # fig = display_edge_data(filtered_df_e)
+        # ax.set_title(f'Metadata plot:')
+        ax.legend()
+        # fig.close()
+        self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
         def _watch():
@@ -177,9 +195,12 @@ edge_select = pn.widgets.Select(name='Roads', options=plot_updater.options_e)
 node_select.param.watch(lambda event: setattr(plot_updater, 'selected_option_n', event.new), 'value')
 edge_select.param.watch(lambda event: setattr(plot_updater, 'selected_option_e', event.new), 'value')
 
+# Link the select widgets to the options parameters
+def update_select_options(event):
+    node_select.options = plot_updater.options_n
+    edge_select.options = plot_updater.options_e
 
-
-
+plot_updater.param.watch(update_select_options, ['options_n', 'options_e'])
 
 
 # ##### -------------------- Node and Edge Select Widgets -------------------- #####
