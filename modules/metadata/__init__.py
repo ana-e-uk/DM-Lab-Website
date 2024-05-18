@@ -122,19 +122,9 @@ class PlotUpdater(param.Parameterized):
         # placeholder needed to avoid Attribute error
         fig, ax = plt.subplots(1, 3, figsize=(15, 5))
         ax[0].text(0.5, 0.5, 'Select options to update plot')
-        # ax.set_xticks([])
-        # ax.set_yticks([])
+
         return fig
     
-    # General update options code
-    # def update_options(self, file_path, col_name, update_func):
-    #     try:
-    #         df = pd.read_csv(file_path)
-    #         options = df[col_name].unique().tolist()
-    #         update_func(options)
-    #     except Exception as e:
-    #         print(f'Error reading Csv file {file_path}: {e}')
-
     def update_options_n(self, options=None):
         # Update node options in select widget given dataframe file
         if options is not None:
@@ -175,19 +165,17 @@ class PlotUpdater(param.Parameterized):
     # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
-        # fig, ax = plt.subplots()
+        # Plots chosen node info
         if self.selected_option_n and not self.df_n_f.empty:
             print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
             filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_node_data(filtered_df_n)
+        # Plots chosen edge info
         if self.selected_option_e and not self.df_e_f.empty:
             print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
             filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
             fig = display_edge_data(filtered_df_e)
-        else:
-            print(f'supdate_plot if statements never TRUE:\nself.df_n_f:\n{self.df_n_f.head(2)}\nself.df_n:\n{self.df_n.head(2)}')
-        # ax.set_title(f'Metadata plot:')
-        # ax.legend()
+
         self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
@@ -208,7 +196,7 @@ class PlotUpdater(param.Parameterized):
         watcher_thread.start()
 
 # Initialize plot updater with two CSV files, 
-# one for the chosen nodes, the other for chosen edges
+    # one for the chosen nodes, the other for chosen edges
 plot_updater = PlotUpdater(file_path_n=os.path.join(metadata_dir, c_n_s_file),
                            file_path_e=os.path.join(metadata_dir, c_e_s_file),
                            file_path_n_f=os.path.join(metadata_dir, c_n_f_file),
