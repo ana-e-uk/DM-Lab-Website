@@ -10,10 +10,13 @@ Author: Ana Uribe
 '''
 
 ########################################## IMPORTS ##########################################
+import matplotlib.pyplot as plt
+
 import osmnx as ox
 import numpy as np
 import random
 import pandas as pd
+import ast
 
 import geopandas as gpd
 from mappymatch.utils.crs import LATLON_CRS
@@ -95,6 +98,118 @@ def plot_map(ox_map, m=None):
             # polyline.popup(message)
             
     return m
+
+def plot_speed_stats(ax, cur_df, min_max):
+    ''' 
+    Plots the avg, min, max speeds at each time point and plots error bars as confidence intervals.
+    Confidence intervals are assumed to have the specific min and max values, speed is assumed to be mph
+    '''
+    # Sort values df by Time_bin
+    cur_df.sort_values('Time_bin')
+    
+    if min_max:
+        cur_df = cur_df.dropna(subset=['Avg_speed', 'Avg_speed_CI', 'Max_speed', 'Min_speed'])
+        avg_speeds=cur_df['Avg_speed']
+        confidence_intervals=cur_df['Avg_speed_CI']
+        min_speeds=cur_df['Min_speed']
+        max_speeds=cur_df['Max_speed']
+    else:
+        cur_df= cur_df.dropna(subset=['Travel_time', 'Travel_time_CI'])
+        avg_speeds=cur_df['Travel_time']
+        confidence_intervals=cur_df['Travel_time_CI']
+    
+    # Get all columns from df
+    time_points=cur_df['Time_bin'] 
+
+    # Make confidence intervals var a list
+    confidence_intervals = list(confidence_intervals)
+    
+    # Turn confidence intervals into tuple values
+    if type(confidence_intervals[0]) == tuple:
+        pass
+    elif type(confidence_intervals[0]) == float:
+        pass
+    else:
+        confidence_intervals = [tuple(map(float, s[1:-1].split(','))) for s in confidence_intervals]
+    
+    # Calculate error bars using confidence intervals
+    lower_errors = [np.abs(conf[0] - avg) for avg, conf in zip(avg_speeds, confidence_intervals)]
+    upper_errors = [np.abs(conf[1] - avg) for avg, conf in zip(avg_speeds, confidence_intervals)]
+
+    # Plotting
+    ax.errorbar(time_points, avg_speeds, yerr=[lower_errors, upper_errors], fmt='o', label='Average Speed', capsize=5)
+
+    if min_max:
+        ax.scatter(time_points, min_speeds, color= 'blue', marker= '^', s= 60, label='Minimum Speed')
+        ax.scatter(time_points, max_speeds, color = 'green', marker= 'v', s= 60, label='Maximum Speed')
+
+    # Adding labels and title
+    ax.set_xlabel('Time Bins')
+    ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
+    ax.set_xlim([-1.5, 3.5])
+    if min_max:
+        ax.set_ylabel('Speed (miles per hour)')
+        ax.set_title('Speed Variation Over Time Bins')
+    else:
+        ax.set_ylabel('Travel Time (minutes)')
+        ax.set_title('Travel Time Variation Over Time Bins')
+
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    ax.grid(True)
+
+def plot_lines(ax, time, counts_list, labels=None):
+    """
+    Plot multiple lines on a single plot.
+    
+    Parameters:
+        time (array-like): Array containing time points.
+        counts_list (list of array-like): List of arrays containing counts for each line.
+        labels (list of str, optional): List of labels for each line. If None, labels will not be shown.
+    """
+    if labels is None:
+        labels = ['Line {}'.format(i+1) for i in range(len(counts_list))]
+
+    for counts, label in zip(counts_list, labels):
+        ax.scatter(time, counts, marker='o', label=label)
+
+    ax.set_xlabel('Time Bins')
+    ax.set_ylabel('Number of Vehicles')
+    ax.set_title('Intersection Flow')
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+    ax.set_xticks([-1, 0, 1, 2], ['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day'], rotation=20)
+    ax.set_xlim([-1.5, 3.5])
+
+    ax.grid(True)
+
+def get_flow_values(n_f_df):
+    
+    # Initialize dictionaries to store the lists for each feature
+    feature_lists = {}
+
+    # Sort the DataFrame by 'Time_bin'
+    df_sorted = n_f_df.sort_values('Time_bin')
+
+    # Loop through each row in the sorted DataFrame
+    for _, row in df_sorted.iterrows():
+        flow = ast.literal_eval(row['Flow'])
+        for key, value in flow.items():
+            if key not in feature_lists:
+                feature_lists[key] = []
+            feature_lists[key].append(value)
+
+    # Save the road name and values
+    labels = []
+    feature_values = []
+    for key, values in feature_lists.items():
+        labels.append(key)
+        feature_values.append(values)
+
+    return labels, feature_values
+
+def get_flow_plot(ax, cur_n_f):
+    labels, values = get_flow_values(cur_n_f)
+    plot_lines(ax, time=cur_n_f.sort_values('Time_bin')['Time_bin'], counts_list=values, labels=labels)
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):

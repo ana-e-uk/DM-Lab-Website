@@ -152,17 +152,17 @@ class PlotUpdater(param.Parameterized):
     # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
-        fig, ax = plt.subplots()
+        # fig, ax = plt.subplots()
         if self.selected_option_n and not self.df_n.empty:
             filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
-            # fig = display_node_data(filtered_df_n)
-            ax.scatter(filtered_df_n['Count'].tolist(), filtered_df_n['Count'].tolist())
+            fig = display_node_data(filtered_df_n)
+            # ax.scatter(filtered_df_n['Count'].tolist(), filtered_df_n['Count'].tolist())
         if self.selected_option_e and not self.df_e.empty:
             filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
-            ax.plot(filtered_df_e['Count'].tolist(), filtered_df_e['Count'].tolist())
-            # fig = display_edge_data(filtered_df_e)
+            # ax.plot(filtered_df_e['Count'].tolist(), filtered_df_e['Count'].tolist())
+            fig = display_edge_data(filtered_df_e)
         # ax.set_title(f'Metadata plot:')
-        ax.legend()
+        # ax.legend()
         self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
