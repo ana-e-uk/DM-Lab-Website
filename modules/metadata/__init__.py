@@ -86,13 +86,17 @@ drawing_button = pn.widgets.Button(name='Explore Region', description='If new tr
 # Attach the function to the button's click
 drawing_button.on_click(on_button_click)
 
-##### -------------------- Parameterized class for Select widgets and Plots -------------------- #####
+##### -------------------- Parameterized Class for Select Widgets and Plots -------------------- #####
 class PlotUpdater(param.Parameterized):
+    # chosen intersection (n) and road (e) from select widget
     selected_option_n = param.Integer(default=None)
     selected_option_e = param.String(default=None)
+    # select widget options
     options_n = param.List()
     options_e = param.List()
+    # matplotlib plot
     plot_pane = param.ClassSelector(class_=pn.pane.Matplotlib)
+    # pandas dataframe that will be updated
     df_n = pd.DataFrame()
     df_e = pd.DataFrame()
 
@@ -107,21 +111,24 @@ class PlotUpdater(param.Parameterized):
         self.watch_file(self.file_path_e, self.update_options_e)
 
     def create_placeholder_plot(self):
+        # placeholder needed to avoid Attribute error
         fig, ax = plt.subplots()
         ax.text(0.5, 0.5, 'Select options to update plot')
         ax.set_xticks([])
         ax.set_yticks([])
         return fig
     
-    def update_options(self, file_path, col_name, update_func):
-        try:
-            df = pd.read_csv(file_path)
-            options = df[col_name].unique().tolist()
-            update_func(options)
-        except Exception as e:
-            print(f'Error reading Csv file {file_path}: {e}')
+    # General update options code
+    # def update_options(self, file_path, col_name, update_func):
+    #     try:
+    #         df = pd.read_csv(file_path)
+    #         options = df[col_name].unique().tolist()
+    #         update_func(options)
+    #     except Exception as e:
+    #         print(f'Error reading Csv file {file_path}: {e}')
 
     def update_options_n(self, options=None):
+        # Update node options in select widget given dataframe file
         if options is not None:
             self.options_n = options
         else:
@@ -132,6 +139,7 @@ class PlotUpdater(param.Parameterized):
                 print(f'Error reading Node CSV file: {e}')
 
     def update_options_e(self, options=None):
+        # Update edge options in select widget given dataframe file
         if options is not None:
             self.options_e = options
         else:
@@ -141,6 +149,7 @@ class PlotUpdater(param.Parameterized):
             except Exception as e:
                 print(f'Error reading Edge CSV file: {e}')
 
+    # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
         fig, ax = plt.subplots()
@@ -157,6 +166,7 @@ class PlotUpdater(param.Parameterized):
         self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
+        # Reload file to update node/edge options if files are modified
         def _watch():
             last_modified = 0
             while True:
@@ -172,15 +182,17 @@ class PlotUpdater(param.Parameterized):
         watcher_thread = threading.Thread(target=_watch, daemon=True)
         watcher_thread.start()
 
-# Initialize plot updater with two CSV files
+# Initialize plot updater with two CSV files, 
+# one for the chosen nodes, the other for chosen edges
 plot_updater = PlotUpdater(file_path_n=os.path.join(metadata_dir, c_n_s_file),
                            file_path_e=os.path.join(metadata_dir, c_e_s_file),
                            )
 
-# Create the Select widgets and link them to the parameters
+# Create the Select widgets
 node_select = pn.widgets.Select(name='Intersections', options=plot_updater.options_n)
 edge_select = pn.widgets.Select(name='Roads', options=plot_updater.options_e)
 
+# Link Select widgets to the parameters
 node_select.param.watch(lambda event: setattr(plot_updater, 'selected_option_n', event.new), 'value')
 edge_select.param.watch(lambda event: setattr(plot_updater, 'selected_option_e', event.new), 'value')
 
@@ -189,6 +201,7 @@ def update_select_options(event):
     node_select.options = plot_updater.options_n
     edge_select.options = plot_updater.options_e
 
+# Update select options
 plot_updater.param.watch(update_select_options, ['options_n', 'options_e'])
 
 
