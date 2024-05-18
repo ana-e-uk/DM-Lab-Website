@@ -99,23 +99,31 @@ class PlotUpdater(param.Parameterized):
     # pandas dataframe that will be updated
     df_n = pd.DataFrame()
     df_e = pd.DataFrame()
+    df_n_f = pd.DataFrame()
+    df_e_f = pd.DataFrame()
 
-    def __init__(self, file_path_n, file_path_e, **params):
+    def __init__(self, file_path_n, file_path_e, file_path_n_f, file_path_e_f, **params):
         super().__init__(**params)
         self.file_path_n = file_path_n
         self.file_path_e = file_path_e
-        self.plot_pane = pn.pane.Matplotlib(self.create_placeholder_plot(), width=800, height=600)
+        self.file_path_n_f = file_path_n_f
+        self.file_path_e_f = file_path_e_f
+        self.plot_pane = pn.pane.Matplotlib(self.create_placeholder_plot(), width=900, height=300)
         self.update_options_n()
         self.update_options_e()
+        self.update_options_n_f()
+        self.update_options_e_f()
         self.watch_file(self.file_path_n, self.update_options_n)
         self.watch_file(self.file_path_e, self.update_options_e)
+        self.watch_file(self.file_path_n_f, self.update_options_n_f)
+        self.watch_file(self.file_path_e_f, self.update_options_e_f)
 
     def create_placeholder_plot(self):
         # placeholder needed to avoid Attribute error
-        fig, ax = plt.subplots()
-        ax.text(0.5, 0.5, 'Select options to update plot')
-        ax.set_xticks([])
-        ax.set_yticks([])
+        fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+        ax[0].text(0.5, 0.5, 'Select options to update plot')
+        # ax.set_xticks([])
+        # ax.set_yticks([])
         return fig
     
     # General update options code
@@ -136,7 +144,14 @@ class PlotUpdater(param.Parameterized):
                 self.df_n = pd.read_csv(self.file_path_n)
                 self.options_n = self.df_n['Node'].unique().tolist()
             except Exception as e:
-                print(f'Error reading Node CSV file: {e}')
+                print(f'Error reading Structural Node CSV file: {e}')
+    
+    def update_options_n_f(self):
+        # Update dataframe
+        try:
+            self.df_n_f = pd.read_csv(self.file_path_n_f)
+        except Exception as e:
+            print(f'Error reading Functional Node CSV file: {e}')
 
     def update_options_e(self, options=None):
         # Update edge options in select widget given dataframe file
@@ -145,22 +160,32 @@ class PlotUpdater(param.Parameterized):
         else:
             try:
                 self.df_e = pd.read_csv(self.file_path_e)
+                self.df_e_f = pd.read_csv(self.file_path_e_f)
                 self.options_e = self.df_e['Edge'].unique().tolist()
             except Exception as e:
                 print(f'Error reading Edge CSV file: {e}')
+    
+    def update_options_e_f(self):
+        # Update dataframe
+        try:
+            self.df_e_f = pd.read_csv(self.file_path_e_f)
+        except Exception as e:
+            print(f'Error reading Functional Edge CSV file: {e}')
 
     # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
         # fig, ax = plt.subplots()
-        if self.selected_option_n and not self.df_n.empty:
-            filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
+        if self.selected_option_n and not self.df_n_f.empty:
+            print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
+            filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_node_data(filtered_df_n)
-            # ax.scatter(filtered_df_n['Count'].tolist(), filtered_df_n['Count'].tolist())
-        if self.selected_option_e and not self.df_e.empty:
-            filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
-            # ax.plot(filtered_df_e['Count'].tolist(), filtered_df_e['Count'].tolist())
+        if self.selected_option_e and not self.df_e_f.empty:
+            print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
+            filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
             fig = display_edge_data(filtered_df_e)
+        else:
+            print(f'supdate_plot if statements never TRUE:\nself.df_n_f:\n{self.df_n_f.head(2)}\nself.df_n:\n{self.df_n.head(2)}')
         # ax.set_title(f'Metadata plot:')
         # ax.legend()
         self.plot_pane.object = fig
@@ -186,6 +211,8 @@ class PlotUpdater(param.Parameterized):
 # one for the chosen nodes, the other for chosen edges
 plot_updater = PlotUpdater(file_path_n=os.path.join(metadata_dir, c_n_s_file),
                            file_path_e=os.path.join(metadata_dir, c_e_s_file),
+                           file_path_n_f=os.path.join(metadata_dir, c_n_f_file),
+                           file_path_e_f=os.path.join(metadata_dir, c_e_f_file)
                            )
 
 # Create the Select widgets
