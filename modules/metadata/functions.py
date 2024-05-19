@@ -122,17 +122,17 @@ def get_metadata(m, bb):
     c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
 def display_node_data(filtered_df):
-    fig, ax = plt.subplots(1, 3, figsize=(15, 5))
-    ax[0].scatter(filtered_df['Count'].tolist(), filtered_df['Count'].tolist())
-    plt.close(fig)
-
-    # fig, axs = plt.subplots(1,3, figsize=(15, 5))
-    # plot_speed_stats(axs[0], filtered_df, True)
-    # plot_speed_stats(axs[1], filtered_df, False)
-    # get_flow_plot(axs[2], filtered_df)
-    # fig.tight_layout()
-
+    # fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+    # ax[0].scatter(filtered_df['Count'].tolist(), filtered_df['Count'].tolist())
     # plt.close(fig)
+
+    fig, axs = plt.subplots(1,3, figsize=(15, 5))
+    plot_speed_stats(axs[0], filtered_df, True)
+    plot_speed_stats(axs[1], filtered_df, False)
+    get_flow_plot(axs[2], filtered_df)
+    fig.tight_layout()
+
+    plt.close(fig)
 
     return fig
 

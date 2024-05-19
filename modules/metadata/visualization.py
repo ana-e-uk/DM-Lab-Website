@@ -99,22 +99,22 @@ def plot_map(ox_map, m=None):
             
     return m
 
-def plot_speed_stats(ax, cur_df, min_max):
+def plot_speed_stats(ax, df, min_max):
     ''' 
     Plots the avg, min, max speeds at each time point and plots error bars as confidence intervals.
     Confidence intervals are assumed to have the specific min and max values, speed is assumed to be mph
     '''
     # Sort values df by Time_bin
-    cur_df.sort_values('Time_bin')
+    df.sort_values('Time_bin')
     
     if min_max:
-        cur_df = cur_df.dropna(subset=['Avg_speed', 'Avg_speed_CI', 'Max_speed', 'Min_speed'])
+        cur_df = df.dropna(subset=['Avg_speed', 'Avg_speed_CI', 'Max_speed', 'Min_speed'])
         avg_speeds=cur_df['Avg_speed']
         confidence_intervals=cur_df['Avg_speed_CI']
         min_speeds=cur_df['Min_speed']
         max_speeds=cur_df['Max_speed']
     else:
-        cur_df= cur_df.dropna(subset=['Travel_time', 'Travel_time_CI'])
+        cur_df= df.dropna(subset=['Travel_time', 'Travel_time_CI'])
         avg_speeds=cur_df['Travel_time']
         confidence_intervals=cur_df['Travel_time_CI']
     
@@ -182,34 +182,48 @@ def plot_lines(ax, time, counts_list, labels=None):
 
     ax.grid(True)
 
-def get_flow_values(n_f_df):
-    
-    # Initialize dictionaries to store the lists for each feature
-    feature_lists = {}
+def process_node_flows(df):
+    # Function to safely evaluate the string to a dictionary
+    def safe_literal_eval(val):
+        if type(val) == dict:
+            return val
+        else:
+            try:
+                return ast.literal_eval(val)
+            except (ValueError, SyntaxError):
+                return {}
 
-    # Sort the DataFrame by 'Time_bin'
-    df_sorted = n_f_df.sort_values('Time_bin')
+    # Convert the 'Flow' column from string to dictionary safely
+    df['Flow'] = df['Flow'].apply(safe_literal_eval)
 
-    # Loop through each row in the sorted DataFrame
-    for _, row in df_sorted.iterrows():
-        flow = ast.literal_eval(row['Flow'])
-        for key, value in flow.items():
-            if key not in feature_lists:
-                feature_lists[key] = []
-            feature_lists[key].append(value)
+    # Expand the 'Flow' dictionary into separate columns
+    flow_expanded = df['Flow'].apply(pd.Series)
 
-    # Save the road name and values
-    labels = []
-    feature_values = []
-    for key, values in feature_lists.items():
-        labels.append(key)
-        feature_values.append(values)
+    # Combine the expanded Flow columns with the original DataFrame
+    df = pd.concat([df[['Time_bin']], flow_expanded], axis=1)
 
-    return labels, feature_values
+    # Fill NaN values with 0
+    df = df.fillna(0)
+
+    # Pivot the table to get the desired structure
+    result = df.pivot_table(index='Time_bin', aggfunc='sum').sort_index()
+
+    # Get the times and labels
+    times = result.index.tolist()
+    labels = result.columns.tolist()
+    value_counts = [result[label].tolist() for label in labels]
+
+    return times, labels, value_counts
 
 def get_flow_plot(ax, cur_n_f):
-    labels, values = get_flow_values(cur_n_f)
-    plot_lines(ax, time=cur_n_f.sort_values('Time_bin')['Time_bin'], counts_list=values, labels=labels)
+    times_list, labels, values = process_node_flows(cur_n_f)
+    print('\n')
+    print(labels)
+    print('\n')
+    print(times_list)
+    print('\n')
+    print(values)
+    plot_lines(ax, time=times_list, counts_list=values, labels=labels)
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):
