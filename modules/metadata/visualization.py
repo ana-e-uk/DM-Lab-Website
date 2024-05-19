@@ -123,12 +123,18 @@ def plot_speed_stats(ax, df, min_max):
     
     if min_max:
         cur_df = df.dropna(subset=['Avg_speed', 'Avg_speed_CI', 'Max_speed', 'Min_speed'])
+        if cur_df.empty:
+            no_info_plot(ax, min_max)
+            return
         avg_speeds=cur_df['Avg_speed']
         confidence_intervals=cur_df['Avg_speed_CI']
         min_speeds=cur_df['Min_speed']
         max_speeds=cur_df['Max_speed']
     else:
         cur_df= df.dropna(subset=['Travel_time', 'Travel_time_CI'])
+        if cur_df.empty:
+            no_info_plot(ax, min_max)
+            return
         avg_speeds=cur_df['Travel_time']
         confidence_intervals=cur_df['Travel_time_CI']
     
