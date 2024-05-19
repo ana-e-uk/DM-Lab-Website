@@ -99,6 +99,20 @@ def plot_map(ox_map, m=None):
             
     return m
 
+def no_info_plot(ax, min_max):
+    # Adding labels and title
+    ax.set_xlabel('Time Bins')
+    ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
+    ax.set_xlim([-1.5, 3.5])
+    if min_max:
+        ax.set_ylabel('Speed (miles per hour)')
+        ax.set_title('Speed Variation Over Time Bins')
+    else:
+        ax.set_ylabel('Travel Time (minutes)')
+        ax.set_title('Travel Time Variation Over Time Bins')
+
+    ax.text(0.5, 0.5, 'No Info')
+
 def plot_speed_stats(ax, df, min_max):
     ''' 
     Plots the avg, min, max speeds at each time point and plots error bars as confidence intervals.
