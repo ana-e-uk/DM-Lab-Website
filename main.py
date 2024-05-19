@@ -28,8 +28,17 @@ pn.extension()
 ##### instructions text #####
 instructions_text = pn.pane.Markdown('''
                                      ## Instructions:
-                                     This is the OpenSource MetaData Project. You can upload trajectories and use them. You can also perform certain operations like map matching on the map. Also, you can upload trajectories. 
-                                     ''')
+                                     Visualize current GPS trajectories and map metadata using the tools below.
+
+                                     You can also upload GPS trajectories to contribute to the GPS trajectory-extracted metadata.
+                                     
+                                     ### Select GPS File to View:
+                                    ''')
+
+##### instructions text #####
+upload_text = pn.pane.Markdown('''
+                                ### Upload GPS File:
+                               ''')
 
 ######## SELECTION  ################
 options = os.listdir(TRAJ_DIR)
@@ -68,18 +77,21 @@ pn.extension('modal')
 
 ######## MODULE SELECTION  ################
 module_select_text = pn.pane.Markdown('''
-                                     ## Modules:
-                                     Choose which of the following to perform on the data as a module
+                                     ### Modules
                                      ''')
 
 ###############   MODULE SPECIFICATION Column ##########
-module_spec = pn.Column(pn.pane.Markdown('''
-                        This part is for the detailed specification for the modules we have. It's just a placeholder
+module_spec = pn.Column(pn.pane.Markdown('''             
+                        Choose the **Map Matching** module to visualize how a trajectory is matched to the OSM road network. Note you must choose a trajectory file above.
+                        
+                        Choose the **Trajectory Split** module to visualize how GPS trajectories are segmented into Origin-Destination trips.
+                                         
+                        Chose the **Metadata** Module to explore OSM and GPS trajectory-extracted road network information. 
                         '''))
 
 ###############   MODULE VISUALIZATION Column ##########
 module_viz = pn.Row(pn.pane.Markdown('''
-                                     This section will contain the module visualziations.
+                                     ### Zoom in and out to change the granularity of the OSM map.
                                      '''))
 
 #####################################################
@@ -105,10 +117,10 @@ def radio_callback(event):
 module_select_radio.param.watch(radio_callback, 'value')
 
 ######## MODULE CONTROL AREA  ################
-module_select_text = pn.pane.Markdown('''
-                                     ### module instructions:
-                                     Choose which of the following to perform on the data as a module
-                                     ''')
+# module_select_text = pn.pane.Markdown('''
+#                                      ### module instructions:
+#                                      Choose which of the following to perform on the data as a module
+#                                      ''')
 
 
 ########### Map View #################
@@ -155,7 +167,8 @@ map_pane = pn.panel(config.map)
 
 ########################################## Layout ##########################################
 sidebar_elements = pn.Column(instructions_text, 
-                             pn.Row(select_widget, view_button), 
+                             pn.Row(select_widget, view_button),
+                             upload_text,
                              pn.Row(file_input, upload_button),
                              pn.Column(module_select_text, module_select_radio),
                              module_spec,
@@ -163,7 +176,7 @@ sidebar_elements = pn.Column(instructions_text,
                             )
 main_elements = [pn.Column(map_pane, module_viz)]
 template = pn.template.FastListTemplate(
-    site='Open MetaData Website',
+    site='Open Metadata',
     title="Map Services For GPS Trajectories",
     sidebar=sidebar_elements,
     main=main_elements,

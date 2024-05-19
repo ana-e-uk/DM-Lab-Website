@@ -50,9 +50,10 @@ def add_metadata_widgets(column, row, c):
     # edit panel column object
     column[:] = [
         pn.pane.Markdown('''
-            Draw a box on the map to explore the metadata in that region.
-            
-            Once you've selected the desired location on the map, click the 'Explore Region' button to visualize the road network.
+            ### How to Explore the Metadata
+            1. Draw a box on the map and click the **Explore Region** button. The OSM road network within that region will be plotted on the map.
+
+            2. Use the **Roads** or **Intersections** drop-down menus to choose which road or intersection metadata will appear under the map.
             '''),
         drawing_button,
         # pn.pane.Markdown(''' 
