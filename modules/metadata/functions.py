@@ -23,7 +23,17 @@ from .visualization import plot_map, plot_speed_stats, get_flow_plot
 ########################################## DATA UPLOAD ########################################## 
 
 # directory and file names
-metadata_dir = '/Users/bean/Documents/DM-Lab-Website/data/output'
+# Get Data Directory
+# Get the directory of the current file
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Generalize the target directory path
+# Assuming the target path is ../../data/output relative to the current file
+generalized_path = os.path.join(current_file_dir, '..', '..', 'data', 'output')
+
+# Normalize the path to ensure it's in the correct format
+metadata_dir  = os.path.normpath(generalized_path)
+
 e_f_file = 'edge_f.csv'
 e_s_file = 'edge_s.csv'
 n_f_file = 'node_f.csv'
