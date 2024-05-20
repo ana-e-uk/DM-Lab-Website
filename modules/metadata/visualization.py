@@ -279,6 +279,10 @@ def get_flow_plot(ax, cur_n_f):
     plot_lines(ax, time=times_list, counts_list=values, labels=labels)
 
 def generate_markdown(row, node):
+    '''
+    row (pandas dataframe) - one row corresp. to node or edge
+    node (bool) - True if node, False if edge
+    '''
     if node:
         return f"""
         **Intersection Structural Metadata:**
