@@ -92,6 +92,9 @@ class PlotUpdater(param.Parameterized):
     # chosen intersection (n) and road (e) from select widget
     selected_option_n = param.Integer(default=None)
     selected_option_e = param.String(default=None)
+    # current (soon to be past) intersection (n) and road (e)
+    cur_n = param.Integer(default=None)
+    cur_e = param.String(default=None)
     # select widget options
     options_n = param.List()
     options_e = param.List()
@@ -170,12 +173,13 @@ class PlotUpdater(param.Parameterized):
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
         # Plots chosen node info
-        if self.selected_option_n and not self.df_n_f.empty:
+        if self.selected_option_n and not self.df_n_f.empty and self.selected_option_n != self.cur_n:
             print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
             filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_node_data(filtered_df_n)
+            self.cur_n = self.selected_option_n
         # Plots chosen edge info
-        if self.selected_option_e and not self.df_e_f.empty:
+        elif self.selected_option_e and not self.df_e_f.empty:
             print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
             filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
             fig = display_edge_data(filtered_df_e)
