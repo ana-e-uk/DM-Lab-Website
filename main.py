@@ -16,7 +16,7 @@ Authors:
 import panel as pn
 import os
 from mappymatch.utils.crs import LATLON_CRS, XY_CRS
-from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl
+from ipyleaflet import Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, LayersControl
 from constants import (TRAJ_DIR)
 from visualization import (plot_traj_from_file)
 
@@ -109,7 +109,7 @@ def radio_callback(event):
     if selected_option == 'Map Matching':
         add_map_matching_widgets(module_spec, config)
     elif selected_option == 'Trajectory Split':
-        add_traj_split_widgets(module_spec)
+        add_traj_split_widgets(module_spec, config)
     elif selected_option == 'Metadata':
         add_metadata_widgets(module_spec, module_viz, config)
     else:
@@ -147,6 +147,7 @@ draw_control.rectangle = {
         "fillOpacity": 0.1
     }
 }
+config.map.add_control(LayersControl())
 config.map.add_control(draw_control)
 
 ##### Saving shape from draw control to config #####
