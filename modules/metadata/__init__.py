@@ -26,6 +26,7 @@ import param
 pn.extension()
 
 from .functions import get_metadata, display_node_data, display_edge_data
+from .visualization import generate_markdown
 ########################################## DATA CONSTANTS ########################################## 
 # Get Data Directory
 # Get the directory of the current file
@@ -75,12 +76,16 @@ def add_metadata_widgets(column, row, c):
     row[:] = [
         pn.Column(
             pn.Row(
-                pn.pane.Markdown('''
-                    Road Network Metadata:
-                    '''),
-                node_select,
-                edge_select),
-            plot_updater.plot_pane)
+                    pn.pane.Markdown('''
+                        Choose a road or intersection:
+                        '''),
+                    node_select,
+                    edge_select
+                  ),
+            pn.Row( plot_updater.metadata_markdown_pane,
+                    plot_updater.plot_pane,
+                  )
+        )
     ]
 
 ########################################## HELPER FUNCTIONS ########################################## 
@@ -110,6 +115,8 @@ class PlotUpdater(param.Parameterized):
     options_e = param.List()
     # matplotlib plot
     plot_pane = param.ClassSelector(class_=pn.pane.Matplotlib)
+    # markdown pane
+    metadata_markdown_pane = param.ClassSelector(class_=pn.pane.Markdown)
     # pandas dataframe that will be updated
     df_n = pd.DataFrame()
     df_e = pd.DataFrame()
@@ -125,6 +132,10 @@ class PlotUpdater(param.Parameterized):
         self.file_path_e_f = file_path_e_f
         # plot pane
         self.plot_pane = pn.pane.Matplotlib(self.create_placeholder_plot(), width=900, height=300)
+        # markdown pane
+        self.metadata_markdown_pane = pn.pane.Markdown('''
+                                                        Metadata:
+                                                       ''', width=200)
         # update functions
         self.update_options_n()
         self.update_options_e()
@@ -182,19 +193,35 @@ class PlotUpdater(param.Parameterized):
     # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
+
         # Plots chosen node info
         if self.selected_option_n and not self.df_n_f.empty and self.selected_option_n != self.cur_n:
-            # print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
+            
+            # get plots
             filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_node_data(filtered_df_n)
+            
+            # get markdown
+            filtered_df_n_s = self.df_n[self.df_n['Node'] == self.selected_option_n]
+            markdown_pane = generate_markdown(row=filtered_df_n_s, node=True)
+
+            # update cur_n so if/elif works when you update the node selected option
             self.cur_n = self.selected_option_n
+
         # Plots chosen edge info
         elif self.selected_option_e and not self.df_e_f.empty:
-            # print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
+
+            # get plots
             filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
             fig = display_edge_data(filtered_df_e)
 
+            # get markdown
+            filtered_df_e_s = self.df_e[self.df_e['Edge'] == self.selected_option_e]
+            markdown_pane = generate_markdown(row=filtered_df_e_s, node=False)
+
+        # update self objects
         self.plot_pane.object = fig
+        self.metadata_markdown_pane.object = markdown_pane
 
     def watch_file(self, file_path, update_func):
         # Reload file to update node/edge options if files are modified
