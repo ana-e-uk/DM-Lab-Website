@@ -103,7 +103,7 @@ class PlotUpdater(param.Parameterized):
     selected_option_n = param.Integer(default=None)
     selected_option_e = param.String(default=None)
     # current (soon to be past) intersection (n) and road (e)
-    cur_n = param.Integer(default=None)
+    cur_n = param.Integer(default=0)
     cur_e = param.String(default=None)
     # select widget options
     options_n = param.List()
