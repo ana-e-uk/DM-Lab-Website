@@ -283,46 +283,59 @@ def generate_markdown(row, node):
     row (pandas dataframe) - one row corresp. to node or edge
     node (bool) - True if node, False if edge
     '''
-    if node:
-        return f"""
-        **Intersection Structural Metadata:**
+    print('Print statements in generate_markdown function of visualization.py')
+    print(row)
+    try:
+        print(row['Node'])
+        print(row['Node'][0])
+        print(row['Count'])
+    except Exception as e:
+        print(e)
 
-        **Intersection Index**: {row['Node']}
+    if node:
+        # return f"""
+        # **Intersection Structural Metadata:**
+
+        # **Intersection Index**: {row['Node']}
         
-        **Street Count**:
-            - **GPS**: {row['Edges_count']}
+        # **Street Count**:
+        #     - **GPS**: {row['Edges_count']}
         
-        **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+        # **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+        # """
+        return f"""
+        <h2>Intersection Structural Metadata:</h2>
+        <p><strong>Intersection Index:</strong> {row['Node']}</p>
+        <p><strong>Street Count:</strong></p>
+        <ul>
+            <li><strong>OSM:</strong></li>
+            <li><strong>GPS:</strong> {row['Edges_count']}</li>
+        </ul>
+        <p><strong>Road Type:</strong></p>
+        <ul>
+            <li><strong>OSM:</strong></li>
+        </ul>
+        <p><strong>Number of GPS trajectories corresponding to this intersection:</strong> {row['Count']}</p>
         """
     else:
         return f"""
-        **Road Structural Metadata:**
-
-        **Road Index**: {row['Edge']}
-        
-        **Driving Directions**:
-            - **GPS**: {row['Compass_dir']}
-
-        **Oneway**:
-            - **GPS**: {row['Directions']}
-        
-        **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+        <h2>Road Structural Metadata:</h2>
+        <p><strong>Road Index:</strong> {row['Edge']}</p>
+        <p><strong>Oneway:</strong></p>
+        <ul>
+            <li><strong>OSM:</strong></li>
+            <li><strong>GPS:</strong> {row['Directions']}</li>
+        </ul>
+        <p><strong>Road Type:</strong></p>
+        <ul>
+            <li><strong>OSM:</strong></li>
+        </ul>
+        <p><strong>Road Direction:</strong></p>
+        <ul>
+            <li><strong>GPS:</strong> {row['Compass_dir']}</li>
+        <ul>
+        <p><strong>Number of GPS trajectories corresponding to this road:</strong> {row['Count']}</p>
         """
-        # Final version
-        return f"""
-            **Intersection Structural Metadata:**
-
-            **Intersection Index**: {row['Node']}
-            
-            **Street Count**:
-                - **OSM**: {row['OSM_Street_count']}
-                - **GPS**: {row['Edges_count']}
-            
-            **Road Type**:
-                - **OSM**: {row['OSM_road_type']}
-            
-            **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
-            """
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):
