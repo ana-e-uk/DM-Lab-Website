@@ -214,7 +214,7 @@ def process_node_flows(df):
                 return {}
 
     # Convert the 'Flow' column from string to dictionary safely
-    df['Flow'] = df['Flow'].apply(safe_literal_eval)
+    df.loc[:, 'Flow'] = df['Flow'].apply(safe_literal_eval)
 
     # Expand the 'Flow' dictionary into separate columns
     flow_expanded = df['Flow'].apply(pd.Series)

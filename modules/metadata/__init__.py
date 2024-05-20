@@ -139,7 +139,7 @@ class PlotUpdater(param.Parameterized):
     def create_placeholder_plot(self):
         # placeholder needed to avoid Attribute error
         fig, ax = plt.subplots(1, 3, figsize=(15, 5))
-        ax[0].text(0.5, 0.5, 'Select options to update plot')
+        ax[0].text(0.1, 0.5, 'Select an option above')
         return fig
     
     def update_options_n(self, options=None):
@@ -184,13 +184,13 @@ class PlotUpdater(param.Parameterized):
     def update_plot(self):
         # Plots chosen node info
         if self.selected_option_n and not self.df_n_f.empty and self.selected_option_n != self.cur_n:
-            print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
+            # print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
             filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_node_data(filtered_df_n)
             self.cur_n = self.selected_option_n
         # Plots chosen edge info
         elif self.selected_option_e and not self.df_e_f.empty:
-            print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
+            # print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
             filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
             fig = display_edge_data(filtered_df_e)
 
