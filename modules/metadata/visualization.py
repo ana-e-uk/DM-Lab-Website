@@ -120,18 +120,23 @@ def plot_map(ox_map, m=None):
             
     return m
 
-def no_info_plot(ax, min_max):
+def no_info_plot(ax, p):
+    '''
+    p (int) - 1 for speed stats plot, 0 for travel time plot, 2 for flow plot
+    '''
     # Adding labels and title
     ax.set_xlabel('Time Bins')
     ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
     ax.set_xlim([-1.5, 3.5])
-    if min_max:
+    if p==1:
         ax.set_ylabel('Speed (miles per hour)')
         ax.set_title('Speed Variation Over Time Bins')
-    else:
+    elif p==0:
         ax.set_ylabel('Travel Time (minutes)')
         ax.set_title('Travel Time Variation Over Time Bins')
-
+    elif p==2:
+        ax.set_ylabel('Number of Vehicles')
+        ax.set_title('Intersection Flow')
     ax.text(0.5, 0.5, 'No Info')
 
 def plot_speed_stats(ax, df, min_max):
@@ -145,7 +150,7 @@ def plot_speed_stats(ax, df, min_max):
     if min_max:
         cur_df = df.dropna(subset=['Avg_speed', 'Avg_speed_CI', 'Max_speed', 'Min_speed'])
         if cur_df.empty:
-            no_info_plot(ax, min_max)
+            no_info_plot(ax, p=1)
             return
         avg_speeds=cur_df['Avg_speed']
         confidence_intervals=cur_df['Avg_speed_CI']
@@ -154,7 +159,7 @@ def plot_speed_stats(ax, df, min_max):
     else:
         cur_df= df.dropna(subset=['Travel_time', 'Travel_time_CI'])
         if cur_df.empty:
-            no_info_plot(ax, min_max)
+            no_info_plot(ax, p=0)
             return
         avg_speeds=cur_df['Travel_time']
         confidence_intervals=cur_df['Travel_time_CI']
@@ -209,6 +214,13 @@ def plot_lines(ax, time, counts_list, labels=None):
     """
     if labels is None:
         labels = ['Line {}'.format(i+1) for i in range(len(counts_list))]
+
+    # print('counts list in plot_lines function in visualization.py', counts_list)
+    # print('len(counts_list)',len(counts_list))
+
+    if len(counts_list) == 0:
+        no_info_plot(ax, p=2)
+        return
 
     for counts, label in zip(counts_list, labels):
         ax.scatter(time, counts, marker='o', label=label)
