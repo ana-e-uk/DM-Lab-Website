@@ -24,7 +24,7 @@ import folium
 import networkx as nx
 
 
-from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup
+from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup, CircleMarker
 from ipywidgets import HTML
 
 from constants import (
@@ -42,14 +42,14 @@ from constants import (
 ########################################## FUNCTIONS ########################################
 def plot_map(ox_map, m=None):
     """
-    Plot the roads on an NxMap.
+    Plot the roads and nodes on an NxMap.
 
     Args:
         tmap: The Nxmap to plot.
         m: the folium map to add to
 
     Returns:
-        The folium map with the roads plotted.
+        The folium map with the roads and nodes plotted.
     """
     tmap = nx.MultiDiGraph(ox_map)
 
@@ -70,9 +70,7 @@ def plot_map(ox_map, m=None):
 
     for t in gdf.itertuples():
         # print(t.geometry.coords)
-        if t.geometry is None:
-            pass
-        else:
+        if t.geometry is not None:
             l = [(lat, lon) for lon, lat in t.geometry.coords]
             c = l[0]
             # polyline = folium.PolyLine(
@@ -81,7 +79,7 @@ def plot_map(ox_map, m=None):
                 color="red",
                 # tooltip=[t.maxspeed, t.oneway]
             )#.add_to(m)
-            polyline.popup = HTML("Hello World")
+            # polyline.popup = HTML("Hello World")
             m.add_layer(polyline)
 
             # message = HTML()
@@ -96,6 +94,20 @@ def plot_map(ox_map, m=None):
             #     )   
             # m.add(popup)
             # polyline.popup(message)
+
+    # Plot nodes
+    for node, data in tmap.nodes(data=True):
+        if 'x' in data and 'y' in data:
+            lat = data['y']
+            long = data['x']
+            circle_marker = CircleMarker(location=[lat, long],
+                                         radius=5,
+                                         color="blue",
+                                         fill=True,
+                                         fill_color="blue",
+                                         fill_opacity=0.6,
+                                         )
+            m.add_layer(circle_marker)
             
     return m
 
