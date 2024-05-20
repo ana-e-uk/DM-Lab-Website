@@ -27,8 +27,18 @@ pn.extension()
 
 from .functions import get_metadata, display_node_data, display_edge_data
 ########################################## DATA CONSTANTS ########################################## 
-# directory and file names
-metadata_dir = '/Users/bean/Documents/DM-Lab-Website/data/output'
+# Get Data Directory
+# Get the directory of the current file
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Generalize the target directory path
+# Assuming the target path is ../../data/output relative to the current file
+generalized_path = os.path.join(current_file_dir, '..', '..', 'data', 'output')
+
+# Normalize the path to ensure it's in the correct format
+metadata_dir  = os.path.normpath(generalized_path)
+
+# File names
 c_e_f_file = 'c_edge_f.csv'
 c_e_s_file = 'c_edge_s.csv'
 c_n_f_file = 'c_node_f.csv'
@@ -50,9 +60,10 @@ def add_metadata_widgets(column, row, c):
     # edit panel column object
     column[:] = [
         pn.pane.Markdown('''
-            Draw a box on the map to explore the metadata in that region.
-            
-            Once you've selected the desired location on the map, click the 'Explore Region' button to visualize the road network.
+            ### How to Explore the Metadata
+            1. Draw a box on the map and click the **Explore Region** button. The OSM road network within that region will be plotted on the map.
+
+            2. Use the **Roads** or **Intersections** drop-down menus to choose which road or intersection metadata will appear under the map.
             '''),
         drawing_button,
         # pn.pane.Markdown(''' 
@@ -74,7 +85,7 @@ def add_metadata_widgets(column, row, c):
 
 ########################################## HELPER FUNCTIONS ########################################## 
 
-##### -------------------- Drawing Button -------------------- #####
+##### -------------------- Create Drawing Button and Link to Event -------------------- #####
 # Define function called when drawing button is clicked
 def on_button_click(event):
     print(f'\nButton clicked! Getting Metadata...')
@@ -91,6 +102,9 @@ class PlotUpdater(param.Parameterized):
     # chosen intersection (n) and road (e) from select widget
     selected_option_n = param.Integer(default=None)
     selected_option_e = param.String(default=None)
+    # current (soon to be past) intersection (n) and road (e)
+    cur_n = param.Integer(default=None)
+    cur_e = param.String(default=None)
     # select widget options
     options_n = param.List()
     options_e = param.List()
@@ -99,34 +113,35 @@ class PlotUpdater(param.Parameterized):
     # pandas dataframe that will be updated
     df_n = pd.DataFrame()
     df_e = pd.DataFrame()
+    df_n_f = pd.DataFrame()
+    df_e_f = pd.DataFrame()
 
-    def __init__(self, file_path_n, file_path_e, **params):
+    def __init__(self, file_path_n, file_path_e, file_path_n_f, file_path_e_f, **params):
         super().__init__(**params)
+        # file paths
         self.file_path_n = file_path_n
         self.file_path_e = file_path_e
-        self.plot_pane = pn.pane.Matplotlib(self.create_placeholder_plot(), width=800, height=600)
+        self.file_path_n_f = file_path_n_f
+        self.file_path_e_f = file_path_e_f
+        # plot pane
+        self.plot_pane = pn.pane.Matplotlib(self.create_placeholder_plot(), width=900, height=300)
+        # update functions
         self.update_options_n()
         self.update_options_e()
+        self.update_options_n_f()
+        self.update_options_e_f()
+        # function to update pandas dfs and select widget options
         self.watch_file(self.file_path_n, self.update_options_n)
         self.watch_file(self.file_path_e, self.update_options_e)
+        self.watch_file(self.file_path_n_f, self.update_options_n_f)
+        self.watch_file(self.file_path_e_f, self.update_options_e_f)
 
     def create_placeholder_plot(self):
         # placeholder needed to avoid Attribute error
-        fig, ax = plt.subplots()
-        ax.text(0.5, 0.5, 'Select options to update plot')
-        ax.set_xticks([])
-        ax.set_yticks([])
+        fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+        ax[0].text(0.5, 0.5, 'Select options to update plot')
         return fig
     
-    # General update options code
-    # def update_options(self, file_path, col_name, update_func):
-    #     try:
-    #         df = pd.read_csv(file_path)
-    #         options = df[col_name].unique().tolist()
-    #         update_func(options)
-    #     except Exception as e:
-    #         print(f'Error reading Csv file {file_path}: {e}')
-
     def update_options_n(self, options=None):
         # Update node options in select widget given dataframe file
         if options is not None:
@@ -136,7 +151,14 @@ class PlotUpdater(param.Parameterized):
                 self.df_n = pd.read_csv(self.file_path_n)
                 self.options_n = self.df_n['Node'].unique().tolist()
             except Exception as e:
-                print(f'Error reading Node CSV file: {e}')
+                print(f'Error reading Structural Node CSV file: {e}')
+    
+    def update_options_n_f(self):
+        # Update dataframe
+        try:
+            self.df_n_f = pd.read_csv(self.file_path_n_f)
+        except Exception as e:
+            print(f'Error reading Functional Node CSV file: {e}')
 
     def update_options_e(self, options=None):
         # Update edge options in select widget given dataframe file
@@ -145,24 +167,33 @@ class PlotUpdater(param.Parameterized):
         else:
             try:
                 self.df_e = pd.read_csv(self.file_path_e)
+                self.df_e_f = pd.read_csv(self.file_path_e_f)
                 self.options_e = self.df_e['Edge'].unique().tolist()
             except Exception as e:
                 print(f'Error reading Edge CSV file: {e}')
+    
+    def update_options_e_f(self):
+        # Update dataframe
+        try:
+            self.df_e_f = pd.read_csv(self.file_path_e_f)
+        except Exception as e:
+            print(f'Error reading Functional Edge CSV file: {e}')
 
     # Update plot when the selected options changes
     @param.depends('selected_option_n', 'selected_option_e', watch=True)
     def update_plot(self):
-        fig, ax = plt.subplots()
-        if self.selected_option_n and not self.df_n.empty:
-            filtered_df_n = self.df_n[self.df_n['Node'] ==  self.selected_option_n]
-            # fig = display_node_data(filtered_df_n)
-            ax.scatter(filtered_df_n['Count'].tolist(), filtered_df_n['Count'].tolist())
-        if self.selected_option_e and not self.df_e.empty:
-            filtered_df_e = self.df_e[self.df_e['Edge'] == self.selected_option_e]
-            ax.plot(filtered_df_e['Count'].tolist(), filtered_df_e['Count'].tolist())
-            # fig = display_edge_data(filtered_df_e)
-        # ax.set_title(f'Metadata plot:')
-        ax.legend()
+        # Plots chosen node info
+        if self.selected_option_n and not self.df_n_f.empty and self.selected_option_n != self.cur_n:
+            print(f'self.df_n_f:\n{self.df_n_f.head(2)}')
+            filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
+            fig = display_node_data(filtered_df_n)
+            self.cur_n = self.selected_option_n
+        # Plots chosen edge info
+        elif self.selected_option_e and not self.df_e_f.empty:
+            print(f'self.df_e_f:\n{self.df_e_f.head(2)}')
+            filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
+            fig = display_edge_data(filtered_df_e)
+
         self.plot_pane.object = fig
 
     def watch_file(self, file_path, update_func):
@@ -182,12 +213,14 @@ class PlotUpdater(param.Parameterized):
         watcher_thread = threading.Thread(target=_watch, daemon=True)
         watcher_thread.start()
 
-# Initialize plot updater with two CSV files, 
-# one for the chosen nodes, the other for chosen edges
-plot_updater = PlotUpdater(file_path_n=os.path.join(metadata_dir, c_n_s_file),
-                           file_path_e=os.path.join(metadata_dir, c_e_s_file),
+##### -------------------- Initialize plot updater with CSV files -------------------- #####
+plot_updater = PlotUpdater(file_path_n=os.path.join(metadata_dir, c_n_s_file),  # structural node metadata
+                           file_path_e=os.path.join(metadata_dir, c_e_s_file),  # structural edge metadata
+                           file_path_n_f=os.path.join(metadata_dir, c_n_f_file),    # functional node metadata
+                           file_path_e_f=os.path.join(metadata_dir, c_e_f_file)     # functional edge metadata
                            )
 
+##### -------------------- Create Select Widgets and Link to Events -------------------- #####
 # Create the Select widgets
 node_select = pn.widgets.Select(name='Intersections', options=plot_updater.options_n)
 edge_select = pn.widgets.Select(name='Roads', options=plot_updater.options_e)

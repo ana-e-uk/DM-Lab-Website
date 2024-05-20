@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
 
-from .visualization import plot_map
+from .visualization import plot_map, plot_speed_stats, get_flow_plot
 
 ########################################## DATA UPLOAD ########################################## 
 
@@ -122,16 +122,22 @@ def get_metadata(m, bb):
     c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
 def display_node_data(filtered_df):
-    fig, ax = plt.subplots()
-    ax.plot([0, 1, 2], [0, 1, 2])
-    ax.set_title(f'First node:{filtered_df['Node'].tolist()[0]}')
+    fig, axs = plt.subplots(1,3, figsize=(15, 5))
+    plot_speed_stats(axs[0], filtered_df, True)
+    plot_speed_stats(axs[1], filtered_df, False)
+    get_flow_plot(axs[2], filtered_df)
+    fig.tight_layout()
+
+    plt.close(fig)
 
     return fig
 
 def display_edge_data(filtered_df):
-    fig, ax = plt.subplots()
-    ax.plot([0, 1, 2], [2, 1, 0])
-    ax.set_title(f'First edge:{filtered_df['Edge'].tolist()[0]}')
+    fig, axs = plt.subplots(1,2, figsize=(10, 5))
+    plot_speed_stats(axs[0], filtered_df, True)
+    plot_speed_stats(axs[1], filtered_df, False)
+    fig.tight_layout()
+    plt.close(fig)
 
     return fig
 
