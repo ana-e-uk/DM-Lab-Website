@@ -27,8 +27,18 @@ pn.extension()
 
 from .functions import get_metadata, display_node_data, display_edge_data
 ########################################## DATA CONSTANTS ########################################## 
-# directory and file names
-metadata_dir = '/Users/bean/Documents/DM-Lab-Website/data/output'
+# Get Data Directory
+# Get the directory of the current file
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Generalize the target directory path
+# Assuming the target path is ../../data/output relative to the current file
+generalized_path = os.path.join(current_file_dir, '..', '..', 'data', 'output')
+
+# Normalize the path to ensure it's in the correct format
+metadata_dir  = os.path.normpath(generalized_path)
+
+# File names
 c_e_f_file = 'c_edge_f.csv'
 c_e_s_file = 'c_edge_s.csv'
 c_n_f_file = 'c_node_f.csv'
