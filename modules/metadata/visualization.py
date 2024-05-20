@@ -82,15 +82,23 @@ def plot_map(ox_map, m=None):
                 locations=l,
                 color="red",
                 fill=False,
-            )#.add_to(m)
+            )
             popup_content = HTML()
             popup_content.value = f"Edge from {t[1]} to {t[2]}"
-            # print(popup_content.value)
             popup = Popup(location=l[0], child=popup_content)
+            # def on_polyline_click(event, polyline=polyline, popup=popup):
+            #     # Remove existing popups
+            #     for layer in m.layers:
+            #         if isinstance(layer, Popup):
+            #             m.remove_layer(layer)
+            #     # Add new popup
+            #     m.add_layer(popup)
+            # polyline.on_click(on_polyline_click)
+
             polyline.popup = popup
             m.add_layer(polyline)
             m.add_layer(popup)
-
+    # return m
     # Plot nodes
     for node, data in tmap.nodes(data=True):
         if 'x' in data and 'y' in data:
