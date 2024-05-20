@@ -111,7 +111,7 @@ def get_metadata(m, bb):
     c_n_s = n_s[n_s['Node'].isin(osm_nodes_list)]
 
     # print(c_e_f.head(3))
-    print(c_e_s.head(3))
+    # print(c_e_s.head(3))
     # print(c_n_f.head(3))
     # print(c_n_s.head(3))
 

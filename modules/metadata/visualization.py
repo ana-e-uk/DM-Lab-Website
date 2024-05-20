@@ -214,7 +214,7 @@ def process_node_flows(df):
                 return {}
 
     # Convert the 'Flow' column from string to dictionary safely
-    df['Flow'] = df['Flow'].apply(safe_literal_eval)
+    df.loc[:, 'Flow'] = df['Flow'].apply(safe_literal_eval)
 
     # Expand the 'Flow' dictionary into separate columns
     flow_expanded = df['Flow'].apply(pd.Series)
@@ -237,13 +237,55 @@ def process_node_flows(df):
 
 def get_flow_plot(ax, cur_n_f):
     times_list, labels, values = process_node_flows(cur_n_f)
-    print('\n')
-    print(labels)
-    print('\n')
-    print(times_list)
-    print('\n')
-    print(values)
+    # print('\n')
+    # print(labels)
+    # print('\n')
+    # print(times_list)
+    # print('\n')
+    # print(values)
     plot_lines(ax, time=times_list, counts_list=values, labels=labels)
+
+def generate_markdown(row, node):
+    if node:
+        return f"""
+        **Intersection Structural Metadata:**
+
+        **Intersection Index**: {row['Node']}
+        
+        **Street Count**:
+            - **GPS**: {row['Edges_count']}
+        
+        **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+        """
+    else:
+        return f"""
+        **Road Structural Metadata:**
+
+        **Road Index**: {row['Edge']}
+        
+        **Driving Directions**:
+            - **GPS**: {row['Compass_dir']}
+
+        **Oneway**:
+            - **GPS**: {row['Directions']}
+        
+        **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+        """
+        # Final version
+        return f"""
+            **Intersection Structural Metadata:**
+
+            **Intersection Index**: {row['Node']}
+            
+            **Street Count**:
+                - **OSM**: {row['OSM_Street_count']}
+                - **GPS**: {row['Edges_count']}
+            
+            **Road Type**:
+                - **OSM**: {row['OSM_road_type']}
+            
+            **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
+            """
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):
