@@ -23,8 +23,18 @@ from mappymatch.utils.crs import LATLON_CRS
 import folium
 import networkx as nx
 
+from ipyleaflet import (Marker, 
+                        Polyline, 
+                        Circle, 
+                        Map, 
+                        basemaps, 
+                        FullScreenControl,
+                        basemap_to_tiles, 
+                        DrawControl, 
+                        Popup, 
+                        CircleMarker, 
+                        LayerGroup)
 
-from ipyleaflet import Marker, Polyline, Circle, Map, basemaps, FullScreenControl, basemap_to_tiles, DrawControl, Polyline, Popup, CircleMarker
 from ipywidgets import HTML
 
 from constants import (
@@ -53,47 +63,33 @@ def plot_map(ox_map, m=None):
     """
     tmap = nx.MultiDiGraph(ox_map)
 
-    # TODO make this generic to all map types, not just NxMap
+    # Plot edges    # TODO make this generic to all map types, not just NxMap
     roads = list(tmap.edges(data=True))
     road_df = pd.DataFrame([r[2] for r in roads])
 
-    # print(road_df.head(3))
+    print(f'\nRoad df head given to plot_map function in visualization.py {road_df.head(3)}\n')
 
     gdf = gpd.GeoDataFrame(
         road_df, geometry=road_df['geometry'], crs=LATLON_CRS
     )
     if gdf.crs != LATLON_CRS:
         gdf = gdf.to_crs(LATLON_CRS)
-    
-    # m.center = gdf.iloc[int(len(gdf) / 2)].geometry.centroid.coords[0]
-    # m.zoom = 14
 
     for t in gdf.itertuples():
-        # print(t.geometry.coords)
         if t.geometry is not None:
             l = [(lat, lon) for lon, lat in t.geometry.coords]
-            c = l[0]
-            # polyline = folium.PolyLine(
             polyline = Polyline(
                 locations=l,
                 color="red",
-                # tooltip=[t.maxspeed, t.oneway]
+                fill=False,
             )#.add_to(m)
-            # polyline.popup = HTML("Hello World")
+            popup_content = HTML()
+            popup_content.value = f"Edge from {t[1]} to {t[2]}"
+            # print(popup_content.value)
+            popup = Popup(location=l[0], child=popup_content)
+            polyline.popup = popup
             m.add_layer(polyline)
-
-            # message = HTML()
-            # # message = f"<b>Oneway:</b> {t.oneway}"
-            # message.value = "Hi"
-            # popup = Popup(
-            #     location=c,
-            #     child=message,
-            #     close_button=True,
-            #     auto_close=False,
-            #     close_on_escape_key=False
-            #     )   
-            # m.add(popup)
-            # polyline.popup(message)
+            m.add_layer(popup)
 
     # Plot nodes
     for node, data in tmap.nodes(data=True):
@@ -107,7 +103,12 @@ def plot_map(ox_map, m=None):
                                          fill_color="blue",
                                          fill_opacity=0.6,
                                          )
+            popup_content = HTML()
+            popup_content.value = f"Node {node}"
+            popup = Popup(location=(lat, long), child=popup_content)
+            circle_marker.popup = popup
             m.add_layer(circle_marker)
+            m.add_layer(popup)
             
     return m
 
