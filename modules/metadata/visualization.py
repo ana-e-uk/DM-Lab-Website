@@ -237,12 +237,12 @@ def process_node_flows(df):
 
 def get_flow_plot(ax, cur_n_f):
     times_list, labels, values = process_node_flows(cur_n_f)
-    print('\n')
-    print(labels)
-    print('\n')
-    print(times_list)
-    print('\n')
-    print(values)
+    # print('\n')
+    # print(labels)
+    # print('\n')
+    # print(times_list)
+    # print('\n')
+    # print(values)
     plot_lines(ax, time=times_list, counts_list=values, labels=labels)
 
 ########################################## HELPER FUNCTIONS #################################
