@@ -283,59 +283,67 @@ def generate_markdown(row, node):
     row (pandas dataframe) - one row corresp. to node or edge
     node (bool) - True if node, False if edge
     '''
-    print('Print statements in generate_markdown function of visualization.py')
-    print(row)
+    print('Print statements in generate_markdown function of visualization.py\n')
+    print('row\n', row)
     try:
-        print(row['Node'])
-        print(row['Node'][0])
-        print(row['Count'])
+        print('node\n',row['Node'])
+        print('node[0]\n',row['Node'][0])
+        print('node.item()\n',row['Node'].item())
     except Exception as e:
         print(e)
 
     if node:
-        # return f"""
-        # **Intersection Structural Metadata:**
-
-        # **Intersection Index**: {row['Node']}
-        
-        # **Street Count**:
-        #     - **GPS**: {row['Edges_count']}
-        
-        # **Number of GPS trajectories corresponding to this intersection**: {row['Count']}
-        # """
         return f"""
-        <h2>Intersection Structural Metadata:</h2>
-        <p><strong>Intersection Index:</strong> {row['Node']}</p>
-        <p><strong>Street Count:</strong></p>
-        <ul>
-            <li><strong>OSM:</strong></li>
-            <li><strong>GPS:</strong> {row['Edges_count']}</li>
-        </ul>
-        <p><strong>Road Type:</strong></p>
-        <ul>
-            <li><strong>OSM:</strong></li>
-        </ul>
-        <p><strong>Number of GPS trajectories corresponding to this intersection:</strong> {row['Count']}</p>
-        """
+                <h3>Intersection {row['Node'].item()} Structural Metadata:</h3>
+                <table border="1" style="border-collapse: collapse; width: 50%;">
+                    <tr>
+                        <th>Metadata Value</th>
+                        <th>GPS</th>
+                        <th>OSM</th>
+                    </tr>
+                    <tr>
+                        <td>Street Count</td>
+                        <td>{row['Edges_count'].item()}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Road Type</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>GPS Trajectory Counts</td>
+                        <td>{row['Count'].item()}</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+                """
     else:
         return f"""
-        <h2>Road Structural Metadata:</h2>
-        <p><strong>Road Index:</strong> {row['Edge']}</p>
-        <p><strong>Oneway:</strong></p>
-        <ul>
-            <li><strong>OSM:</strong></li>
-            <li><strong>GPS:</strong> {row['Directions']}</li>
-        </ul>
-        <p><strong>Road Type:</strong></p>
-        <ul>
-            <li><strong>OSM:</strong></li>
-        </ul>
-        <p><strong>Road Direction:</strong></p>
-        <ul>
-            <li><strong>GPS:</strong> {row['Compass_dir']}</li>
-        <ul>
-        <p><strong>Number of GPS trajectories corresponding to this road:</strong> {row['Count']}</p>
-        """
+                <h3>Road {row['Edge'].item()} Structural Metadata:</h3>
+                <table border="1" style="border-collapse: collapse; width: 50%;">
+                    <tr>
+                        <th>Metadata Value</th>
+                        <th>GPS</th>
+                        <th>OSM</th>
+                    </tr>
+                    <tr>
+                        <td>Oneway</td>
+                        <td>{row['Directions'].item()}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Road Directions</td>
+                        <td>{row['Compass_dir'].item()}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>GPS Trajectory Counts</td>
+                        <td>{row['Count'].item()}</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+                """
 
 ########################################## HELPER FUNCTIONS #################################
 def get_unique_colors(num_colors):
