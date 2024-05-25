@@ -293,8 +293,9 @@ def generate_markdown(row, node):
         print(e)
 
     if node:
+        # Node,OSM_street_count,OSM_highway,OSM_edges,Street_count,Count
         return f"""
-                <h3>Intersection {row['Node'].item()} Structural Metadata:</h3>
+                <h3>Intersection Structural Metadata:</h3>
                 <table border="1" style="border-collapse: collapse; width: 50%;">
                     <tr>
                         <th>Metadata Value</th>
@@ -302,25 +303,26 @@ def generate_markdown(row, node):
                         <th>OSM</th>
                     </tr>
                     <tr>
-                        <td>Street Count</td>
-                        <td>{row['Edges_count'].item()}</td>
+                        <td>Highway</td>
                         <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Road Type</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td>{row['OSM_highway'].item()}</td>
                     </tr>
                     <tr>
                         <td>GPS Trajectory Counts</td>
                         <td>{row['Count'].item()}</td>
-                        <td>-</td>
+                        <td>X</td>
+                    </tr>
+                    <tr>
+                        <td>Street Count</td>
+                        <td>{row['Street_count'].item()}</td>
+                        <td>{row['OSM_street_count'].item()}</td>
                     </tr>
                 </table>
                 """
     else:
+        # Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Count
         return f"""
-                <h3>Road {row['Edge'].item()} Structural Metadata:</h3>
+                <h3>Road Structural Metadata:</h3>
                 <table border="1" style="border-collapse: collapse; width: 50%;">
                     <tr>
                         <th>Metadata Value</th>
@@ -328,19 +330,39 @@ def generate_markdown(row, node):
                         <th>OSM</th>
                     </tr>
                     <tr>
-                        <td>Oneway</td>
-                        <td>{row['Directions'].item()}</td>
+                        <td>Highway</td>
                         <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Road Directions</td>
-                        <td>{row['Compass_dir'].item()}</td>
-                        <td>-</td>
+                        <td>{row['OSM_highway'].item()}</td>
                     </tr>
                     <tr>
                         <td>GPS Trajectory Counts</td>
                         <td>{row['Count'].item()}</td>
+                        <td>X</td>
+                    </tr>
+                    <tr>
+                        <td>Oneway</td>
+                        <td>{row['Oneway'].item()}</td>
+                        <td>{row['OSM_oneway'].item()}</td>
+                    </tr>
+                    <tr>
+                        <td>Maxspeed</td>
+                        <td>Graphed</td>
+                        <td>{row['OSM_maxspeed'].item()}</td>
+                    </tr>
+                    <tr>
+                        <td>Lanes</td>
                         <td>-</td>
+                        <td>{row['OSM_lanes'].item()}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>X</td>
+                        <td>{row['OSM_name'].item()}</td>
+                    </tr>
+                    <tr>
+                        <td>Length</td>
+                        <td>-</td>
+                        <td>{row['OSM_length'].item()}</td>
                     </tr>
                 </table>
                 """
