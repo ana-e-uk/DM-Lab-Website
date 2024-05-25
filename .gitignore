@@ -2,6 +2,10 @@
 # data/output
 data/input/
 data/examples/
+data/output/c_edge_f.csv
+data/output/c_edge_s.csv
+data/output/c_node_f.csv
+data/output/c_node_s.csv
 
 # Map Matching
 module-scripts/map-matching/cache/
