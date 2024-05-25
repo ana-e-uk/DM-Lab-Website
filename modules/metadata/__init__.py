@@ -97,7 +97,7 @@ def on_button_click(event):
     get_metadata(config.map, config.bounding_box)
 
 # Create the drawing button
-drawing_button = pn.widgets.Button(name='Explore Region', description='If new trajectory was uploaded, wait a couple minutes')
+drawing_button = pn.widgets.Button(name='Explore Region', description='Draw a box on the map')
 
 # Attach the function to the button's click
 drawing_button.on_click(on_button_click)
