@@ -58,7 +58,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295399, 4023087068, 0)",False,,Spruce Street,residential,,49.484,,2.0
 "(65349674, 65319886, 0)",False,2,Balboa Street,tertiary,,98.968,,1.0
 "(65287261, 6910272811, 0)",False,4,Fulton Street,secondary,,7.371,,2.0
-"(599157361, 65296331, 0)",False,,"['Collingwood Street', '21st Street']",residential,,128.405,,2.0
+"(599157361, 65296331, 0)",False,,"['21st Street', 'Collingwood Street']",residential,,128.405,,2.0
 "(65295436, 5647545821, 0)",False,4,California Street,secondary,,55.874,True,35.0
 "(65312690, 65312693, 0)",False,"['3', '2']",Union Street,tertiary,,135.411,False,36.0
 "(5647545821, 65295438, 0)",False,4,California Street,secondary,,39.022000000000006,True,6.0
@@ -109,7 +109,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(6906996472, 65319908, 1)",True,,Bush Street,busway,30 mph,51.038,,2.0
 "(65321333, 4178749997, 0)",False,4,Clayton Street,secondary,,55.75500000000001,,2.0
 "(65325391, 65339271, 0)",True,2,Divisadero Street,secondary,20 mph,104.986,False,39.0
-"(65336961, 65371298, 0)",False,"['3', '4']",Stockton Street,tertiary,,99.314,False,31.0
+"(65336961, 65371298, 0)",False,"['4', '3']",Stockton Street,tertiary,,99.314,False,31.0
 "(65363153, 65334510, 0)",False,4,Mission Street,tertiary,,108.685,True,5.0
 "(65336479, 65307356, 0)",True,3,Battery Street,secondary,25 mph,96.147,True,17.0
 "(65307463, 65336924, 0)",False,2,Presidio Avenue,tertiary,,98.976,,4.0
@@ -138,7 +138,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65334013, 65299327, 0)",False,"['3', '2']",Stockton Street,tertiary,,107.255,False,29.0
 "(65336914, 65307440, 0)",False,2,Fillmore Street,tertiary,20 mph,99.357,,6.0
 "(65332833, 65336961, 0)",True,1,Clay Street,tertiary,,145.96200000000002,False,75.0
-"(261510664, 261510655, 0)",True,"['2', '4']",Potrero Avenue,secondary,25 mph,141.993,False,11.0
+"(261510664, 261510655, 0)",True,"['4', '2']",Potrero Avenue,secondary,25 mph,141.993,False,11.0
 "(65342807, 65300097, 0)",False,"['4', '5']",Mission Street,tertiary,,94.88,,1.0
 "(65319526, 65306804, 0)",True,"['3', '5']",4th Street,secondary,40 mph,128.488,False,11.0
 "(65307366, 65307368, 0)",True,2,Sacramento Street,tertiary,,46.458,False,28.0
@@ -155,7 +155,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65287366, 65293117, 0)",False,,27th Avenue,residential,,207.861,,2.0
 "(4022941212, 65322450, 0)",False,,26th Avenue,residential,,207.883,,1.0
 "(65287277, 65287280, 0)",False,4,Fulton Street,secondary,35 mph,146.459,True,19.0
-"(65300073, 65300078, 0)",True,"['3', '4']",3rd Street,secondary,,195.108,True,13.0
+"(65300073, 65300078, 0)",True,"['4', '3']",3rd Street,secondary,,195.108,True,13.0
 "(65299327, 65334013, 0)",False,"['3', '2']",Stockton Street,tertiary,,107.255,True,9.0
 "(65312672, 65312674, 0)",False,2,Union Street,tertiary,,73.311,,8.0
 "(65307474, 65307477, 0)",False,,Sacramento Street,residential,,146.327,,6.0
@@ -177,15 +177,15 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65345337, 65334193, 0)",False,4,16th Street,secondary,,96.3,True,12.0
 "(65287298, 4021607643, 0)",False,4,Fulton Street,secondary,35 mph,99.198,True,12.0
 "(65295493, 65295489, 0)",False,2,California Street,tertiary,25 mph,94.469,True,19.0
-"(65354097, 65325408, 0)",False,"['3', '4']",Stanyan Street,secondary,,103.039,True,16.0
+"(65354097, 65325408, 0)",False,"['4', '3']",Stanyan Street,secondary,,103.039,True,16.0
 "(258965257, 6320119974, 0)",True,"['3', '2']",3rd Street,primary,30 mph,139.49,,1.0
 "(65295450, 65295452, 0)",False,2,California Street,tertiary,25 mph,40.8,True,9.0
 "(65287319, 65375419, 0)",False,,8th Avenue,residential,,208.277,True,36.0
 "(65290217, 65300059, 0)",True,4,3rd Street,secondary,,67.901,True,9.0
 "(65337001, 65337003, 0)",False,2,Clay Street,residential,,136.45100000000002,True,20.0
 "(65295299, 65352435, 0)",False,,Stockton Street,residential,,107.552,,2.0
-"(65325408, 65354097, 0)",False,"['3', '4']",Stanyan Street,secondary,,103.039,False,9.0
-"(1472411079, 265666762, 0)",True,"['3', '4']",Potrero Avenue,secondary,25 mph,145.25400000000002,True,13.0
+"(65325408, 65354097, 0)",False,"['4', '3']",Stanyan Street,secondary,,103.039,False,9.0
+"(1472411079, 265666762, 0)",True,"['4', '3']",Potrero Avenue,secondary,25 mph,145.25400000000002,True,13.0
 "(65302782, 4022927416, 0)",False,2,6th Avenue,residential,,193.093,False,53.0
 "(65295458, 65295455, 0)",False,2,California Street,tertiary,25 mph,99.02,,8.0
 "(65317939, 65371286, 0)",True,3,Stockton Street,tertiary,20 mph,97.409,False,13.0
@@ -198,13 +198,13 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295447, 65280072, 0)",False,4,California Street,secondary,,94.284,,15.0
 "(65318115, 65291341, 0)",False,,30th Street,residential,,90.504,False,35.0
 "(65336583, 65352351, 0)",False,,McAllister Street,residential,,146.451,False,32.0
-"(65287298, 65315794, 0)",False,"['3', '4']",Arguello Boulevard,tertiary,,105.526,True,5.0
+"(65287298, 65315794, 0)",False,"['4', '3']",Arguello Boulevard,tertiary,,105.526,True,5.0
 "(65303533, 65303538, 0)",True,3,Sutter Street,tertiary,,139.091,True,20.0
 "(5647545821, 65295436, 0)",False,4,California Street,secondary,,55.874,False,55.0
 "(65281944, 1260360822, 0)",True,3,James Lick Freeway,motorway,50 mph,681.798,,2.0
 "(65327929, 65327931, 0)",False,2,Haight Street,tertiary,20 mph,43.997,,4.0
 "(65324858, 65318612, 0)",False,2,18th Street,tertiary,,104.685,True,4.0
-"(3716495457, 65339258, 0)",True,"['3', '4']",Fell Street,primary,30 mph,144.471,,1.0
+"(3716495457, 65339258, 0)",True,"['4', '3']",Fell Street,primary,30 mph,144.471,,1.0
 "(4104677530, 4694790279, 0)",True,,,secondary_link,,50.069,False,39.0
 "(65303362, 65333496, 0)",False,,Clifford Terrace,residential,15 mph,148.929,,1.0
 "(65307417, 6710688121, 0)",True,2,Sacramento Street,tertiary,,136.439,False,54.0
@@ -222,7 +222,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295415, 65295420, 0)",False,4,California Street,secondary,,101.533,False,36.0
 "(65324911, 65324419, 0)",False,2,18th Street,residential,25 mph,88.39,,1.0
 "(65295420, 65295415, 0)",False,4,California Street,secondary,,101.533,False,112.0
-"(5854943486, 65327403, 0)",True,"['3', '2', '4']",Pine Street,tertiary,20 mph,104.911,True,30.0
+"(5854943486, 65327403, 0)",True,"['4', '3', '2']",Pine Street,tertiary,20 mph,104.911,True,30.0
 "(4021327376, 4021327380, 0)",False,4,Fulton Street,secondary,35 mph,94.107,True,18.0
 "(65312685, 1580517057, 0)",False,,Larkin Street,residential,,104.763,,2.0
 "(65291752, 65291756, 0)",False,2,Willard Street North,residential,,64.013,,1.0
@@ -231,7 +231,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(5283675522, 173176455, 0)",False,"['3', '2']",Sacramento Street,residential,,146.563,False,49.0
 "(65332164, 65330974, 0)",False,,Waller Street,residential,,73.32300000000001,,1.0
 "(65352337, 65327144, 0)",False,4,McAllister Street,tertiary,20 mph,145.153,False,53.0
-"(65306804, 65351774, 0)",True,"['3', '4']",4th Street,secondary,,124.578,True,16.0
+"(65306804, 65351774, 0)",True,"['4', '3']",4th Street,secondary,,124.578,True,16.0
 "(65317585, 65317590, 0)",False,3,Folsom Street,tertiary,,179.48399999999998,,1.0
 "(4022941223, 4022941220, 0)",False,4,Fulton Street,secondary,35 mph,94.592,,2.0
 "(261510687, 261510678, 0)",True,"['3', '2']",Potrero Avenue,secondary,25 mph,104.226,True,3.0
@@ -239,7 +239,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65345130, 65289005, 0)",False,3,16th Street,tertiary,,51.353,,1.0
 "(5826707782, 65306789, 0)",True,"['3', '2']",Beale Street,tertiary,,74.042,True,4.0
 "(65295477, 65351708, 0)",False,,21st Avenue,residential,,208.076,,1.0
-"(65371298, 65336961, 0)",False,"['3', '4']",Stockton Street,tertiary,,99.314,True,14.0
+"(65371298, 65336961, 0)",False,"['4', '3']",Stockton Street,tertiary,,99.314,True,14.0
 "(65336914, 65365195, 0)",False,2,Fillmore Street,tertiary,20 mph,98.906,True,1.0
 "(65293652, 65293657, 0)",False,,19th Street,residential,,97.008,,2.0
 "(65306996, 65300105, 0)",False,,Jessie Street,residential,,93.036,,1.0
@@ -297,7 +297,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65336607, 173175743, 0)",False,,Scott Street,residential,,98.846,,2.0
 "(65308334, 65287261, 0)",True,2,Masonic Avenue,secondary,25 mph,209.982,,7.0
 "(65287290, 65287288, 0)",False,4,Fulton Street,secondary,35 mph,91.868,True,38.0
-"(6378899315, 65307376, 0)",False,"['3', '2', '4']","['Stockton Street', 'Stockton Tunnel']",tertiary,,391.153,False,37.0
+"(6378899315, 65307376, 0)",False,"['4', '3', '2']","['Stockton Tunnel', 'Stockton Street']",tertiary,,391.153,False,37.0
 "(581251865, 65324878, 0)",False,2,18th Street,tertiary,,101.148,False,20.0
 "(65324869, 65307040, 0)",False,2,18th Street,tertiary,,79.168,True,6.0
 "(65312690, 65345281, 0)",True,2,Van Ness Avenue,trunk,25 mph,104.832,,1.0
@@ -335,7 +335,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65351073, 65349661, 0)",False,,4th Avenue,residential,,207.425,,2.0
 "(65317939, 1580501214, 0)",True,,O'Farrell Street,secondary,,138.36100000000002,False,90.0
 "(2327650830, 65312038, 0)",False,2,Cortland Avenue,tertiary,25 mph,47.326,,8.0
-"(386885670, 1271001343, 0)",True,"['3', '4']",Post Street,tertiary,,87.06899999999999,,4.0
+"(386885670, 1271001343, 0)",True,"['4', '3']",Post Street,tertiary,,87.06899999999999,,4.0
 "(65287356, 4022941218, 0)",False,4,Fulton Street,secondary,35 mph,94.114,False,42.0
 "(65315779, 65295420, 0)",False,"['3', '2']",Arguello Boulevard,tertiary,,69.526,,1.0
 "(4018939403, 65327046, 0)",False,,Lloyd Street,residential,,102.331,,1.0
@@ -343,8 +343,8 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(4022947857, 4022947858, 0)",False,4,Fulton Street,secondary,35 mph,98.94,,9.0
 "(65368988, 6910272807, 0)",False,5,Turk Boulevard,secondary,30 mph,7.468,,1.0
 "(65336924, 65352255, 0)",False,2,Presidio Avenue,tertiary,,98.92,,5.0
-"(65290798, 65315481, 0)",False,"['3', '4']",5th Street,tertiary,,125.215,True,5.0
-"(65317386, 65345359, 0)",False,"['3', '4']",Mission Street,secondary,20 mph,180.03199999999998,False,37.0
+"(65290798, 65315481, 0)",False,"['4', '3']",5th Street,tertiary,,125.215,True,5.0
+"(65317386, 65345359, 0)",False,"['4', '3']",Mission Street,secondary,20 mph,180.03199999999998,False,37.0
 "(65296310, 65296309, 0)",False,"['3', '2']",Castro Street,secondary,,192.371,True,25.0
 "(65287349, 4022941220, 0)",False,4,Fulton Street,secondary,35 mph,94.261,,4.0
 "(65293105, 65295487, 0)",False,2,California Street,tertiary,25 mph,94.302,,23.0
@@ -367,7 +367,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295474, 65289356, 0)",False,,20th Avenue,residential,,207.447,,1.0
 "(65304997, 260494519, 0)",False,,Douglass Street,residential,,84.976,,2.0
 "(65292874, 65292875, 0)",False,,Nebraska Street,residential,,176.464,,1.0
-"(65287287, 65325408, 0)",False,"['3', '4']",Stanyan Street,secondary,,209.598,True,27.0
+"(65287287, 65325408, 0)",False,"['4', '3']",Stanyan Street,secondary,,209.598,True,27.0
 "(258967880, 65294235, 0)",False,2,18th Street,tertiary,,13.123,,1.0
 "(371239915, 65337003, 0)",False,2,Clay Street,residential,,145.893,True,28.0
 "(65305827, 65336950, 0)",True,2,Clay Street,tertiary,,69.091,False,20.0
@@ -393,7 +393,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65322718, 65312709, 0)",False,,Pierce Street,residential,,104.961,,1.0
 "(65317590, 65317592, 0)",False,3,Folsom Street,tertiary,,68.37100000000001,,1.0
 "(65347067, 65295434, 0)",False,,4th Avenue,residential,,39.895,,2.0
-"(65305819, 65295287, 0)",True,"['3', '4']",Montgomery Street,secondary,,104.465,,1.0
+"(65305819, 65295287, 0)",True,"['4', '3']",Montgomery Street,secondary,,104.465,,1.0
 "(259139108, 4019294259, 0)",True,2,Divisadero Street,secondary,,110.269,True,29.0
 "(65314202, 65314200, 0)",False,2,Post Street,tertiary,,144.593,,1.0
 "(65292419, 65298353, 0)",False,2,Ashbury Street,tertiary,,224.442,,11.0
@@ -426,8 +426,8 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295447, 65295444, 0)",False,4,California Street,secondary,,94.161,,5.0
 "(65302780, 65302782, 0)",False,,6th Avenue,residential,,207.46,True,10.0
 "(65303573, 65303574, 0)",False,,Sutter Street,residential,,146.37400000000002,,1.0
-"(65281944, 65281916, 0)",True,"['2', '4']",,motorway_link,50 mph,636.9010000000001,,5.0
-"(65315787, 309032633, 0)",False,"['3', '4']",Arguello Boulevard,tertiary,,51.935,True,9.0
+"(65281944, 65281916, 0)",True,"['4', '2']",,motorway_link,50 mph,636.9010000000001,,5.0
+"(65315787, 309032633, 0)",False,"['4', '3']",Arguello Boulevard,tertiary,,51.935,True,9.0
 "(65295485, 65295487, 0)",False,2,California Street,tertiary,25 mph,94.179,False,49.0
 "(6910272811, 65287260, 0)",False,4,Fulton Street,tertiary,,147.863,False,132.0
 "(65289331, 65295444, 0)",False,,10th Avenue,residential,,207.255,,2.0
@@ -444,7 +444,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(4941850449, 65329503, 0)",True,2,Industrial Street,tertiary,30 mph,32.298,,2.0
 "(65291752, 65365950, 0)",False,3,Turk Boulevard,tertiary,30 mph,72.098,,2.0
 "(65349672, 65349674, 0)",False,2,Balboa Street,tertiary,,98.739,,2.0
-"(65300085, 65306804, 0)",True,"['3', '4']",Howard Street,secondary,25 mph,277.31,,1.0
+"(65300085, 65306804, 0)",True,"['4', '3']",Howard Street,secondary,25 mph,277.31,,1.0
 "(6952632751, 5853161522, 0)",True,,,busway,,81.04799999999999,True,13.0
 "(65361705, 65365950, 0)",False,3,Turk Boulevard,tertiary,30 mph,74.267,,7.0
 "(65295361, 65295364, 0)",False,4,California Street,tertiary,,146.28,,1.0
@@ -562,7 +562,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65292975, 65298164, 0)",False,2,Cortland Avenue,tertiary,25 mph,57.112,False,28.0
 "(260191102, 260190943, 0)",False,,30th Street,residential,,12.017,,1.0
 "(65295289, 65307363, 0)",True,4,Kearny Street,secondary,,103.863,,1.0
-"(65336947, 65336479, 0)",True,"['3', '4']",Clay Street,tertiary,,105.423,False,45.0
+"(65336947, 65336479, 0)",True,"['4', '3']",Clay Street,tertiary,,105.423,False,45.0
 "(65295449, 258756003, 0)",False,5,California Street,secondary,,40.748,True,35.0
 "(65293660, 65312121, 0)",False,,Eureka Street,residential,,179.298,,1.0
 "(4022924673, 4022924671, 0)",False,4,Fulton Street,secondary,35 mph,95.05,True,21.0
@@ -581,7 +581,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65287402, 65297058, 0)",False,,43rd Avenue,residential,,208.025,,2.0
 "(65319894, 65324849, 0)",False,2,18th Street,tertiary,,65.837,True,10.0
 "(4022924675, 65287324, 0)",False,4,Fulton Street,secondary,35 mph,93.243,False,38.0
-"(65345379, 65296324, 0)",True,"['3', '2', '4']",Market Street,primary,20 mph,244.19600000000003,True,3.0
+"(65345379, 65296324, 0)",True,"['4', '3', '2']",Market Street,primary,20 mph,244.19600000000003,True,3.0
 "(258967880, 258967879, 0)",True,2,Dolores Street,secondary,25 mph,85.806,,1.0
 "(65365236, 65333932, 0)",False,2,Fillmore Street,tertiary,,104.215,,2.0
 "(65296774, 65296369, 0)",False,,28th Street,residential,,195.233,,4.0
@@ -601,7 +601,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65327927, 65307322, 0)",False,2,Haight Street,tertiary,20 mph,95.224,True,17.0
 "(259138849, 259138847, 0)",True,2,Divisadero Street,secondary,25 mph,105.294,False,44.0
 "(65296312, 65296310, 0)",False,"['3', '2']",Castro Street,secondary,,89.23599999999999,False,23.0
-"(65306789, 65306793, 0)",False,"['3', '4']",Howard Street,secondary,25 mph,108.247,,2.0
+"(65306789, 65306793, 0)",False,"['4', '3']",Howard Street,secondary,25 mph,108.247,,2.0
 "(258913486, 65339338, 0)",True,2,Divisadero Street,secondary,20 mph,15.166,,3.0
 "(65331040, 65336459, 0)",False,2,Cabrillo Street,residential,25 mph,93.473,False,45.0
 "(65367585, 1692478722, 0)",True,2,Market Street,primary,35 mph,69.61500000000001,,5.0
@@ -610,14 +610,14 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65296346, 1000699966, 0)",False,,24th Street,residential,20 mph,193.24,,2.0
 "(65308820, 65308746, 0)",True,2,Potrero Avenue,secondary,25 mph,143.89,True,18.0
 "(65303589, 4694790279, 0)",False,4,Presidio Avenue,tertiary,,72.26700000000001,True,32.0
-"(65306793, 65306789, 0)",False,"['3', '4']",Howard Street,secondary,25 mph,108.247,,1.0
+"(65306793, 65306789, 0)",False,"['4', '3']",Howard Street,secondary,25 mph,108.247,,1.0
 "(65297095, 65329901, 0)",False,2,Balboa Street,tertiary,,94.09,,1.0
 "(65327936, 65327933, 0)",False,2,Haight Street,tertiary,20 mph,148.85199999999998,,12.0
 "(259139109, 259138858, 0)",True,2,Divisadero Street,secondary,20 mph,104.841,False,30.0
 "(65328707, 65328710, 0)",True,"['1', '2']",Grant Avenue,residential,,49.384,,4.0
 "(65295452, 65289340, 0)",False,,14th Avenue,residential,,207.335,,1.0
 "(65287290, 65291765, 0)",False,2,Willard Street North,residential,,105.805,,3.0
-"(65302139, 65308730, 0)",True,"['3', '4']",Potrero Avenue,secondary,25 mph,104.07,False,12.0
+"(65302139, 65308730, 0)",True,"['4', '3']",Potrero Avenue,secondary,25 mph,104.07,False,12.0
 "(65315790, 309032633, 0)",False,4,Arguello Boulevard,tertiary,,28.633,,2.0
 "(65362744, 65333496, 0)",False,2,Ashbury Street,tertiary,,58.67,,3.0
 "(258756003, 258906452, 0)",True,3,Park Presidio Boulevard,trunk,35 mph,207.76599999999996,,5.0
@@ -643,7 +643,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65281916, 65281097, 0)",False,4,5th Street,secondary,,191.96399999999997,True,9.0
 "(65341408, 65312038, 0)",True,,Ellsworth Street,residential,,164.512,,1.0
 "(6910182909, 65336865, 0)",False,,McAllister Street,residential,,139.628,True,31.0
-"(65296331, 599157361, 0)",False,,"['Collingwood Street', '21st Street']",residential,,128.40499999999997,,1.0
+"(65296331, 599157361, 0)",False,,"['21st Street', 'Collingwood Street']",residential,,128.40499999999997,,1.0
 "(4694790279, 65303589, 0)",False,4,Presidio Avenue,tertiary,,72.267,True,9.0
 "(65322684, 65312672, 0)",False,,Leavenworth Street,residential,,105.176,,1.0
 "(65296327, 65324863, 0)",False,2,18th Street,tertiary,,97.983,False,13.0
@@ -734,7 +734,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(10251824554, 65291006, 0)",False,"['3', '2']",Townsend Street,tertiary,,73.856,True,7.0
 "(4022941217, 4022941228, 0)",False,4,Fulton Street,secondary,35 mph,94.222,,18.0
 "(65325061, 65324087, 0)",False,"['3', '2']",5th Street,tertiary,,95.766,,4.0
-"(65296334, 2800130439, 0)",False,2,"['Collingwood Street', '22nd Street']",residential,,350.08,,3.0
+"(65296334, 2800130439, 0)",False,2,"['22nd Street', 'Collingwood Street']",residential,,350.08,,3.0
 "(65303556, 258758548, 0)",True,3,Sutter Street,residential,20 mph,137.159,,2.0
 "(2768893484, 65289350, 0)",False,,17th Avenue,residential,,207.392,,1.0
 "(65320995, 65296319, 0)",False,,16th Street,residential,,108.56,,2.0
@@ -772,7 +772,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65303578, 65303577, 0)",False,,Sutter Street,residential,,146.298,,1.0
 "(65351772, 65319526, 0)",True,3,4th Street,secondary,40 mph,64.77,True,14.0
 "(65308721, 65302139, 0)",True,2,Potrero Avenue,secondary,25 mph,178.036,True,9.0
-"(65303544, 65303546, 0)",True,"['3', '4']",Sutter Street,tertiary,,146.931,,1.0
+"(65303544, 65303546, 0)",True,"['4', '3']",Sutter Street,tertiary,,146.931,,1.0
 "(65295422, 65287700, 0)",False,4,California Street,secondary,,94.836,,11.0
 "(65303559, 65303560, 0)",True,2,Sutter Street,residential,,136.906,,2.0
 "(65336129, 65336127, 0)",False,2,Greenwich Street,residential,25 mph,122.606,True,19.0
@@ -788,7 +788,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65307404, 65336987, 0)",False,,Leavenworth Street,residential,,99.211,,1.0
 "(258964508, 65300495, 0)",False,,Palou Avenue,tertiary,,15.299,,3.0
 "(65288811, 265666764, 0)",False,,25th Street,residential,,82.20400000000001,True,17.0
-"(65338267, 258456881, 0)",True,"['2', '4']",Geary Boulevard,secondary,35 mph,65.086,,2.0
+"(65338267, 258456881, 0)",True,"['4', '2']",Geary Boulevard,secondary,35 mph,65.086,,2.0
 "(65312695, 65312693, 0)",False,2,Union Street,tertiary,,146.248,True,12.0
 "(65304065, 65324866, 0)",False,2,18th Street,tertiary,,94.964,True,12.0
 "(65295420, 65295422, 0)",False,4,California Street,secondary,,99.222,True,25.0
@@ -814,7 +814,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(2819241004, 65339290, 0)",False,,McAllister Street,residential,,8.299,,3.0
 "(65303655, 65317342, 0)",False,,17th Street,residential,,83.091,,1.0
 "(65305819, 65307363, 0)",True,2,Sacramento Street,tertiary,,145.838,False,41.0
-"(65291752, 65315790, 0)",False,"['3', '4']",Turk Boulevard,tertiary,30 mph,154.03799999999995,,1.0
+"(65291752, 65315790, 0)",False,"['4', '3']",Turk Boulevard,tertiary,30 mph,154.03799999999995,,1.0
 "(1692478722, 65324886, 0)",True,2,Market Street,primary,35 mph,33.119,,1.0
 "(65305069, 65292537, 0)",False,2,Silver Avenue,tertiary,,97.232,,1.0
 "(6913099452, 65285688, 0)",False,4,Turk Boulevard,tertiary,30 mph,78.801,,2.0
@@ -846,13 +846,13 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65295499, 65307164, 0)",False,,32nd Avenue,tertiary,,70.356,,8.0
 "(65293648, 65324863, 0)",False,,Hartford Street,residential,,178.787,,1.0
 "(65339460, 258913493, 0)",True,2,Divisadero Street,secondary,20 mph,15.157,,5.0
-"(258758536, 258758535, 0)",True,"['2', '4']",Van Ness Avenue,trunk,25 mph,105.156,,2.0
+"(258758536, 258758535, 0)",True,"['4', '2']",Van Ness Avenue,trunk,25 mph,105.156,,2.0
 "(65296316, 65369164, 0)",False,,Beaver Street,residential,,215.243,,2.0
 "(6910272813, 6910272811, 0)",True,2,Masonic Avenue,secondary,25 mph,104.803,,2.0
 "(65367373, 65367378, 0)",False,2,Clayton Street,tertiary,,19.55,,7.0
 "(65315412, 65352257, 0)",False,4,Presidio Avenue,tertiary,,104.7,False,60.0
 "(65367378, 65367373, 0)",False,2,Clayton Street,tertiary,,19.55,,1.0
-"(65371299, 65334013, 0)",False,"['3', '4']",Stockton Street,tertiary,,103.393,True,10.0
+"(65371299, 65334013, 0)",False,"['4', '3']",Stockton Street,tertiary,,103.393,True,10.0
 "(65324623, 65287711, 0)",False,3,Balboa Street,tertiary,20 mph,94.265,,2.0
 "(65305814, 65318326, 0)",True,"['3', '2']","['New Montgomery Street', 'Montgomery Street']",secondary,,108.238,False,117.0
 "(65313365, 65336713, 0)",False,,McAllister Street,residential,,140.873,False,53.0
@@ -865,7 +865,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65287319, 4022924680, 0)",False,4,Fulton Street,secondary,35 mph,94.519,False,86.0
 "(65296774, 65327285, 0)",False,,Noe Street,residential,,178.22500000000002,True,19.0
 "(65287288, 65287290, 0)",False,4,Fulton Street,secondary,35 mph,91.868,True,12.0
-"(65352330, 65287201, 0)",True,"['3', '4']",Hyde Street,tertiary,20 mph,104.742,,2.0
+"(65352330, 65287201, 0)",True,"['4', '3']",Hyde Street,tertiary,20 mph,104.742,,2.0
 "(9691602628, 65352339, 0)",False,2,McAllister Street,tertiary,,8.0,,2.0
 "(65315790, 3998115410, 0)",False,4,Balboa Street,tertiary,,54.46500000000001,,8.0
 "(65337066, 2642129714, 0)",False,2,Clayton Street,tertiary,,121.51,True,15.0
@@ -905,7 +905,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65291341, 65312281, 0)",False,,30th Street,residential,,73.958,,13.0
 "(65327171, 65336999, 0)",True,2,Clay Street,residential,,146.404,False,74.0
 "(65332243, 65356422, 0)",False,,Palou Avenue,residential,,65.937,True,18.0
-"(65308767, 65308764, 0)",False,"['6', '5']",Potrero Avenue,secondary,25 mph,145.045,,1.0
+"(65308767, 65308764, 0)",False,"['5', '6']",Potrero Avenue,secondary,25 mph,145.045,,1.0
 "(258758543, 65327171, 0)",True,2,Clay Street,residential,,137.784,False,54.0
 "(65296337, 65296334, 0)",False,,Castro Street,tertiary,,89.647,True,18.0
 "(65300097, 65300105, 0)",True,4,3rd Street,secondary,,65.93100000000001,True,16.0
@@ -921,11 +921,11 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(5826707779, 65363153, 0)",True,3,Fremont Street,secondary,,75.165,False,58.0
 "(4019294259, 4019294261, 0)",False,2,Divisadero Street,secondary,,102.437,False,41.0
 "(4022941206, 4022941213, 0)",False,4,Fulton Street,secondary,35 mph,94.212,True,8.0
-"(65371286, 65351772, 0)",True,"['3', '2', '4']","['Stockton Street', '4th Street']",tertiary,,234.76800000000003,False,121.0
+"(65371286, 65351772, 0)",True,"['4', '3', '2']","['4th Street', 'Stockton Street']",tertiary,,234.76800000000003,False,121.0
 "(65332853, 6378899554, 0)",False,,Green Street,residential,,136.909,,3.0
 "(65350747, 65329089, 0)",False,,McAllister Street,residential,,147.017,False,121.0
 "(65297347, 65287265, 0)",False,,Hemway Terrace,residential,,94.899,,11.0
-"(65326744, 65343958, 0)",True,2,"['Mason Street', 'Turk Street']","['residential', 'tertiary']",20 mph,251.213,False,151.0
+"(65326744, 65343958, 0)",True,2,"['Turk Street', 'Mason Street']","['residential', 'tertiary']",20 mph,251.213,False,151.0
 "(65307352, 65307354, 0)",True,2,Sacramento Street,tertiary,,104.596,True,32.0
 "(65339258, 65325391, 0)",True,2,Divisadero Street,secondary,20 mph,104.897,True,14.0
 "(65327064, 65327062, 0)",False,,Harper Street,residential,,126.778,,1.0
@@ -949,7 +949,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65317391, 10946845802, 0)",True,1,Valencia Street,tertiary,20 mph,178.834,,1.0
 "(65333432, 65287285, 0)",False,,Shrader Street,residential,,107.771,,1.0
 "(6319217971, 65319940, 0)",True,3,Bush Street,secondary,30 mph,145.69000000000003,True,3.0
-"(258910905, 65315781, 0)",False,"['3', '2', '4']",Arguello Boulevard,tertiary,,207.409,True,12.0
+"(258910905, 65315781, 0)",False,"['4', '3', '2']",Arguello Boulevard,tertiary,,207.409,True,12.0
 "(258910948, 65307165, 0)",False,,32nd Avenue,residential,,207.061,True,17.0
 "(65305117, 65343473, 0)",False,2,Newhall Street,residential,,92.278,,2.0
 "(65287287, 65287288, 0)",False,4,Fulton Street,secondary,35 mph,54.019,False,91.0
@@ -988,7 +988,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(4022924671, 65287678, 0)",False,,5th Avenue,residential,,183.412,,1.0
 "(65336422, 65306684, 0)",False,,Noe Street,residential,,90.161,True,44.0
 "(4018639948, 6949087637, 0)",True,2,Stanyan Street,secondary,,32.475,True,15.0
-"(309032633, 65315787, 0)",False,"['3', '4']",Arguello Boulevard,tertiary,,51.935,True,2.0
+"(309032633, 65315787, 0)",False,"['4', '3']",Arguello Boulevard,tertiary,,51.935,True,2.0
 "(65312706, 65312705, 0)",False,2,Union Street,tertiary,,146.31199999999998,,10.0
 "(65324623, 3998115410, 0)",False,3,Balboa Street,tertiary,20 mph,49.014,,1.0
 "(65296337, 65296340, 0)",False,,Castro Street,tertiary,,89.116,False,36.0
@@ -1004,15 +1004,15 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65290949, 65308708, 0)",True,3,Potrero Avenue,secondary,25 mph,143.78799999999998,True,16.0
 "(65336129, 65322726, 0)",False,,Lyon Street,residential,,105.206,True,31.0
 "(65295401, 65295399, 0)",False,4,California Street,secondary,,121.65100000000002,False,89.0
-"(65325408, 65287287, 0)",False,"['3', '4']",Stanyan Street,secondary,,209.598,False,32.0
+"(65325408, 65287287, 0)",False,"['4', '3']",Stanyan Street,secondary,,209.598,False,32.0
 "(65300085, 65300093, 0)",True,"['4', '5']",3rd Street,secondary,,128.341,True,9.0
 "(65339516, 65301575, 0)",False,,Washington Street,residential,,148.393,,1.0
 "(65351775, 65351780, 0)",True,4,4th Street,secondary,,57.863,,3.0
 "(65327927, 65332168, 0)",False,,Clayton Street,tertiary,,104.692,,1.0
 "(65339290, 2819241004, 0)",False,,McAllister Street,residential,,8.299,,3.0
-"(65345359, 65317386, 0)",False,"['3', '4']",Mission Street,secondary,20 mph,180.03199999999998,True,13.0
+"(65345359, 65317386, 0)",False,"['4', '3']",Mission Street,secondary,20 mph,180.03199999999998,True,13.0
 "(65349662, 65297727, 0)",False,3,Balboa Street,tertiary,,94.557,,1.0
-"(259138838, 65301517, 0)",True,"['3', '4']",Fell Street,primary,30 mph,144.336,,1.0
+"(259138838, 65301517, 0)",True,"['4', '3']",Fell Street,primary,30 mph,144.336,,1.0
 "(65341627, 65341630, 0)",False,,18th Avenue,residential,,207.714,,1.0
 "(265666763, 265666764, 0)",True,2,Potrero Avenue,secondary,25 mph,39.510000000000005,,19.0
 "(65334193, 65345337, 0)",False,4,16th Street,secondary,,96.3,False,14.0
@@ -1030,7 +1030,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65356185, 65328707, 0)",True,,Commercial Street,residential,,135.771,,2.0
 "(65292419, 65333496, 0)",False,2,Ashbury Street,tertiary,,120.58100000000002,,8.0
 "(65314171, 65314166, 0)",True,3,Post Street,tertiary,20 mph,146.027,,4.0
-"(65315481, 65293779, 0)",False,"['3', '2', '4', '5']",Brannan Street,secondary,,276.235,,2.0
+"(65315481, 65293779, 0)",False,"['5', '4', '3', '2']",Brannan Street,secondary,,276.235,,2.0
 "(65324852, 10946845802, 0)",False,2,18th Street,tertiary,,68.42099999999999,True,21.0
 "(65287262, 65369603, 0)",False,,Atalaya Terrace,residential,,81.642,,4.0
 "(65312716, 65301587, 0)",False,,Union Street,residential,,148.204,False,26.0
@@ -1038,7 +1038,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65287324, 4022924675, 0)",False,4,Fulton Street,secondary,35 mph,93.243,,7.0
 "(65315412, 4694790279, 0)",False,4,Presidio Avenue,tertiary,,32.096999999999994,,9.0
 "(65312687, 258758536, 0)",False,3,Union Street,tertiary,,137.074,False,15.0
-"(65371299, 65337399, 0)",False,"['3', '4']",Stockton Street,tertiary,,99.22299999999998,True,34.0
+"(65371299, 65337399, 0)",False,"['4', '3']",Stockton Street,tertiary,,99.22299999999998,True,34.0
 "(65339246, 65310823, 0)",True,2,Divisadero Street,secondary,20 mph,104.785,False,52.0
 "(65307150, 65295499, 0)",False,,32nd Avenue,residential,,352.398,,1.0
 "(295218056, 258967899, 0)",True,2,Dolores Street,secondary,25 mph,88.074,,1.0
@@ -1081,7 +1081,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65307456, 65295377, 0)",False,,Baker Street,residential,,103.051,,2.0
 "(65314209, 65314212, 0)",False,2,Post Street,tertiary,,123.80100000000002,,1.0
 "(65307932, 65312028, 0)",False,2,Cortland Avenue,tertiary,25 mph,56.585,,8.0
-"(65287360, 65328836, 0)",True,2,"['Crossover Drive', '25th Avenue']",secondary,,268.99100000000004,,2.0
+"(65287360, 65328836, 0)",True,2,"['25th Avenue', 'Crossover Drive']",secondary,,268.99100000000004,,2.0
 "(65293540, 65293538, 0)",False,,19th Street,residential,,82.83399999999999,,2.0
 "(65300049, 10251824554, 0)",False,3,Townsend Street,tertiary,,65.787,True,8.0
 "(65314187, 65303566, 0)",False,,Laguna Street,residential,,104.887,,1.0
@@ -1100,7 +1100,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65307448, 65307443, 0)",False,,Sacramento Street,residential,,146.14499999999998,,1.0
 "(65298353, 65292419, 0)",False,2,Ashbury Street,tertiary,,224.442,False,31.0
 "(65324852, 65324854, 0)",False,2,18th Street,tertiary,,32.022,,2.0
-"(65317544, 65317542, 0)",True,"['3', '4']",Folsom Street,secondary,25 mph,276.71299999999997,,3.0
+"(65317544, 65317542, 0)",True,"['4', '3']",Folsom Street,secondary,25 mph,276.71299999999997,,3.0
 "(65332243, 65346430, 0)",False,,Palou Avenue,residential,,203.831,False,28.0
 "(65287711, 65349661, 0)",False,3,Balboa Street,tertiary,20 mph,94.486,,3.0
 "(65295392, 65295740, 0)",False,,Locust Street,residential,,104.966,,2.0
@@ -1145,7 +1145,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65280072, 65295447, 0)",False,4,California Street,secondary,,94.284,True,51.0
 "(65337399, 65371298, 0)",False,3,Stockton Street,tertiary,,99.11,True,11.0
 "(65329089, 65319004, 0)",False,,McAllister Street,residential,,292.489,False,139.0
-"(65318282, 65313131, 0)",False,"['3', '4']","['5th Street', 'Cyril Magnin Street']",tertiary,,140.553,False,123.0
+"(65318282, 65313131, 0)",False,"['4', '3']","['Cyril Magnin Street', '5th Street']",tertiary,,140.553,False,123.0
 "(259139109, 65301554, 0)",True,3,Pine Street,secondary,20 mph,144.578,,1.0
 "(4694790279, 65315412, 0)",False,4,Presidio Avenue,tertiary,,32.096999999999994,,7.0
 "(65327146, 65327144, 0)",False,3,Polk Street,secondary,20 mph,57.107,,3.0
@@ -1200,7 +1200,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65287251, 65287254, 0)",False,3,Fulton Street,tertiary,,145.803,,4.0
 "(65287251, 65336865, 0)",False,,Baker Street,residential,,105.104,True,20.0
 "(65296319, 65296316, 0)",False,2,Castro Street,secondary,,94.333,,10.0
-"(65315794, 65287298, 0)",False,"['3', '4']",Arguello Boulevard,tertiary,,105.526,True,31.0
+"(65315794, 65287298, 0)",False,"['4', '3']",Arguello Boulevard,tertiary,,105.526,True,31.0
 "(65300093, 65300097, 0)",True,6,3rd Street,secondary,,66.801,True,5.0
 "(65323671, 65305089, 0)",True,2,Industrial Street,tertiary,30 mph,101.937,,8.0
 "(65303548, 65303550, 0)",True,3,Sutter Street,residential,20 mph,146.248,,2.0
@@ -1210,7 +1210,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65289269, 65295489, 0)",False,,28th Avenue,residential,,161.926,,1.0
 "(4021327380, 4021327376, 0)",False,4,Fulton Street,secondary,35 mph,94.107,,7.0
 "(65336459, 65287415, 0)",False,,La Playa Street,residential,,208.34500000000003,False,19.0
-"(2800130439, 65296334, 0)",False,2,"['Collingwood Street', '22nd Street']",residential,,350.08,,4.0
+"(2800130439, 65296334, 0)",False,2,"['22nd Street', 'Collingwood Street']",residential,,350.08,,4.0
 "(65295438, 5647545821, 0)",False,4,California Street,secondary,,39.022000000000006,True,21.0
 "(65307474, 65295403, 0)",False,,Maple Street,residential,,104.134,True,9.0
 "(4188186120, 65337383, 0)",False,4,Columbus Avenue,secondary,25 mph,93.848,True,1.0
@@ -1270,8 +1270,8 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65317986, 259138852, 0)",False,,O'Farrell Street,residential,,8.535,,1.0
 "(2327650830, 2327650831, 0)",False,2,Cortland Avenue,tertiary,25 mph,12.17,,3.0
 "(65303583, 4015833309, 0)",False,,Sutter Street,residential,,146.185,True,12.0
-"(65306810, 65325037, 0)",False,"['3', '4']",5th Street,secondary,,66.134,,1.0
-"(1578907668, 65317939, 0)",True,"['3', '2', '4']",O'Farrell Street,secondary,,146.457,,2.0
+"(65306810, 65325037, 0)",False,"['4', '3']",5th Street,secondary,,66.134,,1.0
+"(1578907668, 65317939, 0)",True,"['4', '3', '2']",O'Farrell Street,secondary,,146.457,,2.0
 "(65295471, 65295466, 0)",False,2,California Street,tertiary,25 mph,94.407,True,20.0
 "(9691602628, 9691602630, 0)",False,2,Van Ness Bus Rapid Transit,busway,,50.434,,2.0
 "(65349668, 65349666, 0)",False,3,Balboa Street,tertiary,,94.037,,1.0
@@ -1327,7 +1327,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65368992, 65347140, 0)",True,2,Turk Boulevard,tertiary,30 mph,78.697,True,8.0
 "(65372268, 65336485, 0)",True,2,Washington Street,unclassified,,206.455,True,1.0
 "(65307172, 65333137, 0)",False,2,Balboa Street,tertiary,,94.163,,1.0
-"(65337399, 65371299, 0)",False,"['3', '4']",Stockton Street,tertiary,,99.223,True,18.0
+"(65337399, 65371299, 0)",False,"['4', '3']",Stockton Street,tertiary,,99.223,True,18.0
 "(65281916, 65325050, 0)",False,5,5th Street,secondary,,68.162,,1.0
 "(1723738829, 3814451006, 0)",True,3,Taylor Street,secondary,20 mph,29.677,True,8.0
 "(65295482, 65329896, 0)",False,,23rd Avenue,residential,,208.086,,1.0
@@ -1441,7 +1441,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65297381, 65295385, 0)",False,,Walnut Street,residential,,103.927,,3.0
 "(260494516, 65304065, 0)",False,,Diamond Street,residential,,122.33,True,1.0
 "(65296354, 65296351, 0)",False,,Castro Street,residential,,89.111,True,34.0
-"(65315481, 65290798, 0)",False,"['3', '4']",5th Street,tertiary,,125.215,True,17.0
+"(65315481, 65290798, 0)",False,"['4', '3']",5th Street,tertiary,,125.215,True,17.0
 "(65303538, 1271001348, 0)",False,2,Grant Avenue,residential,,104.924,,1.0
 "(258910905, 258910914, 0)",True,3,Geary Boulevard,primary,25 mph,98.573,,3.0
 "(65308495, 65315787, 0)",False,"['3', '2']",Arguello Boulevard,tertiary,,149.955,True,13.0
@@ -1524,7 +1524,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65293729, 65312028, 0)",False,2,Cortland Avenue,tertiary,25 mph,56.353,,8.0
 "(330666993, 65312651, 0)",False,,Union Street,residential,,84.36100000000002,True,6.0
 "(65316368, 65287347, 0)",False,,19th Avenue,residential,25 mph,208.074,,1.0
-"(65351780, 65282779, 0)",True,"['3', '4']",4th Street,secondary,,65.581,False,16.0
+"(65351780, 65282779, 0)",True,"['4', '3']",4th Street,secondary,,65.581,False,16.0
 "(65298164, 65292975, 0)",False,2,Cortland Avenue,tertiary,25 mph,57.111999999999995,,9.0
 "(65295471, 65316359, 0)",False,,19th Avenue,residential,25 mph,208.075,,2.0
 "(65296333, 65296334, 0)",False,,Castro Street,tertiary,,88.64500000000001,True,44.0
@@ -1600,8 +1600,8 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65306684, 65296374, 0)",False,,29th Street,residential,,195.786,,6.0
 "(65295399, 65295392, 0)",False,4,California Street,secondary,,146.398,True,21.0
 "(65339271, 65287243, 0)",True,2,Divisadero Street,secondary,20 mph,104.782,False,23.0
-"(258911592, 65338198, 0)",True,"['3', '4']",Geary Boulevard,primary,25 mph,100.574,,3.0
-"(65363153, 65327403, 0)",True,"['3', '4']","['Front Street', 'Fremont Street']",secondary,,283.067,False,141.0
+"(258911592, 65338198, 0)",True,"['4', '3']",Geary Boulevard,primary,25 mph,100.574,,3.0
+"(65363153, 65327403, 0)",True,"['4', '3']","['Fremont Street', 'Front Street']",secondary,,283.067,False,141.0
 "(4022924683, 65287319, 0)",False,4,Fulton Street,secondary,35 mph,94.282,,5.0
 "(65315781, 65315446, 0)",False,2,Arguello Boulevard,tertiary,,69.989,,1.0
 "(65296340, 65296337, 0)",False,,Castro Street,tertiary,,89.116,True,20.0
@@ -1611,7 +1611,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65345359, 1677788981, 0)",False,4,16th Street,secondary,,89.974,False,36.0
 "(65291286, 1636827301, 0)",False,2,Cortland Avenue,tertiary,25 mph,14.111,,7.0
 "(65333929, 65333932, 0)",False,,Broadway,residential,25 mph,146.475,,6.0
-"(65307376, 6378899315, 0)",False,"['3', '2', '4']","['Stockton Street', 'Stockton Tunnel']",tertiary,,391.153,True,18.0
+"(65307376, 6378899315, 0)",False,"['4', '3', '2']","['Stockton Tunnel', 'Stockton Street']",tertiary,,391.153,True,18.0
 "(65336479, 65327408, 0)",True,2,Clay Street,tertiary,,103.871,False,43.0
 "(260494513, 1723564001, 0)",True,2,Market Street,primary,20 mph,154.867,,3.0
 "(65289005, 65312208, 0)",False,2,16th Street,tertiary,,70.492,,2.0
@@ -1656,7 +1656,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(5853161527, 5826707779, 0)",True,,,busway,,86.51100000000001,True,11.0
 "(260494512, 65345130, 0)",False,3,16th Street,tertiary,,58.384,True,4.0
 "(4019294259, 65295375, 0)",False,4,California Street,secondary,,148.59799999999998,False,85.0
-"(65313131, 65318282, 0)",False,"['3', '4']","['5th Street', 'Cyril Magnin Street']",tertiary,,140.553,,21.0
+"(65313131, 65318282, 0)",False,"['4', '3']","['Cyril Magnin Street', '5th Street']",tertiary,,140.553,,21.0
 "(65287356, 4022941223, 0)",False,4,Fulton Street,secondary,35 mph,94.079,,6.0
 "(65294136, 65347537, 0)",True,"['3', '2']",Turk Boulevard,tertiary,30 mph,85.583,,7.0
 "(65321333, 2642129716, 0)",False,2,Clayton Street,tertiary,,75.268,True,15.0
@@ -1737,7 +1737,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65305824, 65356185, 0)",True,,Commercial Street,residential,,145.702,True,7.0
 "(65293538, 65308721, 0)",True,2,Potrero Avenue,secondary,25 mph,144.122,True,12.0
 "(65341630, 4022947860, 0)",False,,18th Avenue,residential,,208.049,,1.0
-"(65295345, 6710688121, 0)",True,"['3', '4']",Franklin Street,secondary,25 mph,104.87,,1.0
+"(65295345, 6710688121, 0)",True,"['4', '3']",Franklin Street,secondary,25 mph,104.87,,1.0
 "(65336947, 65359314, 0)",False,3,Sansome Street,tertiary,,97.842,,1.0
 "(65307354, 65327408, 0)",True,2,Front Street,tertiary,,102.223,,7.0
 "(65295383, 65307463, 0)",False,3,Presidio Avenue,tertiary,,103.266,,4.0
@@ -1752,9 +1752,9 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(65334473, 6329528592, 0)",False,3,Townsend Street,tertiary,,13.222,,9.0
 "(601280963, 65352349, 0)",False,,McAllister Street,residential,,76.628,False,82.0
 "(65296774, 65296771, 0)",False,,28th Street,residential,,195.669,,1.0
-"(65315781, 258910905, 0)",False,"['3', '2', '4']",Arguello Boulevard,tertiary,,207.40899999999996,False,23.0
+"(65315781, 258910905, 0)",False,"['4', '3', '2']",Arguello Boulevard,tertiary,,207.40899999999996,False,23.0
 "(65336921, 65339516, 0)",False,2,Divisadero Street,secondary,,98.863,True,25.0
-"(5854943486, 65308413, 0)",True,"['3', '4', '5']","['Davis Street', 'Beale Street']",tertiary,30 mph,212.614,True,82.0
+"(5854943486, 65308413, 0)",True,"['4', '3', '5']","['Beale Street', 'Davis Street']",tertiary,30 mph,212.614,True,82.0
 "(65345374, 6336978425, 0)",False,3,16th Street,tertiary,,92.69100000000002,,1.0
 "(65301536, 259138850, 0)",False,,Ellis Street,residential,,144.111,,1.0
 "(65304065, 65312121, 0)",False,2,18th Street,tertiary,,95.0,True,5.0
@@ -1772,15 +1772,15 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(371239915, 173176455, 0)",False,2,Gough Street,tertiary,25 mph,98.902,False,41.0
 "(65295403, 65307474, 0)",False,,Maple Street,residential,,104.134,True,14.0
 "(4023155492, 4014218767, 0)",False,4,Presidio Avenue,tertiary,,34.282,,1.0
-"(4023324382, 65287360, 0)",True,"['1', '3', '2']",Crossover Drive,secondary,,252.052,,3.0
-"(65334013, 65371299, 0)",False,"['3', '4']",Stockton Street,tertiary,,103.393,False,34.0
+"(4023324382, 65287360, 0)",True,"['3', '2', '1']",Crossover Drive,secondary,,252.052,,3.0
+"(65334013, 65371299, 0)",False,"['4', '3']",Stockton Street,tertiary,,103.393,False,34.0
 "(65295367, 65295364, 0)",False,4,California Street,tertiary,,146.19,False,76.0
 "(65295411, 65307477, 0)",False,,Cherry Street,residential,,104.348,,1.0
 "(65339516, 65336921, 0)",False,2,Divisadero Street,secondary,,98.863,True,13.0
 "(65289320, 65295436, 0)",False,,7th Avenue,residential,,196.455,,1.0
 "(65312068, 295222775, 0)",False,2,Cortland Avenue,tertiary,25 mph,53.599,False,46.0
 "(65317986, 258913486, 0)",True,"['3', '2']",Divisadero Street,secondary,20 mph,88.509,False,33.0
-"(65314158, 65314156, 0)",True,"['3', '2', '4']",Post Street,tertiary,20 mph,146.478,,2.0
+"(65314158, 65314156, 0)",True,"['4', '3', '2']",Post Street,tertiary,20 mph,146.478,,2.0
 "(65356180, 65356183, 0)",True,,Commercial Street,residential,,76.966,,2.0
 "(65314173, 65314171, 0)",True,3,Post Street,tertiary,20 mph,146.56799999999998,,2.0
 "(65299327, 4019577207, 0)",False,2,Stockton Street,tertiary,,102.068,False,36.0
@@ -1799,7 +1799,7 @@ Edge,OSM_oneway,OSM_lanes,OSM_name,OSM_highway,OSM_maxspeed,OSM_length,Oneway,Co
 "(4022947860, 65287347, 0)",False,4,Fulton Street,secondary,35 mph,94.124,,4.0
 "(65313365, 65287260, 0)",False,,Central Avenue,residential,,104.921,False,52.0
 "(5283668862, 65307443, 0)",False,,Steiner Street,residential,,99.411,,1.0
-"(65315790, 65291752, 0)",False,"['3', '4']",Turk Boulevard,tertiary,30 mph,154.038,True,20.0
+"(65315790, 65291752, 0)",False,"['4', '3']",Turk Boulevard,tertiary,30 mph,154.038,True,20.0
 "(65307448, 65295367, 0)",False,,Pierce Street,residential,,104.406,,2.0
 "(65315446, 65315445, 0)",False,,Euclid Avenue,tertiary,,100.0,,1.0
 "(4022947860, 4022947859, 0)",False,4,Fulton Street,secondary,35 mph,94.477,False,20.0
