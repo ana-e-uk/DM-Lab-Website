@@ -25,7 +25,7 @@ import param
 
 pn.extension()
 
-from .functions import get_metadata, display_node_data, display_edge_data
+from .functions import get_metadata, display_data #display_node_data, display_edge_data
 from .visualization import generate_markdown
 ########################################## DATA CONSTANTS ########################################## 
 # Get Data Directory
@@ -199,7 +199,7 @@ class PlotUpdater(param.Parameterized):
             
             # get plots
             filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
-            fig = display_node_data(filtered_df_n)
+            fig = display_data(filtered_df_n)
             
             # get markdown
             filtered_df_n_s = self.df_n[self.df_n['Node'] == self.selected_option_n]
@@ -213,7 +213,7 @@ class PlotUpdater(param.Parameterized):
 
             # get plots
             filtered_df_e = self.df_e_f[self.df_e_f['Edge'] == self.selected_option_e]
-            fig = display_edge_data(filtered_df_e)
+            fig = display_data(filtered_df_e)
 
             # get markdown
             filtered_df_e_s = self.df_e[self.df_e['Edge'] == self.selected_option_e]

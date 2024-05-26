@@ -131,27 +131,24 @@ def get_metadata(m, bb):
     c_n_f.to_csv(os.path.join(metadata_dir, c_n_f_file), index=None)
     c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
-def display_node_data(filtered_df):
+def display_data(filtered_df):
     # filtered_df has either 4 rows (one per time bin) or one row with all values
     fig, axs = plt.subplots(1,3, figsize=(15, 5))
     plot_boxplot(axs[0], filtered_df, p=1)
     plot_boxplot(axs[1], filtered_df, p=0)
-    # plot_speed_stats(axs[0], filtered_df, True)
-    # plot_speed_stats(axs[1], filtered_df, False)
-    # get_flow_plot(axs[2], filtered_df)
     plot_flow(axs[2], filtered_df)
-    fig.tight_layout()
 
-    plt.close(fig)
-
-    return fig
-
-def display_edge_data(filtered_df):
-    fig, axs = plt.subplots(1,2, figsize=(10, 5))
-    plot_speed_stats(axs[0], filtered_df, True)
-    plot_speed_stats(axs[1], filtered_df, False)
     fig.tight_layout()
     plt.close(fig)
 
     return fig
+
+# def display_edge_data(filtered_df):
+#     fig, axs = plt.subplots(1,2, figsize=(10, 5))
+#     plot_speed_stats(axs[0], filtered_df, True)
+#     plot_speed_stats(axs[1], filtered_df, False)
+#     fig.tight_layout()
+#     plt.close(fig)
+
+#     return fig
 

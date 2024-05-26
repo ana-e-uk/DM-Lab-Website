@@ -126,9 +126,6 @@ def no_info_plot(ax, p):
     p (int) - 1 for speed stats plot, 0 for travel time plot, 2 for flow plot
     '''
     # Adding labels and title
-    # ax.set_xlabel('Time Bins')
-    # ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
-    # ax.set_xlim([-1.5, 3.5])
     if p==1:
         ax.set_ylabel('Speed (miles per hour)')
         ax.set_title('Speed Variation Over Time Bins')
@@ -151,9 +148,6 @@ def plot_boxplot(ax, edge_data, p):
     # Define the time points and their corresponding labels
     time_points = [-1, 0, 1, 2, 3]
     time_labels = ['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All']
-    
-    # # Filter data for the specific edge
-    # edge_data = data[data['Edge'] == edge]
     
     # Check if all 'Boxplot_speed' values are empty points or if there's no data for the edge
     if edge_data.empty or all(ast.literal_eval(row[cur_col]) == {'points': []} for _, row in edge_data.iterrows()):
@@ -260,6 +254,7 @@ def plot_flow(ax, edge_data):
 
     # Check if there's no data for the edge
     if edge_data.empty:
+        no_info_plot(ax, p=2)
         return
     
     # Initialize bar_width and position offset
@@ -311,10 +306,10 @@ def plot_flow(ax, edge_data):
     
     # Customize the plot
     ax.set_xticks(range(len(time_points)))
-    ax.set_xticklabels(time_labels)
+    ax.set_xticklabels(time_labels, rotation=45)
+    ax.set_xlim(-1, 5)
     ax.set_ylabel('Number of Vehicles')
     ax.set_title(f'Distribution of Trajectory Counts')
-    # ax.set_xlabel('Time Bins')
     
     # Create a legend with unique keys
     handles = [plt.Line2D([0], [0], color=color_map[key], lw=4) for key in unique_keys]
@@ -323,94 +318,11 @@ def plot_flow(ax, edge_data):
     # Set y-axis to increment by whole values
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))
 
-def plot_lines(ax, time, counts_list, labels=None):
-    """
-    Plot multiple lines on a single plot.
-    
-    Parameters:
-        time (array-like): Array containing time points.
-        counts_list (list of array-like): List of arrays containing counts for each line.
-        labels (list of str, optional): List of labels for each line. If None, labels will not be shown.
-    """
-    if labels is None:
-        labels = ['Line {}'.format(i+1) for i in range(len(counts_list))]
-
-    # print('counts list in plot_lines function in visualization.py', counts_list)
-    # print('len(counts_list)',len(counts_list))
-
-    if len(counts_list) == 0:
-        no_info_plot(ax, p=2)
-        return
-
-    for counts, label in zip(counts_list, labels):
-        ax.bar(time, counts, marker='o', label=label)
-
-    ax.set_xlabel('Time Bins')
-    ax.set_ylabel('Number of Vehicles')
-    ax.set_title('Intersection Flow')
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-
-    ax.set_xticks([-1, 0, 1, 2], ['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day'], rotation=20)
-    ax.set_xlim([-1.5, 3.5])
-
-    ax.grid(True)
-
-def process_node_flows(df):
-    # Function to safely evaluate the string to a dictionary
-    def safe_literal_eval(val):
-        if type(val) == dict:
-            return val
-        else:
-            try:
-                return ast.literal_eval(val)
-            except (ValueError, SyntaxError):
-                return {}
-
-    # Convert the 'Flow' column from string to dictionary safely
-    df.loc[:, 'Flow'] = df['Flow'].apply(safe_literal_eval)
-
-    # Expand the 'Flow' dictionary into separate columns
-    flow_expanded = df['Flow'].apply(pd.Series)
-
-    # Combine the expanded Flow columns with the original DataFrame
-    df = pd.concat([df[['Time_bin']], flow_expanded], axis=1)
-
-    # Fill NaN values with 0
-    df = df.fillna(0)
-
-    # Pivot the table to get the desired structure
-    result = df.pivot_table(index='Time_bin', aggfunc='sum').sort_index()
-
-    # Get the times and labels
-    times = result.index.tolist()
-    labels = result.columns.tolist()
-    value_counts = [result[label].tolist() for label in labels]
-
-    return times, labels, value_counts
-
-def get_flow_plot(ax, cur_n_f):
-    times_list, labels, values = process_node_flows(cur_n_f)
-    # print('\n')
-    # print(labels)
-    # print('\n')
-    # print(times_list)
-    # print('\n')
-    # print(values)
-    plot_lines(ax, time=times_list, counts_list=values, labels=labels)
-
 def generate_markdown(row, node):
     '''
     row (pandas dataframe) - one row corresp. to node or edge
     node (bool) - True if node, False if edge
     '''
-    # print('Print statements in generate_markdown function of visualization.py\n')
-    # print('row\n', row)
-    # try:
-    #     print('node\n',row['Node'])
-    #     print('node[0]\n',row['Node'][0])
-    #     print('node.item()\n',row['Node'].item())
-    # except Exception as e:
-    #     print(e)
 
     if node:
         # Node,OSM_street_count,OSM_highway,OSM_edges,Street_count,Count
