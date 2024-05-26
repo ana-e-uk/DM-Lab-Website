@@ -336,12 +336,12 @@ def generate_markdown(row, node):
                     </tr>
                     <tr>
                         <td>Highway</td>
-                        <td>-</td>
+                        <td>TBD</td>
                         <td>{row['OSM_highway'].item()}</td>
                     </tr>
                     <tr>
                         <td>GPS Trajectory Counts</td>
-                        <td>{row['Count'].item()}</td>
+                        <td>{int(row['Count'].item())}</td>
                         <td>X</td>
                     </tr>
                     <tr>
@@ -363,12 +363,12 @@ def generate_markdown(row, node):
                     </tr>
                     <tr>
                         <td>Highway</td>
-                        <td>-</td>
+                        <td>TBD</td>
                         <td>{row['OSM_highway'].item()}</td>
                     </tr>
                     <tr>
                         <td>GPS Trajectory Counts</td>
-                        <td>{row['Count'].item()}</td>
+                        <td>{int(row['Count'].item())}</td>
                         <td>X</td>
                     </tr>
                     <tr>
@@ -383,7 +383,7 @@ def generate_markdown(row, node):
                     </tr>
                     <tr>
                         <td>Lanes</td>
-                        <td>-</td>
+                        <td>TBD</td>
                         <td>{row['OSM_lanes'].item()}</td>
                     </tr>
                     <tr>
@@ -393,8 +393,8 @@ def generate_markdown(row, node):
                     </tr>
                     <tr>
                         <td>Length</td>
-                        <td>-</td>
-                        <td>{row['OSM_length'].item()}</td>
+                        <td>TBD</td>
+                        <td>{round(row['OSM_length'].item(), 2)}</td>
                     </tr>
                 </table>
                 """

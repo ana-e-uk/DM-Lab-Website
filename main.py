@@ -24,6 +24,8 @@ from userdefined_components import Modal
 import config
 pn.extension()
 
+
+only_metadata = True
 ########################################## FUNCTIONS ########################################
 ##### instructions text #####
 instructions_text = pn.pane.Markdown('''
@@ -34,11 +36,23 @@ instructions_text = pn.pane.Markdown('''
                                      
                                      ### Select GPS File to View:
                                     ''')
+instructions_text_only_metadata = pn.pane.Markdown('''
+                                                   # Explore Road Network:
+                                                   1. Choose the Metadata Module below.
 
+                                                   2. Select the OpenStreet Map region of interest by drawing a box on the map and clicking the **Explore Region** button.
+
+                                                   3. Choose a road or intersection using the drop-down menus to visualize speed, travel time, and other metadata for that road or intersection.
+                                                   ''')
 ##### instructions text #####
 upload_text = pn.pane.Markdown('''
                                 ### Upload GPS File:
                                ''')
+
+upload_text_only_metadata = pn.pane.Markdown('''
+                                             # Upload GPS File:
+                                             Upload a GPS trajectory file to contribute to the GPS trajectory-extracted metadata.
+                                             ''')
 
 ######## SELECTION  ################
 options = os.listdir(TRAJ_DIR)
@@ -89,31 +103,49 @@ module_spec = pn.Column(pn.pane.Markdown('''
                         Chose the **Metadata** Module to explore OSM and GPS trajectory-extracted road network information. 
                         '''))
 
+module_spec_only_metadata = pn.Column(pn.pane.Markdown('''             
+                        The **Map Matching** and **Trajectory Split** modules visualize the pre-processing steps needed to prepare GPS trajectories.
+                        '''))
+
+
 ###############   MODULE VISUALIZATION Column ##########
 module_viz = pn.Row(pn.pane.Markdown('''
                                      ### Zoom in and out to change the granularity of the OSM map.
                                      '''))
 
 #####################################################
-
 options = ['Map Matching', 'Trajectory Split', 'Metadata']
 module_select_radio = pn.widgets.RadioBoxGroup(name='Modules', options=options)
 from modules.map_matching import add_map_matching_widgets
 from modules.metadata import add_metadata_widgets
 from modules.traj_split import add_traj_split_widgets
 
-def radio_callback(event):
-    global module_spec
-    global module_viz
-    selected_option = event.new
-    if selected_option == 'Map Matching':
-        add_map_matching_widgets(module_spec, config)
-    elif selected_option == 'Trajectory Split':
-        add_traj_split_widgets(module_spec, config)
-    elif selected_option == 'Metadata':
-        add_metadata_widgets(module_spec, module_viz, config)
-    else:
-        raise Exception("Error Found!")
+if only_metadata:
+    def radio_callback(event):
+        global module_spec_only_metadata
+        global module_viz
+        selected_option = event.new
+        if selected_option == 'Map Matching':
+            add_map_matching_widgets(module_spec_only_metadata, config)
+        elif selected_option == 'Trajectory Split':
+            add_traj_split_widgets(module_spec_only_metadata, config)
+        elif selected_option == 'Metadata':
+            add_metadata_widgets(module_spec_only_metadata, module_viz, config)
+        else:
+            raise Exception("Error Found!")
+else:
+    def radio_callback(event):
+        global module_spec
+        global module_viz
+        selected_option = event.new
+        if selected_option == 'Map Matching':
+            add_map_matching_widgets(module_spec, config)
+        elif selected_option == 'Trajectory Split':
+            add_traj_split_widgets(module_spec, config)
+        elif selected_option == 'Metadata':
+            add_metadata_widgets(module_spec, module_viz, config)
+        else:
+            raise Exception("Error Found!")
 module_select_radio.param.watch(radio_callback, 'value')
 
 ######## MODULE CONTROL AREA  ################
@@ -175,11 +207,30 @@ sidebar_elements = pn.Column(instructions_text,
                              module_spec,
                              # modal.param.open, modal # TODO: can be added later
                             )
-main_elements = [pn.Column(map_pane, module_viz)]
-template = pn.template.FastListTemplate(
-    site='Open Metadata',
-    title="Map Services For GPS Trajectories",
-    sidebar=sidebar_elements,
-    main=main_elements,
-    font='Times New Roman'
-).servable()
+
+sidebar_elements_only_metadata = pn.Column(instructions_text_only_metadata,
+                                           module_select_text, 
+                                           module_select_radio,
+                                           module_spec_only_metadata,
+                                           upload_text_only_metadata,
+                                           pn.Row(file_input, upload_button)
+                                           )
+
+if only_metadata:
+    main_elements = [pn.Column(map_pane, module_viz)]
+    template = pn.template.FastListTemplate(
+        site='Open Metadata',
+        title='GPS Trajectory Extracted Road Network Information',
+        sidebar=sidebar_elements_only_metadata,
+        main=main_elements,
+        font='Times New roman'
+    ).servable()
+else:
+    main_elements = [pn.Column(map_pane, module_viz)]
+    template = pn.template.FastListTemplate(
+        site='Open Metadata',
+        title="Map Services For GPS Trajectories",
+        sidebar=sidebar_elements,
+        main=main_elements,
+        font='Times New Roman'
+    ).servable()
