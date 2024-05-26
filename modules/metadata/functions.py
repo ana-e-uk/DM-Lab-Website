@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
 
-from .visualization import plot_map, plot_speed_stats, get_flow_plot, plot_boxplot
+from .visualization import plot_map, plot_speed_stats, plot_boxplot, plot_flow
 
 ########################################## DATA UPLOAD ########################################## 
 
@@ -138,7 +138,8 @@ def display_node_data(filtered_df):
     plot_boxplot(axs[1], filtered_df, p=0)
     # plot_speed_stats(axs[0], filtered_df, True)
     # plot_speed_stats(axs[1], filtered_df, False)
-    get_flow_plot(axs[2], filtered_df)
+    # get_flow_plot(axs[2], filtered_df)
+    plot_flow(axs[2], filtered_df)
     fig.tight_layout()
 
     plt.close(fig)

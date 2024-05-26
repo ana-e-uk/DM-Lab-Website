@@ -11,6 +11,7 @@ Author: Ana Uribe
 
 ########################################## IMPORTS ##########################################
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 import osmnx as ox
 import numpy as np
@@ -140,86 +141,53 @@ def no_info_plot(ax, p):
 
     ax.text(0.5, 0.5, 'No Info')
 
-def box_plot_or_points(d):
-    no_box_plot = {'whislo':np.NaN,
-                    'q1':np.NaN,
-                    'med':np.NaN,
-                    'q3':np.NaN,
-                    'whishi':np.NaN,
-                    'fliers': []
-                    }
-    if d == {}:
-        return no_box_plot, False, False
-    elif 'points' in d:
-        return no_box_plot, True, True
-    else:
-        return d, False, True
-
-
-def plot_boxplot(ax, df, p):
-
-    # Adding labels and title
-    ax.set_xlabel('Time Bins')
-    ax.set_xticks([-1, 0, 1, 2, 3])
-    ax.set_xticklabels(['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'])
-    # ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
-    # ax.set_xlim([-1.5, 3.5])
-
-    # Sort values df by Time_bin
-    df.sort_values('Time_bin')
-    
+def plot_boxplot(ax, edge_data, p):
+    # get current column
     if p == 1:
         cur_col = 'Boxplot_speed'
     else:
         cur_col = 'Boxplot_time'
 
-    # filtered_df has either 4 rows (one per time bin) or one row with all values: 
-    # values are in: Boxplot_speed,Boxplot_time
-    box_plot_data_list = []
-    plotted_points = False
-
-    time_bins = [-1, 0, 1, 2, 3]
-    print('print statement plot boxplot visualization.py')
-    # print(f'df\n{df}\ndf[Boxplot_speed]: {df['Boxplot_speed']}')
-    for i in time_bins:
-        if i in list(df['Time_bin']):
-            cur_dict = ast.literal_eval(str(df[df['Time_bin'] == i][cur_col].item()))
-            print(cur_dict)
-        else:
-            cur_dict = {}
-        # cur_dict = ast.literal_eval(str(df.loc[i]['Boxplot_speed'].item()))
-
-        bp, sp_bool, plotting_bool = box_plot_or_points(cur_dict)
-        
-        box_plot_data_list.append(bp)
-
-        if sp_bool:
-            # add scatter points for this time bin
-            scatter_points = cur_dict['points']
-            if scatter_points == []:
-                pass
-            else:
-                x_coords = np.full(len(scatter_points), i+1)
-                ax.scatter(x_coords, scatter_points, color = 'black', zorder=3)
-                plotted_points = True
+    # Define the time points and their corresponding labels
+    time_points = [-1, 0, 1, 2, 3]
+    time_labels = ['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All']
     
-    # if there's no info plot no info plot
-    if not plotting_bool and not plotted_points:
-        no_info_plot(ax, p=1)
+    # # Filter data for the specific edge
+    # edge_data = data[data['Edge'] == edge]
+    
+    # Check if all 'Boxplot_speed' values are empty points or if there's no data for the edge
+    if edge_data.empty or all(ast.literal_eval(row[cur_col]) == {'points': []} for _, row in edge_data.iterrows()):
+        no_info_plot(ax, p)
         return
+    
+    for idx, time_point in enumerate(time_points):
+        row = edge_data[edge_data['Time_bin'] == time_point]
+        
+        if row.empty:
+            continue
+        
+        boxplot_speed = ast.literal_eval(row.iloc[0][cur_col])
+        
+        if 'q1' in boxplot_speed:
+            ax.bxp([boxplot_speed], positions=[idx], showfliers=True)
+        elif 'points' in boxplot_speed:
+            if boxplot_speed['points']:
+                x_coords = np.full(len(boxplot_speed['points']), idx)
+                ax.scatter(x_coords, boxplot_speed['points'], color='black', marker='s', zorder=3)
+    
+    # Customize the plot
+    ax.set_xticks(range(len(time_points)))
+    ax.set_xticklabels(time_labels, rotation=45)
+    ax.set_xlim(-1, 5)
+
+    if p==1:
+        ax.set_ylabel('Speed (miles per hour)')
+        ax.set_title('Speed Variation Over Time Bins')
     else:
-        # plot boxplots
-        ax.bxp(box_plot_data_list, showfliers=True)
+        ax.set_ylabel('Travel Time (minutes)')
+        ax.set_title('Travel Time Variation Over Time Bins')
 
-        if p==1:
-            ax.set_ylabel('Speed (miles per hour)')
-            ax.set_title('Speed Variation Over Time Bins')
-        else:
-            ax.set_ylabel('Travel Time (minutes)')
-            ax.set_title('Travel Time Variation Over Time Bins')
-
-    # ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    # ax.grid(True)
+    ax.grid(True)
 
 def plot_speed_stats(ax, df, min_max):
     ''' 
@@ -285,6 +253,76 @@ def plot_speed_stats(ax, df, min_max):
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     ax.grid(True)
 
+def plot_flow(ax, edge_data):
+    # Define the time points and their corresponding labels
+    time_points = [-1, 0, 1, 2, 3]
+    time_labels = ['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All']
+
+    # Check if there's no data for the edge
+    if edge_data.empty:
+        return
+    
+    # Initialize bar_width and position offset
+    bar_width = 0.1
+    
+    # Collect all unique keys to assign colors
+    unique_keys = set()
+    for idx, time_point in enumerate(time_points):
+        row = edge_data[edge_data['Time_bin'] == time_point]
+        if row.empty:
+            continue
+        flow_data = ast.literal_eval(row.iloc[0]['Flow'])
+        unique_keys.update(flow_data.keys())
+    
+    # Create a color map for the unique keys
+    colors = plt.get_cmap('tab20', len(unique_keys))
+    color_map = {key: colors(i) for i, key in enumerate(unique_keys)}
+    
+    # Collect bar heights and labels
+    bar_heights = {time_point: [] for time_point in time_points}
+    bar_labels = {time_point: [] for time_point in time_points}
+    
+    for idx, time_point in enumerate(time_points):
+        row = edge_data[edge_data['Time_bin'] == time_point]
+        
+        if row.empty:
+            continue
+        
+        flow_data = ast.literal_eval(row.iloc[0]['Flow'])
+        
+        for key, value in flow_data.items():
+            bar_heights[time_point].append(value)
+            bar_labels[time_point].append(key)
+    
+    # Plot the bars for each time point
+    for idx, time_point in enumerate(time_points):
+        heights = bar_heights[time_point]
+        labels = bar_labels[time_point]
+        
+        if not heights:
+            continue
+        
+        # Compute positions for the bars
+        positions = np.arange(len(heights)) * bar_width + (idx - len(heights) / 2 * bar_width)
+        
+        # Plot each bar with the corresponding color
+        for pos, height, label in zip(positions, heights, labels):
+            ax.bar(pos, height, width=bar_width, color=color_map[label], label=label)
+    
+    # Customize the plot
+    ax.set_xticks(range(len(time_points)))
+    ax.set_xticklabels(time_labels)
+    ax.set_ylabel('Number of Vehicles')
+    ax.set_title(f'Distribution of Trajectory Counts')
+    # ax.set_xlabel('Time Bins')
+    
+    # Create a legend with unique keys
+    handles = [plt.Line2D([0], [0], color=color_map[key], lw=4) for key in unique_keys]
+    ax.legend(handles, unique_keys, loc='upper right')
+
+    # Set y-axis to increment by whole values
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
 def plot_lines(ax, time, counts_list, labels=None):
     """
     Plot multiple lines on a single plot.
@@ -305,7 +343,7 @@ def plot_lines(ax, time, counts_list, labels=None):
         return
 
     for counts, label in zip(counts_list, labels):
-        ax.scatter(time, counts, marker='o', label=label)
+        ax.bar(time, counts, marker='o', label=label)
 
     ax.set_xlabel('Time Bins')
     ax.set_ylabel('Number of Vehicles')
