@@ -125,9 +125,9 @@ def no_info_plot(ax, p):
     p (int) - 1 for speed stats plot, 0 for travel time plot, 2 for flow plot
     '''
     # Adding labels and title
-    ax.set_xlabel('Time Bins')
-    ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
-    ax.set_xlim([-1.5, 3.5])
+    # ax.set_xlabel('Time Bins')
+    # ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
+    # ax.set_xlim([-1.5, 3.5])
     if p==1:
         ax.set_ylabel('Speed (miles per hour)')
         ax.set_title('Speed Variation Over Time Bins')
@@ -137,7 +137,89 @@ def no_info_plot(ax, p):
     elif p==2:
         ax.set_ylabel('Number of Vehicles')
         ax.set_title('Intersection Flow')
+
     ax.text(0.5, 0.5, 'No Info')
+
+def box_plot_or_points(d):
+    no_box_plot = {'whislo':np.NaN,
+                    'q1':np.NaN,
+                    'med':np.NaN,
+                    'q3':np.NaN,
+                    'whishi':np.NaN,
+                    'fliers': []
+                    }
+    if d == {}:
+        return no_box_plot, False, False
+    elif 'points' in d:
+        return no_box_plot, True, True
+    else:
+        return d, False, True
+
+
+def plot_boxplot(ax, df, p):
+
+    # Adding labels and title
+    ax.set_xlabel('Time Bins')
+    ax.set_xticks([-1, 0, 1, 2, 3])
+    ax.set_xticklabels(['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'])
+    # ax.set_xticks([-1, 0, 1, 2, 3],['Weekend-Night', 'Weekday-Night', 'Weekend-Day', 'Weekday-Day', 'All'], rotation=20)
+    # ax.set_xlim([-1.5, 3.5])
+
+    # Sort values df by Time_bin
+    df.sort_values('Time_bin')
+    
+    if p == 1:
+        cur_col = 'Boxplot_speed'
+    else:
+        cur_col = 'Boxplot_time'
+
+    # filtered_df has either 4 rows (one per time bin) or one row with all values: 
+    # values are in: Boxplot_speed,Boxplot_time
+    box_plot_data_list = []
+    plotted_points = False
+
+    time_bins = [-1, 0, 1, 2, 3]
+    print('print statement plot boxplot visualization.py')
+    # print(f'df\n{df}\ndf[Boxplot_speed]: {df['Boxplot_speed']}')
+    for i in time_bins:
+        if i in list(df['Time_bin']):
+            cur_dict = ast.literal_eval(str(df[df['Time_bin'] == i][cur_col].item()))
+            print(cur_dict)
+        else:
+            cur_dict = {}
+        # cur_dict = ast.literal_eval(str(df.loc[i]['Boxplot_speed'].item()))
+
+        bp, sp_bool, plotting_bool = box_plot_or_points(cur_dict)
+        
+        box_plot_data_list.append(bp)
+
+        if sp_bool:
+            # add scatter points for this time bin
+            scatter_points = cur_dict['points']
+            if scatter_points == []:
+                pass
+            else:
+                x_coords = np.full(len(scatter_points), i+1)
+                ax.scatter(x_coords, scatter_points, color = 'black', zorder=3)
+                plotted_points = True
+    
+    # if there's no info plot no info plot
+    if not plotting_bool and not plotted_points:
+        no_info_plot(ax, p=1)
+        return
+    else:
+        # plot boxplots
+        ax.bxp(box_plot_data_list, showfliers=True)
+
+        if p==1:
+            ax.set_ylabel('Speed (miles per hour)')
+            ax.set_title('Speed Variation Over Time Bins')
+        else:
+            ax.set_ylabel('Travel Time (minutes)')
+            ax.set_title('Travel Time Variation Over Time Bins')
+
+    # ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    # ax.grid(True)
 
 def plot_speed_stats(ax, df, min_max):
     ''' 
@@ -283,14 +365,14 @@ def generate_markdown(row, node):
     row (pandas dataframe) - one row corresp. to node or edge
     node (bool) - True if node, False if edge
     '''
-    print('Print statements in generate_markdown function of visualization.py\n')
-    print('row\n', row)
-    try:
-        print('node\n',row['Node'])
-        print('node[0]\n',row['Node'][0])
-        print('node.item()\n',row['Node'].item())
-    except Exception as e:
-        print(e)
+    # print('Print statements in generate_markdown function of visualization.py\n')
+    # print('row\n', row)
+    # try:
+    #     print('node\n',row['Node'])
+    #     print('node[0]\n',row['Node'][0])
+    #     print('node.item()\n',row['Node'].item())
+    # except Exception as e:
+    #     print(e)
 
     if node:
         # Node,OSM_street_count,OSM_highway,OSM_edges,Street_count,Count

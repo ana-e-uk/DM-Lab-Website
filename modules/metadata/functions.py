@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
 
-from .visualization import plot_map, plot_speed_stats, get_flow_plot
+from .visualization import plot_map, plot_speed_stats, get_flow_plot, plot_boxplot
 
 ########################################## DATA UPLOAD ########################################## 
 
@@ -132,9 +132,12 @@ def get_metadata(m, bb):
     c_n_s.to_csv(os.path.join(metadata_dir, c_n_s_file), index=None)
 
 def display_node_data(filtered_df):
+    # filtered_df has either 4 rows (one per time bin) or one row with all values
     fig, axs = plt.subplots(1,3, figsize=(15, 5))
-    plot_speed_stats(axs[0], filtered_df, True)
-    plot_speed_stats(axs[1], filtered_df, False)
+    plot_boxplot(axs[0], filtered_df, p=1)
+    plot_boxplot(axs[1], filtered_df, p=0)
+    # plot_speed_stats(axs[0], filtered_df, True)
+    # plot_speed_stats(axs[1], filtered_df, False)
     get_flow_plot(axs[2], filtered_df)
     fig.tight_layout()
 
