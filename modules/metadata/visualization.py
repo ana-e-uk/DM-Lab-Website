@@ -53,6 +53,8 @@ from constants import (
 ########################################## FUNCTIONS ########################################
 def plot_map(ox_map, m=None):
     """
+    Function edited from a function by M.Hemdan
+
     Plot the roads and nodes on an NxMap.
 
     Args:
@@ -99,7 +101,7 @@ def plot_map(ox_map, m=None):
             polyline.popup = popup
             m.add_layer(polyline)
             m.add_layer(popup)
-    # return m
+
     # Plot nodes
     for node, data in tmap.nodes(data=True):
         if 'x' in data and 'y' in data:
