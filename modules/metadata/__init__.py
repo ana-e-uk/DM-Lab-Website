@@ -198,15 +198,15 @@ class PlotUpdater(param.Parameterized):
         if self.selected_option_n and not self.df_n_f.empty and self.selected_option_n != self.cur_n:
             
             # get plots
-            filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  int(self.selected_option_n)]
+            filtered_df_n = self.df_n_f[self.df_n_f['Node'] ==  self.selected_option_n]
             fig = display_data(filtered_df_n)
             
             # get markdown
-            filtered_df_n_s = self.df_n[self.df_n['Node'] == int(self.selected_option_n)]
+            filtered_df_n_s = self.df_n[self.df_n['Node'] == self.selected_option_n]
             markdown_pane = generate_markdown(row=filtered_df_n_s, node=True)
 
             # update cur_n so if/elif works when you update the node selected option
-            self.cur_n = int(self.selected_option_n)
+            self.cur_n = self.selected_option_n
 
         # Plots chosen edge info
         elif self.selected_option_e and not self.df_e_f.empty:
