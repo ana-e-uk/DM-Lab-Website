@@ -311,7 +311,7 @@ def plot_flow(ax, edge_data):
     ax.set_xticklabels(time_labels, rotation=45)
     ax.set_xlim(-1, 5)
     ax.set_ylabel('Number of Vehicles')
-    ax.set_title(f'Distribution of Trajectory Counts')
+    ax.set_title(f'Flow')
     
     # Create a legend with unique keys
     handles = [plt.Line2D([0], [0], color=color_map[key], lw=4) for key in unique_keys]
@@ -342,7 +342,7 @@ def generate_markdown(row, node):
                         <td>{row['OSM_highway'].item()}</td>
                     </tr>
                     <tr>
-                        <td>GPS Trajectory Counts</td>
+                        <td>GPS Trip S. Counts</td>
                         <td>{int(row['Count'].item())}</td>
                         <td>X</td>
                     </tr>
