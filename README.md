@@ -1,26 +1,35 @@
 # DM-Lab-Website
-This repository holds the code that implements the Open Source Metadata/Trajectory/Map Project website.
+This repository holds the code that implements the Open Source Metadata Project website.
 
-The website is created using [Panel](https://panel.holoviz.org), an open-source Python library for building applications and dashboards. 
+The website is currently created using [Panel](https://panel.holoviz.org), an open-source Python library for building applications and dashboards. 
 
-The goal of the website is to provide various functionalities such as trajectory split, map-matching, and metadata generation, from uploaded GPS trajectories.
+The goal of the website is to provide visualization and sharing of map (road network) metadata, along with visualizations of functionalities such as trajectory splitting, and map-matching of GPS trajectories.
 
-### Website Functionality
-The website can:
+### How to run the code
+First, create an environment and then install panel
+```
+conda create -n panel
+conda install panel ipywidgets ipyleaflet shapely geopandas ipykernel
+pip install osmnx
+```
 
-1. Take in GPS trajectories
+To run the code, use the following command
+```
+panel serve main.py
+```
+and click on the link in the terminal.
+
+`main.py` is the script that generates and updates the dashboard, and calls other scripts depending on the choices made by the user on the dahsboard.
+
+### Website Functionality Goals
+1. Upload GPS trajectory files
 2. Process trajectories and provide:
     
-    * Trajectory splits
+    * Trajectory segmentation
     * Map-matching
     * Metadata
     * Visualization and downloadable results of the above
 
-### How to run it?
-```
-conda activate panel
-panel serve main.py
-```
 #### Assumptions
 1. Each file contains one trajectory. Even if you fed in different trajectories in the same file. The script will randomly select one of them and plot it
 2. Map matching may take some time, so the user is expected to wait for sometime to see the output
@@ -32,13 +41,11 @@ The repository has the file structure outlined below. In general:
 
 **For specific module documentation:** Go to `docs/[module name]`
 
-**For specific module code:** Each module has their own folder in the `module-scripts` folder. 
-* `main.py` has the code that runs the module's data processing
-* `[module name]_pn.py` has the code that creates the Panel dashboard/web-page for the specific module
-* `vizualization.py` has the code that is used by Panel to visualize the data
-* `constants.py` has the constants used in the `main.py` and `visualization.py` scripts
+**For specific module code:** Each module has their own folder in the `modules` folder. 
+* `__init__.py` creates the Panel objects and calls necessary functions for that module's functionality
+* `functions.py` has functions used by `__init__.py`
+* `vizualization.py` has functions that provide visualization
 
-**For Panel code:** Each module's Panel webpage/dashboard code is in that module's `module-scripts` file. The main webpage/dashboard code is in the `panel-scripts` folder.
 
 ```
 data
@@ -60,41 +67,36 @@ docs
 
 module-scripts
 |__ map-matching
+    |__ __init__.py
     |__ constants.py
-    |__ main.py
-    |__ map_matching_pn.py
+    |__ functions.py
+    |__ sample.py
     |__ vizualization.py
 |__ metadata
-    |__ constants.py
-    |__ main.py
-    |__ metadata_pn.py
+    |__ __init__.py
+    |__ constants.json
+    |__ functions.py
     |__ vizualization.py
 |__ traj-split
+    |__ __init__.py
     |__ constants.py
-    |__ main.py
+    |__ functions.py
     |__ traj_split_pn.py
     |__ vizualization.py
 
-panel-scripts
-|__ utils
-    |__ constants.py
-    |__ data_processing.py
-    |__ visualization.py
-|__ main.py
-|__ upload_data.py
+utils
+|__ constants.py
+|__ data_processing.py
+|__ visualization.py
 
-requirements.txt (to be added)
-```
-
-### How to run the code
-First, you need to create an environment and then install panel
-```
-conda create -n panel
-conda install panel ipywidgets ipyleaflet shapely geopandas ipykernel
-pip install osmnx
-```
-
-To run the code, use the following command
-```
-panel serve [filename.py]
+.gitignore
+config.py
+constants.py
+draft_upload_data.py
+main.py
+map.html
+notebook.ipynb
+README.md
+userdefined_components.py
+visualization.py
 ```
